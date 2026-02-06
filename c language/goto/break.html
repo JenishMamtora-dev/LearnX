@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>break</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+<header><h1>Break statement</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>The <b>Break</b> statement is used to terminate the innermost loop or switch case statement.</p>
+            <h2>Syntax</h2>
+    <pre>
+        break;</pre>
+                <h2>Key Points</h2>
+                    <ul>
+                    <li><p>It is terminated using semi colon(;).</p></li>   
+                    <li>
+                    <p>It can only be used with loops & switch case.</p> </li> 
+                    <li> <p>When used in multiple loop it will always terminate the inner loop.</p></li> 
+                       <li> <p>Break statement will terminate the loop when condition is satisfied.</p></li>  
+                </ul>
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main(){
+       int i=0;
+       clrscr();
+        for ( i = 0; i < 10; i++)
+         {
+            if (i == 5) 
+            {
+                 break; // Exits the loop when i is 5
+            }
+         printf(\n"%d ", i);
+    }
+    getch();
+}
+
+    <h3>Output:
+        0
+        1
+        2
+        3
+        4</h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+            <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</body>
+    </html>

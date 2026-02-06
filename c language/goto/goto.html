@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>Return</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ 
+<header><h1>Goto statement</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>The<b> goto</b> statement in C is a control statement used to transfer the flow of execution to a specific labeled statement in the same function.
+<b>It is often called an unconditional jump statement.</b></p>
+            <h2>Syntax</h2>
+    <pre>
+       goto label;</pre>
+                <h2>Key Points</h2>
+                    <ul>
+                    <li><p>label is a user-defined identifier followed by a colon :.</p></li>   
+                    <li>
+                    <p>It can jump forward or backward in the code.</p> </li> 
+                    <li> <p>goto label; transfers control to the statement after label:.</p></li> 
+                       <li> <p><b>Note:</b> goto makes the program less readable and harder to debug  that's why it is not recommended in modern coding.</p></li>
+                    
+                    
+                </ul>
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main(){
+       int num = 1;
+       clrscr();
+    start: // label
+    printf("%d\n", num);
+    num++;
+
+    if (num <= 5)
+    {
+        goto start; // jumps back to label
+    }
+    getch();
+}
+
+    <h3>Output:
+        
+        1
+        2
+        3
+        4
+        5</h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+            <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</body>
+    </html>

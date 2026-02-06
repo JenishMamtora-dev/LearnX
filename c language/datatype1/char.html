@@ -1,0 +1,53 @@
+<html>
+<head>
+        <title>Character</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ <header><h1>Character</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>The character datatype Stores a single character/letter/number, or ASCII values	.</p>
+            <h2>Syntax</h2>
+            <pre>
+                char variable_name;
+            </pre>
+                <h2>Key Points</h2>
+                   <ul>
+                    <li>
+                    <p>The Character datatype is declared in C using <b>char </b>keyword. </p> </li> 
+                    <li> <p>It can store 1 bytes of data.    </p></li>  
+                    <li><p> The format specifer of character is  <b> %c.</b></p></li>   
+                    <li><p><b></b>We can also store strings using char & %s is the format specifier used for it.</p></li>
+                </ul>
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main()
+    {
+    char c='a';
+    char j[]="hello world";
+    clrscr();       
+     printf("\n character is: %c",i);
+     printf("\n string is: %s",j);
+    getch();
+    }
+
+    <h3>Output:
+        char is:a
+        string is:hello world
+    </h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+ <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</body>
+    </html>

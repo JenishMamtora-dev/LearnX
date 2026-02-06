@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arrays & Strings — C++</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #121212;
+      color: #E0E0E0;
+    }
+
+    header {
+      padding: 15px 40px;
+      background: #1E1E1E;
+      border-bottom: 2px solid #4CAF50;
+    }
+
+    header h1 {
+      color: #4CAF50;
+      margin: 0;
+    }
+
+    .container {
+      padding: 36px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h2 {
+      color: #4CAF50;
+    }
+
+    h3 {
+      color: #81C784;
+    }
+
+    pre {
+      background: #1E1E1E;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      overflow: auto;
+    }
+
+    .output {
+      background: #000;
+      padding: 10px;
+      border: 1px solid #4CAF50;
+      color: #81C784;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      line-height: 1.6;
+    }
+
+    a.back {
+      display: inline-block;
+      margin-top: 16px;
+      color: #4CAF50;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Arrays & Strings — C++</h1>
+  </header>
+  <div class="container">
+    <h2>Definition</h2>
+    <p>An array is a collection of elements of the same type stored in contiguous memory.
+      A string is a sequence of characters terminated with a null character ('\0') or managed by the <code>string</code>
+      class.</p>
+
+    <h2>Arrays</h2>
+
+    <h3>1. One-Dimensional Array</h3>
+    <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int arr[3] = {10,20,30};
+    for(int i=0;i&lt;3;i++)
+        cout &lt;&lt; arr[i] &lt;&lt; " ";
+}</code></pre>
+    <div class="output">10 20 30</div>
+
+    <h3>2. Two-Dimensional Array</h3>
+    <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int matrix[2][3] = {{1,2,3},{4,5,6}};
+    for(int i=0;i&lt;2;i++) {
+        for(int j=0;j&lt;3;j++) {
+            cout &lt;&lt; matrix[i][j] &lt;&lt; " ";
+        }
+        cout &lt;&lt; endl;
+    }
+}</code></pre>
+    <div class="output">1 2 3<br>4 5 6</div>
+
+    <h3>3. Array Initialization Methods</h3>
+    <pre><code>int a[5] = {1,2,3};    // remaining values = 0
+int b[] = {10,20,30};  // size auto-detected
+</code></pre>
+
+    <h2>Strings</h2>
+
+    <h3>1. C-Style String (char array)</h3>
+    <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    char name[] = "C++";
+    cout &lt;&lt; name;
+}</code></pre>
+    <div class="output">C++</div>
+
+    <h3>2. String Functions (C library)</h3>
+    <pre><code>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main() {
+    char str1[20] = "Hello";
+    char str2[20] = "World";
+    strcat(str1, str2); // join
+    cout &lt;&lt; "Length: " &lt;&lt; strlen(str1) &lt;&lt; endl;
+    cout &lt;&lt; "Concat: " &lt;&lt; str1;
+}</code></pre>
+    <div class="output">Length: 10<br>Concat: HelloWorld</div>
+
+    <h3>3. C++ String Class</h3>
+    <pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string s = "Hello";
+    s.append(" C++");
+    cout &lt;&lt; "Length: " &lt;&lt; s.length() &lt;&lt; endl;
+    cout &lt;&lt; "Substring: " &lt;&lt; s.substr(0,5);
+}</code></pre>
+    <div class="output">Length: 9<br>Substring: Hello</div>
+  <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+:root {
+    --bg-obsidian: #0a0a0a;
+    --card-bg: rgba(20, 20, 20, 0.8);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --accent-green: #4ade80;
+    --text-dim: #a1a1aa;
+}
+
+body {
+    background-color: var(--bg-obsidian);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Navbar & Dropdown */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.account-container { position: relative; }
+
+.account-trigger {
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.account-trigger:hover { background: rgba(255,255,255,0.05); }
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    width: 200px;
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    display: none; /* Controlled by JS */
+    flex-direction: column;
+    padding: 10px;
+    z-index: 100;
+}
+
+.dropdown-menu.active { display: flex; }
+
+.dropdown-menu a {
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.dropdown-menu a:hover { background: var(--border-glass); color: white; }
+
+/* Course Cards */
+.course-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.blue-glow { border-top: 3px solid #1e40af; }
+.purple-glow { border-top: 3px solid #7e22ce; }
+
+.card-glass-top {
+    height: 120px;
+    background: linear-gradient(180deg, rgba(30, 64, 175, 0.3) 0%, transparent 100%);
+    padding: 15px;
+}
+
+.progress-bar {
+    height: 6px;
+    background: var(--accent-green);
+    border-radius: 10px;
+}
+
+.cta-btn {
+    background: var(--accent-green);
+    color: black;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}

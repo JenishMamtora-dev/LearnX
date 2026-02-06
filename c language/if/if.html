@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>if</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ <header><h1>If statement</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>The if statement executes the block of code if the given conditionis true.</p>
+            <h2>Syntax</h2>
+    <pre>
+if (condition) 
+{
+  // block of code to be executed if the condition is true
+}</pre>
+                <h2>Key Points</h2>
+                    <ul>
+                    <li>
+                    <p>It is used when only a single condition is to be checked</p> </li> 
+                    <li> <p>It will not execute the block of code if condition is false.</p></li>  
+                    <li><p>It is called <b>Simple if statement</b>.</p></li>   
+                    
+                </ul>
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main(){
+        int a=20,b=10; 
+         clrscr();
+    if(a>b)
+    {     
+              printf("\n a is greater than b");
+            } 
+    getch();
+}
+
+    <h3>Output:
+    a is greater than b</h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+</body>
+    </html>

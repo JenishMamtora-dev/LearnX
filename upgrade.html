@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade to Pro</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            height: 80vh;
+            display: flex;
+            gap: 50px;
+           
+        }
+        .upgrade-content {
+            background-color: #1E1E1E;
+            border-radius: 10px;
+            border: 2px solid #4CAF50;
+            padding: 30px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            color: white;
+        }
+
+         .upgrade-content:hover {
+            box-shadow: 0 0 15px #4CAF50;
+            transform: translateY(-5px);
+            transition: 0.3s;
+        }
+
+        .upgrade-content.pro {
+            color: white;
+        }
+
+        .upgrade-content.pro:hover {
+            box-shadow: 0 0 15px #4CAF50;
+            transform: translateY(-5px);
+            transition: 0.3s;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 80px 0;
+        }
+        ul li {
+            margin: 25px 0;
+        }
+
+        s{
+            color: gray;
+        }
+
+        .btn-upgrade {
+            margin-top: 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-upgrade:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+        <div class="upgrade-content">
+            <h2>Free</h2>
+            <h3>Rs0 / month</h3>
+            <ul>
+                <li>Access to basic courses</li>
+                <li>Community support</li>
+                <li>Limited resources</li>
+            </ul>
+        </div>
+        <div class="upgrade-content pro">
+            <h2>Pro</h2>
+            <h3>Rs500 / month</h3>
+            <ul>
+                <li>Unlimited access to all courses</li>
+                <li>Priority support</li>
+                <li>Exclusive chatbot Unlock</li>
+            </ul>
+            <a href="#"><button class="btn-upgrade">Upgrade Now</button></a>
+        </div>
+        <div class="upgrade-content pro">
+            <h2>Pro +</h2>
+            <h3><s>Rs6,000</s> Rs3,000/ Year</h3>
+            <ul>
+                <li>Unlimited access to all courses</li>
+                <li>Priority support</li>
+                <li>Exclusive chatbot Unlock</li>
+            </ul>
+            <a href="#"><button class="btn-upgrade">Upgrade Now</button></a>
+        </div>
+    </section>
+</body>
+</html>

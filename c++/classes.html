@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Classes & Objects — C++</title>
+  <style>
+    body { margin:0; font-family:'Roboto',sans-serif; background:#121212; color:#E0E0E0; }
+    header { padding:15px 40px; background:#1E1E1E; border-bottom:2px solid #4CAF50; }
+    header h1{ color:#4CAF50; margin:0; }
+    .container{ padding:36px; max-width:900px; margin:auto; }
+    h2{ color:#4CAF50; }
+    pre{ background:#1E1E1E; padding:14px; border-radius:8px; border:1px solid #333; overflow:auto; }
+    .output{ background:#000; padding:10px; border:1px solid #4CAF50; color:#81C784; border-radius:6px; }
+    ul{ line-height:1.6; }
+    a.back{ display:inline-block; margin-top:16px; color:#4CAF50; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <header><h1>Classes & Objects — C++</h1></header>
+  <div class="container">
+    <h2>Definition</h2>
+    <p>A class is a blueprint for creating objects. Objects are instances of classes.</p>
+
+    <h2>Syntax</h2>
+    <pre><code>class ClassName {
+public:
+    // data members
+    // member functions
+};</code></pre>
+
+    <h2>Example</h2>
+    <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int age;
+
+    void introduce() {
+        cout &lt;&lt; "My name is " &lt;&lt; name &lt;&lt; ", age " &lt;&lt; age &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Student s1;
+    s1.name = "Alice";
+    s1.age = 20;
+    s1.introduce();
+
+    Student s2;
+    s2.name = "Bob";
+    s2.age = 22;
+    s2.introduce();
+}</code></pre>
+
+    <h2>Expected Output</h2>
+    <div class="output">My name is Alice, age 20
+My name is Bob, age 22</div>
+
+      <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+  </div>
+</body>
+</html>

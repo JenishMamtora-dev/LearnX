@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnX Pro - Live Preview</title>
+    <style>
+        /* OBSIDIAN THEME CONFIG */
+        :root {
+            --bg: #050505;
+            --card-glass: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-green: #4ade80;
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0; padding: 40px;
+        }
+
+        /* NAVIGATION & ACCOUNT MENU */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .account-wrapper { position: relative; }
+        
+        .account-trigger {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            padding: 8px 16px; border-radius: 10px;
+            cursor: pointer; display: flex; align-items: center; gap: 10px;
+            color: white;
+        }
+
+        .account-trigger:hover { background: rgba(255,255,255,0.1); }
+
+        .dropdown {
+            position: absolute; right: 0; top: 50px; width: 180px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 8px; display: none; z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .dropdown.active { display: block; animation: slideIn 0.2s ease-out; }
+
+        .dropdown a {
+            display: block; padding: 10px; color: var(--text-dim);
+            text-decoration: none; font-size: 14px; border-radius: 6px;
+        }
+
+        .dropdown a:hover { background: var(--card-border); color: white; }
+
+        /* GLASS CARDS */
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px; margin-top: 30px;
+        }
+
+        .card {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 20px; overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .card-header { height: 120px; position: relative; padding: 20px; }
+        .blue-grad { background: linear-gradient(to bottom, rgba(59,130,246,0.3), transparent); }
+        .purple-grad { background: linear-gradient(to bottom, rgba(168,85,247,0.3), transparent); }
+
+        .badge {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px; border-radius: 20px;
+            font-size: 10px; font-weight: bold; letter-spacing: 1px;
+        }
+
+        .content { padding: 20px; }
+        .content h3 { margin: 0 0 10px 0; font-size: 18px; }
+        .content p { color: var(--text-dim); font-size: 13px; line-height: 1.5; }
+
+        /* PROGRESS BARS */
+        .prog-bg { background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; margin: 20px 0 10px; }
+        .prog-fill { height: 100%; border-radius: 10px; position: relative; }
+        .prog-fill::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: 0 0 10px inherit; border-radius: 10px;
+        }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="font-size: 24px; font-weight: bold;">Learn<span style="color: var(--accent-green);">X</span></div>
+        <div class="account-wrapper">
+            <button class="account-trigger" onclick="toggleMenu(event)">
+                <div style="width: 24px; height: 24px; background: #6366f1; border-radius: 50%;"></div>
+                Developer ▾
+            </button>
+            <div class="dropdown" id="userMenu">
+                <div style="font-size: 10px; color: var(--accent-green); padding: 5px 10px;">LEVEL 4 SCHOLAR</div>
+                <a href="#">Profile</a>
+                <a href="#">My Courses</a>
+                <a href="#">Settings</a>
+                <hr style="border: 0; border-top: 1px solid var(--card-border);">
+                <a href="#" style="color: #ef4444;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <h1>Welcome back, Developer.</h1>
+    <p style="color: var(--text-dim);">Your progress looks great today.</p>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-header blue-grad">
+                <span class="badge">SYSTEMS</span>
+            </div>
+            <div class="content">
+                <h3>Advanced C Programming</h3>
+                <p>Deep dive into memory management and pointers.</p>
+                <div class="prog-bg"><div class="prog-fill" style="width: 72%; background: var(--accent-green); box-shadow: 0 0 10px #4ade80;"></div></div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
+                    <span>Lesson 12 of 48</span>
+                    <span>72%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header purple-grad">
+                <span class="badge">WEB</span>
+            </div>
+            <div class="content">
+                <h3>React Architecture</h3>
+                <p>Building scalable front-end systems with ease.</p>
+                <div class="prog-bg"><div class="prog-fill" style="width: 35%; background: var(--accent-purple); box-shadow: 0 0 10px #a855f7;"></div></div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
+                    <span>Lesson 4 of 20</span>
+                    <span>35%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu(event) {
+            event.stopPropagation();
+            document.getElementById('userMenu').classList.toggle('active');
+        }
+
+        window.onclick = function() {
+            document.getElementById('userMenu').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

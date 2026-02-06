@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C Loops</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #121212;
+      color: #E0E0E0;
+      line-height: 1.6;
+    }
+    header {
+      padding: 15px 40px;
+      background-color: #1E1E1E;
+      border-bottom: 2px solid #4CAF50;
+    }
+    header h1 {
+      color: #4CAF50;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px;
+    }
+    h2 {
+      color: #4CAF50;
+      margin-top: 30px;
+    }
+    p {
+      margin-top: 15px;
+    }
+    .loop-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .card {
+      background-color: #1E1E1E;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 25px;
+      text-align: center;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .card:hover {
+      border-color: #4CAF50;
+      box-shadow: 0 0 15px #4CAF50;
+    }
+    .card h3 {
+      margin-bottom: 10px;
+      color: #4CAF50;
+    }
+    .card p {
+      color: #B0B0B0;
+      font-size: 0.95rem;
+    }
+    .card a {
+      /* make the whole card clickable: link covers entire card */
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>C Loops</h1>
+  </header>
+
+  <div class="container">
+    <h2>What are Loops?</h2>
+    <p>
+      In C programming, loops are constructs that repeatedly execute a block of code as long as a condition is true.
+      They help you run repetitive tasks without duplicating code. The three main types of loops in C are:
+      <strong>for loop</strong>, <strong>while loop</strong>, and <strong>do-while loop</strong>.
+    </p>
+
+    <h2>Loop Types</h2>
+    <div class="loop-cards">
+      <div class="card">
+        <a href="for_loop.html">
+          <h3>For Loop</h3>
+          <p>Use when you know how many times you want to repeat.</p>
+        </a>
+      </div>
+      <div class="card">
+        <a href="while_loop.html">
+          <h3>While Loop</h3>
+          <p>Repeat until a condition becomes false.</p>
+        </a>
+      </div>
+      <div class="card">
+        <a href="do_while_loop.html">
+          <h3>Do-While Loop</h3>
+          <p>Executes at least once, then repeats while condition is true.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

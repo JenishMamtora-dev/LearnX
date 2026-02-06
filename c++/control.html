@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Variables in C++</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #E0E0E0;
+        }
+
+        header {
+            padding: 15px 40px;
+            background: #1E1E1E;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        header h1 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .container {
+            padding: 36px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        h3 {
+            color: #81C784;
+        }
+
+        pre {
+            background: #1E1E1E;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: auto;
+        }
+
+        .output {
+            background: #000;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            color: #81C784;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-family: monospace;
+        }
+
+        .key-points {
+            background: #1E1E1E;
+            border-left: 4px solid #4CAF50;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .key-points h2 {
+            color: #4CAF50;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+            color: #E0E0E0;
+        }
+
+        .types-box {
+            background: #1E1E1E;
+            border: 2px solid #81C784;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .types-box h3 {
+            color: #81C784;
+            margin-top: 0;
+        }
+
+        .types-box p {
+            margin: 6px 0;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 16px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Variables in C++</h1>
+    </header>
+
+    <div class="container">
+
+        <h2>Definition</h2>
+        <p>A variable is a named memory location used to store data. Its value can be changed during program execution.
+        </p>
+
+        <div class="key-points">
+            <h2>Key Points</h2>
+            <ul>
+                <li><b>Declaration:</b> Every variable must be declared before use, specifying its type.</li>
+                <li><b>Memory Allocation:</b> Memory is automatically allocated based on the variable’s data type.</li>
+                <li><b>Variable Types:</b> Variables can be <b>Local</b> (inside function) or <b>Global</b> (outside
+                    function).</li>
+                <li><b>Initialization:</b> Assigning a value to the variable when declaring it.</li>
+                <li><b>Constants:</b> Declared with <code>const</code> keyword; value cannot be modified later.</li>
+            </ul>
+        </div>
+
+        <h2>Variable Types & Examples</h2>
+
+        <div class="types-box">
+            <h3>1. Integer Types</h3>
+            <p><b>int:</b> Whole numbers, positive or negative. <code>int age = 25;</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int age = 25;
+    cout &lt;&lt; "Age = " &lt;&lt; age;
+}</code></pre>
+            <div class="output">Age = 25</div>
+
+            <p><b>short:</b> Smaller range integers. <code>short s = 10;</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    short s = 10;
+    cout &lt;&lt; "Short = " &lt;&lt; s;
+}</code></pre>
+            <div class="output">Short = 10</div>
+
+            <p><b>long:</b> Larger range integers. <code>long l = 100000;</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    long l = 100000;
+    cout &lt;&lt; "Long = " &lt;&lt; l;
+}</code></pre>
+            <div class="output">Long = 100000</div>
+
+            <p><b>long long:</b> Very large integers. <code>long long ll = 1000000000;</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    long long ll = 1000000000;
+    cout &lt;&lt; "Long Long = " &lt;&lt; ll;
+}</code></pre>
+            <div class="output">Long Long = 1000000000</div>
+        </div>
+
+        <div class="types-box">
+            <h3>2. Floating Types</h3>
+            <p><b>float:</b> Single precision decimals. <code>float pi = 3.14;</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    float pi = 3.14;
+    cout &lt;&lt; "PI = " &lt;&lt; pi;
+}</code></pre>
+            <div class="output">PI = 3.14</div>
+
+            <p><b>double:</b> Double precision decimals. <code>double d = 3.141592;</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    double d = 3.141592;
+    cout &lt;&lt; "Double = " &lt;&lt; d;
+}</code></pre>
+            <div class="output">Double = 3.141592</div>
+
+            <p><b>long double:</b> Higher precision decimals. <code>long double ld = 3.1415926535;</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    long double ld = 3.1415926535;
+    cout &lt;&lt; "Long Double = " &lt;&lt; ld;
+}</code></pre>
+            <div class="output">Long Double = 3.1415926535</div>
+        </div>
+
+        <div class="types-box">
+            <h3>3. Character Types</h3>
+            <p><b>char:</b> Single character. <code>char c = 'A';</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    char c = 'A';
+    cout &lt;&lt; "Char = " &lt;&lt; c;
+}</code></pre>
+            <div class="output">Char = A</div>
+
+            <p><b>wchar_t:</b> Wide characters. <code>wchar_t wc = L'Ω';</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    wchar_t wc = L'Ω';
+    wcout &lt;&lt; "Wide Char = " &lt;&lt; wc;
+}</code></pre>
+            <div class="output">Wide Char = Ω</div>
+        </div>
+
+        <div class="types-box">
+            <h3>4. Boolean Type</h3>
+            <p><b>bool:</b> Stores <code>true</code> or <code>false</code>. <code>bool flag = true;</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    bool flag = true;
+    cout &lt;&lt; "Flag = " &lt;&lt; flag;
+}</code></pre>
+            <div class="output">Flag = 1</div>
+        </div>
+
+        <div class="types-box">
+            <h3>5. Void Type</h3>
+            <p><b>void:</b> Represents no value, used as function return type.</p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+void show() {
+    cout &lt;&lt; "Hello from void function!";
+}
+int main() {
+    show();
+}</code></pre>
+            <div class="output">Hello from void function!</div>
+        </div>
+
+        <div class="types-box">
+            <h3>6. Constant Variables</h3>
+            <p><b>const:</b> Value cannot be changed once assigned. <code>const int x = 10;</code></p>
+            <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    const int x = 10;
+    cout &lt;&lt; "Constant x = " &lt;&lt; x;
+}</code></pre>
+            <div class="output">Constant x = 10</div>
+        </div>
+
+        <h2>Syntax</h2>
+        <pre><code>data_type variable_name = value;</code></pre>
+
+         <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+    </div>
+</body>
+
+</html>

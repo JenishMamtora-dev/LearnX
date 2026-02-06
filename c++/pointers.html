@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Pointers in C++</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #E0E0E0;
+        }
+
+        header {
+            padding: 15px 40px;
+            background: #1E1E1E;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        header h1 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .container {
+            padding: 36px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        h3 {
+            color: #81C784;
+        }
+
+        pre {
+            background: #1E1E1E;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: auto;
+        }
+
+        .output {
+            background: #000;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            color: #81C784;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 16px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        /* --- Key Points Box --- */
+        .key-section {
+            margin: 20px 0;
+            background: #1B1B1B;
+            border: 1px solid #2E7D32;
+            border-radius: 10px;
+            padding: 16px 20px;
+        }
+
+        .key-section h4 {
+            color: #4CAF50;
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .key-section ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .key-section li {
+            color: #B9F6CA;
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Pointers in C++</h1>
+    </header>
+
+    <div class="container">
+
+        <h2>Definition :</h2>
+        <p>A pointer is a variable that stores the memory address of another variable.
+            It allows direct memory access and manipulation, making C++ powerful and flexible.</p>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Pointers store the memory address of another variable.</li>
+                <li>They allow direct access and manipulation of memory.</li>
+                <li>Used widely for dynamic memory, arrays, and data structures.</li>
+            </ul>
+        </div>
+       
+       
+
+        <h2>Types of Pointers</h2>
+
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>There are several pointer types in C++ based on how they manage memory.</li>
+                <li>Understanding them helps prevent runtime errors and crashes.</li>
+            </ul>
+        </div>
+
+        <h3>1. Null Pointer</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Points to nothing (address = 0).</li>
+                <li>Used for safe initialization before assigning real addresses.</li>
+            </ul>
+        </div>
+        <pre><code>int *ptr = NULL;
+if(ptr == NULL)
+    cout &lt;&lt; "Pointer is null";</code></pre>
+
+        <h3>2. Void Pointer</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Generic pointer type; can point to any data type.</li>
+                <li>Must be type-cast before dereferencing.</li>
+            </ul>
+        </div>
+        <pre><code>void *ptr;
+int a = 10;
+ptr = &a;
+cout &lt;&lt; *(int*)ptr;</code></pre>
+
+        <h3>3. Wild Pointer</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Declared but not initialized pointers.</li>
+                <li>Accessing them causes undefined behavior or crashes.</li>
+            </ul>
+        </div>
+        <pre><code>int *p;
+*p = 5;  // ❌ Undefined behavior</code></pre>
+
+        <h3>4. Dangling Pointer</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Pointer pointing to memory that has been freed or deleted.</li>
+                <li>Accessing such pointers leads to unpredictable results.</li>
+            </ul>
+        </div>
+        <pre><code>int *p = new int(10);
+delete p;
+cout &lt;&lt; *p;  // ❌ Dangling pointer</code></pre>
+
+        <h3>5. Constant Pointer</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Address stored in pointer cannot be changed.</li>
+                <li>Value at that address can still be modified.</li>
+            </ul>
+        </div>
+        <pre><code>int x=5, y=10;
+int *const ptr = &x;
+*ptr = 20;     // allowed
+ptr = &y;      // ❌ not allowed</code></pre>
+
+        <h3>6. Pointer to Constant</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Data pointed to cannot be modified through the pointer.</li>
+                <li>The pointer itself can point to other variables.</li>
+            </ul>
+        </div>
+        <pre><code>int x = 5;
+const int *ptr = &x;
+*ptr = 20;   // ❌ not allowed
+ptr = NULL;  // ✅ allowed</code></pre>
+
+        <h3>7. Constant Pointer to Constant</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Neither address nor data can be changed.</li>
+                <li>Provides complete immutability and safety.</li>
+            </ul>
+        </div>
+        <pre><code>int x = 5;
+const int *const ptr = &x;
+*ptr = 20;   // ❌ not allowed
+ptr = NULL;  // ❌ not allowed</code></pre>
+
+        <h2>Examples</h2>
+
+        <h3>1. Basic Pointer</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>'&' gives the address of a variable.</li>
+                <li>'*' (dereference) accesses the value stored at that address.</li>
+            </ul>
+        </div>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 10;
+    int *ptr = &a;
+    cout &lt;&lt; "Value: " &lt;&lt; *ptr &lt;&lt; endl;
+    cout &lt;&lt; "Address: " &lt;&lt; ptr;
+}</code></pre>
+        <div class="output">Value: 10<br>Address: 0x61ff0c (example)</div>
+
+        <h3>2. Pointer to Pointer</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Stores the address of another pointer.</li>
+                <li>Double dereference '**' is used to access the actual value.</li>
+            </ul>
+        </div>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x = 5;
+    int *p = &x;
+    int **pp = &p;
+    cout &lt;&lt; "Value: " &lt;&lt; **pp;
+}</code></pre>
+        <div class="output">Value: 5</div>
+
+        <h3>3. Pointer with Array</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Array name acts as pointer to first element.</li>
+                <li>Pointer arithmetic *(p+i) is used to access array values.</li>
+            </ul>
+        </div>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int arr[3] = {10,20,30};
+    int *p = arr;
+    for(int i=0;i&lt;3;i++) {
+        cout &lt;&lt; *(p+i) &lt;&lt; " ";
+    }
+}</code></pre>
+        <div class="output">10 20 30</div>
+
+        <h3>4. Pointer with Function (Call by Reference)</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>Addresses of variables are passed to function.</li>
+                <li>Allows modification of original variables inside function.</li>
+            </ul>
+        </div>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int x=10, y=20;
+    swap(&x,&y);
+    cout &lt;&lt; "x=" &lt;&lt; x &lt;&lt; " y=" &lt;&lt; y;
+}</code></pre>
+        <div class="output">x=20 y=10</div>
+
+        <h3>5. Pointer with Object</h3>
+        <div class="key-section">
+            <h4>Key Points</h4>
+            <ul>
+                <li>'->' operator is used to access class members using pointer.</li>
+                <li>Pointers can refer to entire objects just like normal variables.</li>
+            </ul>
+        </div>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+public:
+    string name;
+    Student(string n) { name = n; }
+    void show() { cout &lt;&lt; "Name: " &lt;&lt; name; }
+};
+
+int main() {
+    Student s("Rahul");
+    Student *ptr = &s;
+    ptr-&gt;show();
+}</code></pre>
+        <div class="output">Name: Rahul</div>
+
+         <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+    </div>
+</body>
+
+</html>

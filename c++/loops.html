@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Loops in C++</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #E0E0E0;
+        }
+
+        header {
+            padding: 15px 40px;
+            background: #1E1E1E;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        header h1 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .container {
+            padding: 36px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        h3 {
+            color: #81C784;
+        }
+
+        pre {
+            background: #1E1E1E;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: auto;
+        }
+
+        .output {
+            background: #000;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            color: #81C784;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 16px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        /* Key Points box (added) */
+        .key-points {
+            background: #1E1E1E;
+            border-left: 4px solid #4CAF50;
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .key-points h2 {
+            color: #4CAF50;
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+        }
+
+        .key-points ul {
+            margin: 0;
+            margin-left: 18px;
+            color: #E0E0E0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Loops in C++</h1>
+    </header>
+
+    <div class="container">
+
+        <h2>Definition</h2>
+        <p>Loops allow repeating a block of code multiple times until a condition becomes false.</p>
+
+        <div class="key-points">
+            <h2>Key Points</h2>
+            <ul>
+                <li><b>Purpose:</b> Loops help execute a set of statements repeatedly without writing them multiple
+                    times.</li>
+                <li><b>Types:</b> C++ provides three main loops — <b>for</b>, <b>while</b>, and <b>do-while</b>.</li>
+                <li><b>Termination:</b> Ensure conditions change to avoid infinite loops.</li>
+                <li><b>Nested Loops:</b> A loop inside another loop for advanced tasks like patterns or matrices.</li>
+            </ul>
+        </div>
+
+        <h2>Syntax</h2>
+
+        <h3>For Loop</h3>
+        <pre><code>for(initialization; condition; increment/decrement) {
+    // statements
+}</code></pre>
+
+        <h3>While Loop</h3>
+        <pre><code>while(condition) {
+    // statements
+}</code></pre>
+
+        <h3>Do-While Loop</h3>
+        <pre><code>do {
+    // statements
+} while(condition);</code></pre>
+
+        <h2>Examples</h2>
+
+        <h3>1. For Loop Example</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    for(int i=1;i&lt;=5;i++)
+        cout &lt;&lt; i &lt;&lt; " ";
+    return 0;
+}</code></pre>
+        <div class="output">1 2 3 4 5</div>
+
+        <h3>2. While Loop Example</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int i=1;
+    while(i&lt;=5) {
+        cout &lt;&lt; i &lt;&lt; " ";
+        i++;
+    }
+    return 0;
+}</code></pre>
+        <div class="output">1 2 3 4 5</div>
+
+        <h3>3. Do-While Loop Example</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int i=1;
+    do {
+        cout &lt;&lt; i &lt;&lt; " ";
+        i++;
+    } while(i&lt;=5);
+    return 0;
+}</code></pre>
+        <div class="output">1 2 3 4 5</div>
+
+        <h3>4. Nested Loop Example</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    for(int i=1;i&lt;=3;i++) {
+        for(int j=1;j&lt;=3;j++) {
+            cout &lt;&lt; "(" &lt;&lt; i &lt;&lt; "," &lt;&lt; j &lt;&lt; ") ";
+        }
+        cout &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+        <div class="output">
+            (1,1) (1,2) (1,3)<br>
+            (2,1) (2,2) (2,3)<br>
+            (3,1) (3,2) (3,3)
+        </div>
+
+        <h3>5. Infinite Loop Example (Avoid This)</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int i=1;
+    while(true) {
+        cout &lt;&lt; i &lt;&lt; " ";
+        if(i==5) break;  // exit loop safely
+        i++;
+    }
+    return 0;
+}</code></pre>
+        <div class="output">1 2 3 4 5</div>
+
+         <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+    </div>
+</body>
+
+</html>

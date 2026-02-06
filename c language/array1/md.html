@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>Multidimensional-array</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ 
+  <header><h1>MULTI DIMENSIONAL ARRAY</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>Multidimensional array contains three dimensions, so it can be considered an array of two-dimensional arrays.</p>
+            <h2>Syntax</h2>
+    <pre>
+    data_type array_name[sizeof_1st_dimension][sizeof_2nd_dimension][sizeof_3rd_dimension];</pre>
+                <h2>Key Points</h2>
+                     <ul>
+                    <li>
+                    <p>The first dimension represents the number of rows.  </p> </li> 
+                    <li> <p>The second dimension represents the number of columns .  </p></li>
+                      <li> <p>it is made up of 2 2d array.  </p></li>
+                    <li><p>We need to use three loops so we can print all values of array  .</p></li>
+                    <li><p>While declaring a static value it is necesscary to write it in {} braces .</p></li>
+                </ul>
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main()
+    {
+       int arr[3][2][4] = {
+        {
+            {1, 2, 3, 4},
+            {5, 6, 7, 8}
+        },
+        {
+            {9, 10, 11, 12},
+            {13, 14, 15, 16}
+        },
+        {
+            {17, 18, 19, 20},
+            {21, 22, 23, 24}
+        }
+    };
+
+    for (int i = 0; i < 3; i++) {         
+        printf("Block %d:\n", i + 1);
+        for (int j = 0; j < 2; j++) {    
+            for (int k = 0; k < 4; k++) { 
+                printf("%d\t", arr[i][j][k]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+    }
+    getch();
+}
+
+    <h3>Output:
+   Block 1:
+   1	2	3	4	
+   5	6	7	8	
+
+   Block 2:
+   9	10	11	12	
+   13	14	15	16	
+
+   Block 3:
+   17	18	19	20	
+   21	22	23	24	
+  </h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+   <p><a class="back" href="../c.html">&larr; Back to Home</a></p>
+</body>
+    </html>
+            
+           

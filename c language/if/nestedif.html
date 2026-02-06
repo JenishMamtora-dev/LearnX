@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title>nested if</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ 
+<header><h1>Nested-If statement</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>It conists of if condition inside another if statement  .</p>
+            <h2>Syntax</h2>
+    <pre>
+if (condition) 
+{
+   if (condition)
+    {
+     
+  // block of code to be executed if both the condition is true.
+                } 
+                else
+                 {
+  // block of code to be executed if second  if  condition is false
+}
+}
+else
+ {
+  // block of code to be executed if the condition is false.
+}</pre>
+                <h2>Key Points</h2>
+                    <ul>
+                    <li>
+                    <p>It is used when multiple condition is to be checked</p> </li> 
+                    <li> <p>It first check the if condition</p></li>  
+                     <li> <p>If condition is true than it checks the inner if condition and if it is true than the block of code is executed.</p></li>
+                      <li> <p>otherwise it will  execute the else part of inner if statement.</p></li>    
+                     <li> <p>If first if condition is false than it directly executes the else part of outer if statement.</p></li>
+                      <li><p>It is called <b> Nestedif  statement</b>.</p></li>   
+                    
+                </ul>
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main()
+    {
+       int a=30,b=20,c=10; 
+        clrscr();
+       
+       if(a>b)
+       {     
+          if(a>c)
+          {     
+             printf("\n a is greater than b & c")
+          } 
+          else
+          {     
+            printf("\n a is greater than b");
+          }//else condition over 
+        }//first if condition over 
+      else
+      {     
+           printf("\n b is greater than a");
+      } 
+    getch();
+    }
+
+    <h3>Output:
+    a is greater than b & c</h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+</body>
+    </html>

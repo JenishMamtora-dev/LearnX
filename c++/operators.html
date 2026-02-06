@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Operators in C++</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #E0E0E0;
+        }
+
+        header {
+            padding: 15px 40px;
+            background: #1E1E1E;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        header h1 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .container {
+            padding: 36px;
+            max-width: 950px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        h3 {
+            color: #81C784;
+        }
+
+        pre {
+            background: #1E1E1E;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: auto;
+        }
+
+        .output {
+            background: #000;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            color: #81C784;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .key-points {
+            background: #1E1E1E;
+            border-left: 4px solid #4CAF50;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .key-points h2 {
+            color: #4CAF50;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+            color: #E0E0E0;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 16px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .types-box {
+            background: #1E1E1E;
+            border: 2px solid #81C784;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .types-box h3 {
+            color: #81C784;
+            margin-top: 0;
+        }
+
+        .types-box p {
+            margin: 6px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Operators in C++</h1>
+    </header>
+
+    <div class="container">
+
+        <h2>Definition</h2>
+        <p>Operators are special symbols that perform operations on operands (variables or values) to produce a result.
+        </p>
+
+        <div class="key-points">
+            <h2>Key Points</h2>
+            <ul>
+                <li>Operators act on <b>operands</b> to compute results.</li>
+                <li>They can be classified into several types based on their functionality.</li>
+                <li>Each operator has a <b>syntax</b> and may return a value.</li>
+                <li>Operators can be unary (one operand), binary (two operands), or ternary (three operands).</li>
+            </ul>
+        </div>
+
+        <h2>Operator Types</h2>
+
+        <div class="types-box">
+            <h3>1. Arithmetic Operators</h3>
+            <p>Perform mathematical calculations.</p>
+            <p><b>Operators:</b> +, -, *, /, %</p>
+            <p><b>Example:</b></p>
+            <pre><code>int a = 10, b = 3;
+cout &lt;&lt; a + b; // 13
+cout &lt;&lt; a % b; // 1</code></pre>
+        </div>
+
+        <div class="types-box">
+            <h3>2. Relational Operators</h3>
+            <p>Compare two values and return <code>true</code> or <code>false</code>.</p>
+            <p><b>Operators:</b> ==, !=, &gt;, &lt;, &gt;=, &lt;=</p>
+            <p><b>Example:</b></p>
+            <pre><code>int x = 5, y = 10;
+cout &lt;&lt; (x &lt; y); // true
+cout &lt;&lt; (x == y); // false</code></pre>
+        </div>
+
+        <div class="types-box">
+            <h3>3. Logical Operators</h3>
+            <p>Combine multiple conditions and return <code>true</code> or <code>false</code>.</p>
+            <p><b>Operators:</b> &&, ||, !</p>
+            <p><b>Example:</b></p>
+            <pre><code>bool a = true, b = false;
+cout &lt;&lt; (a &amp;&amp; b); // false
+cout &lt;&lt; (!a);         // false</code></pre>
+        </div>
+
+        <div class="types-box">
+            <h3>4. Assignment Operators</h3>
+            <p>Assign and modify values of variables.</p>
+            <p><b>Operators:</b> =, +=, -=, *=, /=, %=</p>
+            <p><b>Example:</b></p>
+            <pre><code>int x = 10;
+x += 5; // x = 15
+x *= 2; // x = 30</code></pre>
+        </div>
+
+        <div class="types-box">
+            <h3>5. Increment & Decrement Operators</h3>
+            <p>Increase or decrease a variable by 1.</p>
+            <p><b>Operators:</b> ++, --</p>
+            <p><b>Example:</b></p>
+            <pre><code>int a = 5;
+a++; // 6
+--a; // 5</code></pre>
+        </div>
+
+        <div class="types-box">
+            <h3>6. Bitwise Operators</h3>
+            <p>Perform operations on individual bits of integers.</p>
+            <p><b>Operators:</b> &, |, ^, ~, &lt;&lt;, &gt;&gt;</p>
+            <p><b>Example:</b></p>
+            <pre><code>int a = 5, b = 3;
+cout &lt;&lt; (a &amp; b); // 1
+cout &lt;&lt; (a | b);   // 7</code></pre>
+        </div>
+
+        <div class="types-box">
+            <h3>7. Ternary Operator</h3>
+            <p>Conditional operator that evaluates based on a condition.</p>
+            <p><b>Syntax:</b> <code>condition ? expr1 : expr2</code></p>
+            <p><b>Example:</b></p>
+            <pre><code>int a = 10, b = 20;
+string result = (a &gt; b) ? "A" : "B";
+cout &lt;&lt; result; // B</code></pre>
+        </div>
+
+        <div class="types-box">
+            <h3>8. sizeof & Comma Operators</h3>
+            <p><b>sizeof:</b> Returns memory size of a variable/type.</p>
+            <p><b>Comma:</b> Evaluate multiple expressions and return the last one.</p>
+            <p><b>Example:</b></p>
+            <pre><code>int a = 5, b = 10;
+cout &lt;&lt; sizeof(a);         // 4 (bytes)
+int c = (a += 2, b += 3, a+b);
+cout &lt;&lt; c;                // 20</code></pre>
+        </div>
+
+        <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+    </div>
+</body>
+
+</html>

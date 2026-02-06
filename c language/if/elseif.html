@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <title>else if</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+
+<header><h1>Else-if Ladder</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>It conists of multiple if else if condition.</p>
+            <h2>Syntax</h2>
+    <pre>
+if (condition1) 
+{
+ // code to be executed if condition1 is true
+} 
+else if (condition2)
+ {
+    // code to be executed if condition1 is false and condition2 is true
+} 
+else if (condition3)
+ {
+    // code to be executed if condition1 and condition2 are false, and condition3 is true
+}
+// ... (more else if clauses can be added)
+else
+{
+    // code to be executed if all preceding conditions are false (optional)
+}</pre>
+                <h2>Key Points</h2>
+                    <ul>
+                    <li>
+                    <p>It is used when multiple condition is to be checked</p> </li> 
+                    <li> <p>It first check the if condition</p></li>  
+                     <li> <p>If condition is true than block of code is executed.</p></li>
+                      <li> <p>If condition is false it check the 2nd condition and if that is true its block of code is been executed .</p></li>    
+                     <li> <p>Similarly it check all the else if condition and execute the block of code when condition is true.</p></li>
+                      <li> <p>if no condition is true it will execute the else part.</p></li>
+                     
+                      <li><p>It is called <b> else if Ladder</b>.</p></li>   
+                    
+                </ul>
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main()
+    {
+        int mark; 
+        clrscr();
+        printf("enter mark:");<br>
+        scanf("%d",&mark);
+        if (mark >= 90 && mark <= 100)
+        {
+             printf("Grade: A (Excellent)\n");
+        } 
+        else if (mark >= 80 && mark < 90) 
+        {
+            printf("Grade: B (Very Good)\n");
+        } 
+        else if (mark >= 70 && mark < 80) 
+        {
+            printf("Grade: C (Good)\n");
+        }
+        else if (mark >= 60 && mark < 70)
+         {
+            printf("Grade: D (Pass)\n");
+        } 
+        else if (mark >= 0 && mark < 60)
+        {
+             printf("Grade: F (Fail)\n");
+        }
+        else
+        {
+             printf("Invalid score entered.
+             Please enter a score between 0 and 100.\n");
+        } 
+    getch();
+    }
+
+    <h3>Output:
+    enter mark:75
+    Grade: C (Good)</h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+</body>
+    </html>

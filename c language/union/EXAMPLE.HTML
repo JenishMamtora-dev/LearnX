@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>Example</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ 
+  <h2>This C program demonstrates the use of a union (union Data) to store and access different types of data in the same memory location.</h2>
+          
+       
+                <div class="container">
+      
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+   // Union definition
+union Data
+ {
+    int i;
+    float f;
+    char name[20];
+};
+
+void main()
+ {
+    union Data d;
+
+    // Input integer
+    printf("Enter an integer: ");
+    scanf("%d", &d.i);
+    printf("Integer: %d\n", d.i);
+
+    // Input float (overwrites previous value)
+    printf("Enter a float: ");
+    scanf("%f", &d.f);
+    printf("Float: %.2f\n", d.f);
+
+    // Input name (overwrites previous value)
+    printf("Enter a name: ");
+    scanf("%s", d.name);
+    printf("Name: %s\n", d.name);
+    getch();
+}
+    <h3>Output:
+Enter an integer: 10
+Integer: 10
+Enter a float: 3.14
+Float: 3.14
+Enter a name: Krish
+Name: Krish</h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+
+</body>
+    </html>

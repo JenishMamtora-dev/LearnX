@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>File Handling in C++</title>
+<style>
+body{margin:0;font-family:'Roboto',sans-serif;background:#121212;color:#E0E0E0;}
+header{padding:15px 40px;background:#1E1E1E;border-bottom:2px solid #4CAF50;}
+header h1{color:#4CAF50;margin:0;}
+.container{padding:36px;max-width:900px;margin:auto;}
+h2{color:#4CAF50;} h3{color:#81C784;}
+pre{background:#1E1E1E;padding:14px;border-radius:8px;border:1px solid #333;overflow:auto;}
+.output{background:#000;padding:10px;border:1px solid #4CAF50;color:#81C784;border-radius:6px;margin-bottom:20px;}
+ul{margin-left:20px;}
+a.back{display:inline-block;margin-top:16px;color:#4CAF50;text-decoration:none;}
+</style>
+</head>
+<body>
+<header><h1>File Handling in C++</h1></header>
+<div class="container">
+
+<h2>Definition</h2>
+<p>File handling allows reading from and writing to files stored on disk.</p>
+
+<h2>Key Points</h2>
+<ul>
+<li>Use <code>fstream</>, <code>ifstream</>, and <code>ofstream</> classes.</li>
+<li>Always close files after use.</li>
+<li>Supports text and binary files.</li>
+</ul>
+
+<h2>Syntax</h2>
+<h3>Writing to a File</h3>
+<pre><code>#include &lt;fstream&gt;
+ofstream fout("file.txt");
+fout &lt;&lt; "Hello";
+fout.close();</code></pre>
+
+<h3>Reading from a File</h3>
+<pre><code>#include &lt;fstream&gt;
+ifstream fin("file.txt");
+fin &gt;&gt; variable;
+fin.close();</code></pre>
+
+<h2>Examples</h2>
+
+<h3>1. Writing to a File</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    ofstream fout("example.txt");
+    fout &lt;&lt; "Hello File Handling";
+    fout.close();
+    cout &lt;&lt; "Data written successfully";
+}</code></pre>
+<div class="output">Data written successfully</div>
+
+<h3>2. Reading from a File</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    ifstream fin("example.txt");
+    string data;
+    getline(fin, data);
+    cout &lt;&lt; "File content: " &lt;&lt; data;
+    fin.close();
+}</code></pre>
+<div class="output">File content: Hello File Handling</div>
+
+  <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</div>
+</body>
+</html>

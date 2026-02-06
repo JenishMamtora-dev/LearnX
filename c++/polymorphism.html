@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Polymorphism — C++</title>
+  <style>
+    body{margin:0;font-family:'Roboto',sans-serif;background:#121212;color:#E0E0E0;}
+    header{padding:15px 40px;background:#1E1E1E;border-bottom:2px solid #4CAF50;}
+    header h1{color:#4CAF50;margin:0;}
+    .container{padding:36px;max-width:900px;margin:auto;}
+    h2{color:#4CAF50;}
+    pre{background:#1E1E1E;padding:14px;border-radius:8px;border:1px solid #333;overflow:auto;}
+    .output{background:#000;padding:10px;border:1px solid #4CAF50;color:#81C784;border-radius:6px;}
+    ul{line-height:1.6;}
+    a.back{display:inline-block;margin-top:16px;color:#4CAF50;text-decoration:none;}
+  </style>
+</head>
+<body>
+  <header><h1>Polymorphism — C++</h1></header>
+  <div class="container">
+    <h2>Definition</h2>
+    <p>Polymorphism means "many forms". It allows same function name to behave differently.</p>
+
+    <h2>Types</h2>
+    <ul>
+      <li><b>Compile-time:</b> Function overloading, Operator overloading</li>
+      <li><b>Run-time:</b> Virtual functions (method overriding)</li>
+    </ul>
+
+    <h2>Example</h2>
+    <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    virtual void draw() { cout &lt;&lt; "Drawing Shape" &lt;&lt; endl; }
+};
+
+class Circle : public Shape {
+public:
+    void draw() override { cout &lt;&lt; "Drawing Circle" &lt;&lt; endl; }
+};
+
+class Square : public Shape {
+public:
+    void draw() override { cout &lt;&lt; "Drawing Square" &lt;&lt; endl; }
+};
+
+int main() {
+    Shape* s;
+    Circle c; Square sq;
+    s = &c; s-&gt;draw();
+    s = &sq; s-&gt;draw();
+}</code></pre>
+
+    <h2>Expected Output</h2>
+    <div class="output">Drawing Circle
+Drawing Square</div>
+
+  <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+  </div>
+</body>
+</html>

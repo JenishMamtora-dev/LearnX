@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Templates in C++</title>
+<style>
+body{margin:0;font-family:'Roboto',sans-serif;background:#121212;color:#E0E0E0;}
+header{padding:15px 40px;background:#1E1E1E;border-bottom:2px solid #4CAF50;}
+header h1{color:#4CAF50;margin:0;}
+.container{padding:36px;max-width:900px;margin:auto;}
+h2{color:#4CAF50;} h3{color:#81C784;}
+pre{background:#1E1E1E;padding:14px;border-radius:8px;border:1px solid #333;overflow:auto;}
+.output{background:#000;padding:10px;border:1px solid #4CAF50;color:#81C784;border-radius:6px;margin-bottom:20px;}
+ul{margin-left:20px;}
+a.back{display:inline-block;margin-top:16px;color:#4CAF50;text-decoration:none;}
+</style>
+</head>
+<body>
+<header><h1>Templates in C++</h1></header>
+<div class="container">
+
+<h2>Definition</h2>
+<p>Templates allow writing generic functions or classes that work with any data type.</p>
+
+<h2>Key Points</h2>
+<ul>
+<li>Two types: Function Templates and Class Templates.</li>
+<li>Enable code reusability.</li>
+<li>Type is specified at compile-time.</li>
+</ul>
+
+<h2>Syntax</h2>
+<h3>Function Template</h3>
+<pre><code>template &lt;typename T&gt;
+T add(T a, T b) {
+    return a + b;
+}</code></pre>
+
+<h2>Examples</h2>
+
+<h3>1. Function Template</h3>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;typename T&gt;
+T add(T a, T b) {
+    return a + b;
+}
+
+int main() {
+    cout &lt;&lt; add(5,3) &lt;&lt; endl;
+    cout &lt;&lt; add(2.5, 3.5);
+}</code></pre>
+<div class="output">8<br>6</div>
+
+  <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</div>
+</body>
+</html>

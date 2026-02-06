@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Functions in C++</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #E0E0E0;
+        }
+
+        header {
+            padding: 15px 40px;
+            background: #1E1E1E;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        header h1 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .container {
+            padding: 36px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        h3 {
+            color: #81C784;
+        }
+
+        pre {
+            background: #1E1E1E;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: auto;
+        }
+
+        .output {
+            background: #000;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            color: #81C784;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 16px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        /* Key Points box */
+        .key-points {
+            background: #1E1E1E;
+            border-left: 4px solid #4CAF50;
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .key-points h2 {
+            color: #4CAF50;
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+        }
+
+        .key-points ul {
+            margin: 0;
+            margin-left: 18px;
+            color: #E0E0E0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Functions in C++</h1>
+    </header>
+    <div class="container">
+        <h2>Definition</h2>
+        <p>A function is a block of code that performs a specific task.
+            Functions improve code reusability, readability, and modularity.</p>
+
+        <div class="key-points">
+            <h2>Key Points</h2>
+            <ul>
+                <li>Functions allow modular programming and reduce code repetition.</li>
+                <li>Can return values or be void (no return).</li>
+                <li>Can have parameters (arguments) and default values.</li>
+                <li>Supports inline, recursive, overloaded, and friend functions.</li>
+                <li>Functions must be declared before usage (or use prototypes).</li>
+            </ul>
+        </div>
+
+        <h2>Types</h2>
+        <ul>
+            <li>Normal / User-defined Functions</li>
+            <li>Inline Functions</li>
+            <li>Recursive Functions</li>
+            <li>Function Overloading</li>
+            <li>Default Arguments</li>
+            <li>Friend Functions</li>
+        </ul>
+
+        <h2>Syntax</h2>
+        <pre><code>return_type function_name(parameter_list) {
+    // function body
+    return value; // if return_type is not void
+}</code></pre>
+
+        <h2>Examples</h2>
+
+        <h3>1. Normal Function</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    cout &lt;&lt; "Sum = " &lt;&lt; add(5, 3);
+}</code></pre>
+        <div class="output">Sum = 8</div>
+
+        <h3>2. Inline Function</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+inline int square(int x) {
+    return x * x;
+}
+
+int main() {
+    cout &lt;&lt; "Square = " &lt;&lt; square(6);
+}</code></pre>
+        <div class="output">Square = 36</div>
+
+        <h3>3. Recursive Function</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int factorial(int n) {
+    if(n == 0) return 1;
+    return n * factorial(n - 1);
+}
+
+int main() {
+    cout &lt;&lt; "Factorial = " &lt;&lt; factorial(5);
+}</code></pre>
+        <div class="output">Factorial = 120</div>
+
+        <h3>4. Function Overloading</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int area(int side) { return side * side; }
+int area(int l, int b) { return l * b; }
+
+int main() {
+    cout &lt;&lt; "Square area = " &lt;&lt; area(5) &lt;&lt; endl;
+    cout &lt;&lt; "Rectangle area = " &lt;&lt; area(4,6);
+}</code></pre>
+        <div class="output">Square area = 25<br>Rectangle area = 24</div>
+
+        <h3>5. Default Arguments</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int power(int base, int exp=2) {
+    int result=1;
+    for(int i=0;i&lt;exp;i++) result *= base;
+    return result;
+}
+
+int main() {
+    cout &lt;&lt; power(5) &lt;&lt; endl;
+    cout &lt;&lt; power(2,3);
+}</code></pre>
+        <div class="output">25<br>8</div>
+
+        <h3>6. Friend Function</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Box {
+private:
+    int width;
+public:
+    Box(int w) { width = w; }
+    friend void showWidth(Box b);
+};
+
+void showWidth(Box b) {
+    cout &lt;&lt; "Width = " &lt;&lt; b.width;
+}
+
+int main() {
+    Box b1(10);
+    showWidth(b1);
+}</code></pre>
+        <div class="output">Width = 10</div>
+
+         <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+    </div>
+</body>
+
+</html>

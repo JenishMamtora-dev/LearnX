@@ -1,0 +1,17 @@
+ body{margin:0;font-family:'Roboto',sans-serif;background:#121212;color:#E0E0E0;line-height:1.6}
+    header{padding:15px 40px;background:#1E1E1E;border-bottom:2px solid #4CAF50}
+    header h1{color:#4CAF50}
+    .container{padding:40px;max-width:900px;margin:auto}
+    h2{color:#4CAF50;margin-top:30px}
+    pre{background:#1E1E1E;border:1px solid #333;border-radius:6px;padding:15px;overflow-x:auto;font-family:'Fira Code',monospace;color:#E0E0E0}
+    ul{margin:10px 0 20px 25px}
+    li{margin:6px 0}
+    button{margin-top:10px;padding:8px 15px;background:#4CAF50;border:none;border-radius:5px;color:white;cursor:pointer}
+    button:hover{background:#45a049;box-shadow:0 0 10px #4CAF50}
+
+    a.back {
+            display: inline-block;
+            margin-top: 16px;
+            color: #4CAF50;
+            text-decoration: none;
+        }

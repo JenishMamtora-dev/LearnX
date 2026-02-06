@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Arrays in C++</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #E0E0E0;
+        }
+
+        header {
+            padding: 15px 40px;
+            background: #1E1E1E;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        header h1 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .container {
+            padding: 36px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        h3 {
+            color: #81C784;
+        }
+
+        pre {
+            background: #1E1E1E;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: auto;
+        }
+
+        .output {
+            background: #000;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            color: #81C784;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 16px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Arrays in C++</h1>
+    </header>
+    <div class="container">
+
+        <h2>Definition</h2>
+        <p>An array is a collection of elements of the same type stored in contiguous memory locations.</p>
+
+        <h2>Key Points</h2>
+        <ul>
+            <li>Elements are accessed using an index.</li>
+            <li>Index starts from 0.</li>
+            <li>Arrays can be 1D, 2D, or multidimensional.</li>
+            <li>Size must be declared at compile-time (for static arrays).</li>
+        </ul>
+
+        <h2>Syntax</h2>
+        <h3>One-Dimensional Array</h3>
+        <pre><code>data_type array_name[size];</code></pre>
+
+        <h3>Two-Dimensional Array</h3>
+        <pre><code>data_type array_name[row][column];</code></pre>
+
+        <h2>Examples</h2>
+
+        <h3>1. One-Dimensional Array</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int arr[5] = {10,20,30,40,50};
+    for(int i=0;i&lt;5;i++)
+        cout &lt;&lt; arr[i] &lt;&lt; " ";
+}</code></pre>
+        <div class="output">10 20 30 40 50</div>
+
+        <h3>2. Two-Dimensional Array</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int matrix[2][3] = {{1,2,3},{4,5,6}};
+    for(int i=0;i&lt;2;i++) {
+        for(int j=0;j&lt;3;j++)
+            cout &lt;&lt; matrix[i][j] &lt;&lt; " ";
+        cout &lt;&lt; endl;
+    }
+}</code></pre>
+        <div class="output">1 2 3<br>4 5 6</div>
+  <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+    </div>
+</body>
+
+</html>

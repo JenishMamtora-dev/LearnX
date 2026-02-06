@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>1d</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ <header><h1>ONE DIMENSIONAL ARRAY</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>It Store a single list of the element of a similar data type.</p>
+            <h2>Syntax</h2>
+    <pre>
+    data_type array_name[array_size];</pre>
+                <h2>Key Points</h2>
+                    <ul>
+                    <li>
+                    <p> data_type: is a type of data of each array block.. </p> </li> 
+                    <li> <p>array_name: is the name of the array using which we can refer to it.  </p></li>  
+                    <li><p>array_size: is the number of blocks of memory array going to have.</p></li>   
+                    <li><p>USing loops we can print all values of array  .</p></li>
+                    <li><p>While declaring a static value it is necesscary to write it in {} braces .</p></li>
+                </ul>
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main()
+    {
+       int a[5]={25,50,60,58,11};
+      int i;
+      for(i=0;i<=4;i++)
+      {
+         printf("\n %d",a[i]);
+      }
+    getch();
+}
+
+    <h3>Output:
+    25
+    50
+    60
+    58
+    11
+  </h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+    <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</body>
+    </html>

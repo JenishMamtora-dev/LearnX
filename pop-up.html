@@ -1,0 +1,148 @@
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade to Pro Animation</title>
+    <style>
+        /* 1. The Overlay: Darkens the background */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px); /* Adds a modern blur effect */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            
+            /* Animation for the background fading in */
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* 2. The Modal Box: The actual card */
+        .pro-modal {
+            background: white;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            position: relative;
+            
+            /* THE POP-UP ANIMATION */
+            transform: scale(0); /* Start hidden/small */
+            animation: popUpBounce 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+            animation-delay: 0.2s; /* Slight delay after overlay appears */
+        }
+
+        /* 3. Content Styling */
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3);
+        }
+
+        .icon-container span {
+            font-size: 40px;
+            color: white;
+        }
+
+        h2 {
+            margin: 0 0 10px;
+            color: #333;
+            font-family: sans-serif;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            font-family: sans-serif;
+        }
+
+        .btn-upgrade {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        .btn-upgrade:hover {
+            transform: scale(1.05);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s;
+            border: none;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        /* 4. Defining the Animations */
+        
+        /* Fade in the dark background */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Bounce effect for the box */
+        @keyframes popUpBounce {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            70% {
+                transform: scale(1.1); /* Goes slightly bigger */
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1); /* Settles to normal size */
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="popup-overlay" id="popup">
+        <div class="pro-modal">
+            <span class="close-btn" onclick="document.getElementById('popup').style.display='none'">&times;</span>
+            
+            <div class="icon-container">
+                <span>🚀</span>
+            </div>
+            
+            <h2>Upgrade to Pro</h2>
+            <p>Unlock unlimited access, premium support, and exclusive analytics features today.</p>
+            
+            <button class="btn-upgrade">Get Started</button>
+        </div>
+    </div>
+
+</body>
+</html>

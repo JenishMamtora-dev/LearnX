@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Double</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ <header><h1>Double</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>Double datatype stores fractional numbers, containing one or more decimals.Sufficient for storing 15 decimal digits.</p>
+            <h2>Syntax</h2>
+            <pre>
+               double variable_name;
+            </pre>
+                <h2>Key Points</h2>
+                      <ul>
+                    <li>
+                    <p>The double datatype is declared in C using <b>double </b>keyword. </p> </li> 
+                    <li> <p>It can store 8  bytes of data.  </p></li>  
+                    <li><p> The format specifer of double is  <b> %lf.</b></p></li>   
+                    <li><p><b></b>The double datatpe works same as float but it can store more data than float.
+                </p></li>
+                </ul>
+              
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main()
+    {
+    double i=10.101010;
+    clrscr();       
+    printf("\n Value of i is: %lf",i)   
+    getch();
+    }
+
+    <h3>Output:
+        value of i is:10.101010</h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+ 
+                    </div>
+                    <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</body>
+    </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>STL in C++</title>
+<style>
+body{margin:0;font-family:'Roboto',sans-serif;background:#121212;color:#E0E0E0;}
+header{padding:15px 40px;background:#1E1E1E;border-bottom:2px solid #4CAF50;}
+header h1{color:#4CAF50;margin:0;}
+.container{padding:36px;max-width:900px;margin:auto;}
+h2{color:#4CAF50;} h3{color:#81C784;}
+pre{background:#1E1E1E;padding:14px;border-radius:8px;border:1px solid #333;overflow:auto;}
+.output{background:#000;padding:10px;border:1px solid #4CAF50;color:#81C784;border-radius:6px;margin-bottom:20px;}
+ul{margin-left:20px;}
+a.back{display:inline-block;margin-top:16px;color:#4CAF50;text-decoration:none;}
+</style>
+</head>
+<body>
+<header><h1>STL in C++</h1></header>
+<div class="container">
+
+<h2>Definition</h2>
+<p>The Standard Template Library (STL) provides ready-to-use classes and functions for data structures and algorithms.</p>
+
+<h2>Key Points</h2>
+<ul>
+<li>Includes <b>containers</b> (vector, list, map, etc.)</li>
+<li>Provides <b>algorithms</b> (sort, reverse, etc.)</li>
+<li>Supports iterators for traversal</li>
+</ul>
+
+<h2>Syntax (Vector)</h2>
+<pre><code>#include &lt;vector&gt;
+vector&lt;data_type&gt; v;
+v.push_back(value);
+v.size();
+v[i];</code></pre>
+
+<h2>Example</h2>
+
+<h3>Vector Example</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main() {
+    vector&lt;int&gt; v;
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+    for(int i=0;i&lt;v.size();i++)
+        cout &lt;&lt; v[i] &lt;&lt; " ";
+}</code></pre>
+<div class="output">10 20 30</div>
+
+  <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</div>
+</body>
+</html>

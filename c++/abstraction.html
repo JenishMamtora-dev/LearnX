@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Abstraction — C++</title>
+  <style>
+    body{margin:0;font-family:'Roboto',sans-serif;background:#121212;color:#E0E0E0;}
+    header{padding:15px 40px;background:#1E1E1E;border-bottom:2px solid #4CAF50;}
+    header h1{color:#4CAF50;margin:0;}
+    .container{padding:36px;max-width:900px;margin:auto;}
+    h2{color:#4CAF50;}
+    pre{background:#1E1E1E;padding:14px;border-radius:8px;border:1px solid #333;overflow:auto;}
+    .output{background:#000;padding:10px;border:1px solid #4CAF50;color:#81C784;border-radius:6px;}
+    ul{line-height:1.6;}
+    a.back{display:inline-block;margin-top:16px;color:#4CAF50;text-decoration:none;}
+  </style>
+</head>
+<body>
+  <header><h1>Abstraction — C++</h1></header>
+  <div class="container">
+    <h2>Definition</h2>
+    <p>Abstraction hides implementation details and shows only essential features to the user.</p>
+
+    <h2>Example</h2>
+    <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Vehicle {
+public:
+    virtual void start() = 0; // pure virtual function
+};
+
+class Bike : public Vehicle {
+public:
+    void start() override {
+        cout &lt;&lt; "Bike started" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Vehicle* v = new Bike();
+    v-&gt;start();
+    delete v;
+}</code></pre>
+
+    <h2>Expected Output</h2>
+    <div class="output">Bike started</div>
+       <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>>
+  </div>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeOps: C Operator Grimoire</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <style>
+        .operator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+        }
+        .type-pill {
+            transition: all 0.3s ease;
+        }
+        .type-pill:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen" id="vanta-bg">
+    <div class="container mx-auto px-4 py-12">
+        <!-- Header -->
+        <header class="mb-16 text-center">
+            <h1 class="text-5xl font-bold mb-4 glow-text text-green-400">C Operators</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Arithmetic Operators -->
+                <div class="operator-card bg-gray-800 rounded-xl p-6 border-l-4 border-green-500 transition-all duration-300 hover:border-green-400">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-500 p-2 rounded-lg mr-4">
+                            <i data-feather="plus" class="text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-green-400">Arithmetic Operators</h2>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">+</span>
+                            <span>Addition</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">-</span>
+                            <span>Subtraction</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">*</span>
+                            <span>Multiplication</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">/</span>
+                            <span>Division</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">%</span>
+                            <span>Modulus</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">++</span>
+                            <span>Increment</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Unary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">--</span>
+                            <span>Decrement</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Unary</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Relational Operators -->
+                <div class="operator-card bg-gray-800 rounded-xl p-6 border-l-4 border-green-500 transition-all duration-300 hover:border-green-400">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-500 p-2 rounded-lg mr-4">
+                            <i data-feather="activity" class="text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-green-400">Relational Operators</h2>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">==</span>
+                            <span>Equal to</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">!=</span>
+                            <span>Not equal</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">></span>
+                            <span>Greater than</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300"><</span>
+                            <span>Less than</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">>=</span>
+                            <span>Greater or equal</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300"><=</span>
+                            <span>Less or equal</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logical Operators -->
+                <div class="operator-card bg-gray-800 rounded-xl p-6 border-l-4 border-green-500 transition-all duration-300 hover:border-green-400">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-500 p-2 rounded-lg mr-4">
+                            <i data-feather="cpu" class="text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-green-400">Logical Operators</h2>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">&&</span>
+                            <span>Logical AND</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">||</span>
+                            <span>Logical OR</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">!</span>
+                            <span>Logical NOT</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Unary</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bitwise Operators -->
+                <div class="operator-card bg-gray-800 rounded-xl p-6 border-l-4 border-green-500 transition-all duration-300 hover:border-green-400">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-500 p-2 rounded-lg mr-4">
+                            <i data-feather="code" class="text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-green-400">Bitwise Operators</h2>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">&</span>
+                            <span>Bitwise AND</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">|</span>
+                            <span>Bitwise OR</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">^</span>
+                            <span>Bitwise XOR</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">~</span>
+                            <span>Bitwise NOT</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Unary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300"><<</span>
+                            <span>Left shift</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">>></span>
+                            <span>Right shift</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assignment Operators -->
+                <div class="operator-card bg-gray-800 rounded-xl p-6 border-l-4 border-green-500 transition-all duration-300 hover:border-green-400">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-500 p-2 rounded-lg mr-4">
+                            <i data-feather="edit-3" class="text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-green-400">Assignment Operators</h2>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">=</span>
+                            <span>Simple assignment</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">+=</span>
+                            <span>Add and assign</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">-=</span>
+                            <span>Subtract and assign</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">*=</span>
+                            <span>Multiply and assign</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">/=</span>
+                            <span>Divide and assign</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">%=</span>
+                            <span>Modulus and assign</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300"><<=</span>
+                            <span>Left shift and assign</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">>>=</span>
+                            <span>Right shift and assign</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Miscellaneous Operators -->
+                <div class="operator-card bg-gray-800 rounded-xl p-6 border-l-4 border-green-500 transition-all duration-300 hover:border-green-400">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-500 p-2 rounded-lg mr-4">
+                            <i data-feather="zap" class="text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-green-400">Miscellaneous</h2>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">sizeof()</span>
+                            <span>Size of variable</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Unary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">&</span>
+                            <span>Address of</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Unary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">*</span>
+                            <span>Pointer dereference</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Unary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">? :</span>
+                            <span>Ternary conditional</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Ternary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">,</span>
+                            <span>Comma operator</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Binary</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                            <span class="font-mono text-green-300">(type)</span>
+                            <span>Type casting</span>
+                            <span class="type-pill bg-green-900 text-green-300 text-xs px-2 py-1 rounded-full">Unary</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-20 text-center text-gray-500">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="hover:text-green-400 transition-colors"><i data-feather="github"></i></a>
+                <a href="#" class="hover:text-green-400 transition-colors"><i data-feather="twitter"></i></a>
+                <a href="#" class="hover:text-green-400 transition-colors"><i data-feather="linkedin"></i></a>
+            </div>
+            <p>© 2023 CodeOps | C Operator Grimoire</p>
+            <p class="text-sm mt-2">Made with <i data-feather="heart" class="inline text-red-400 w-4 h-4"></i> for C programmers</p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Vanta.js background
+        VANTA.GLOBE({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x10b981,
+            backgroundColor: 0x111827,
+            size: 0.8
+        });
+
+        // Initialize feather icons
+        feather.replace();
+        
+        // Add animation to cards on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.operator-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>

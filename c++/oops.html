@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OOP Concepts in C++</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #E0E0E0;
+        }
+
+        header {
+            padding: 15px 40px;
+            background: #1E1E1E;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        header h1 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .container {
+            padding: 36px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        h3 {
+            color: #81C784;
+        }
+
+        pre {
+            background: #1E1E1E;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: auto;
+        }
+
+        .output {
+            background: #000;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            color: #81C784;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 16px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        /* Key Points box */
+        .key-points {
+            background: #1E1E1E;
+            border-left: 4px solid #4CAF50;
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .key-points h2 {
+            color: #4CAF50;
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+        }
+
+        .key-points ul {
+            margin: 0;
+            margin-left: 18px;
+            color: #E0E0E0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>OOP Concepts in C++</h1>
+    </header>
+    <div class="container">
+
+        <h2>Definition</h2>
+        <p>Object-Oriented Programming (OOP) is a programming paradigm based on <b>objects</b> and <b>classes</b>.</p>
+
+        <div class="key-points">
+            <h2>Key Points</h2>
+            <ul>
+                <li>Encapsulates data and functions in objects.</li>
+                <li>Supports code reusability via inheritance.</li>
+                <li>Polymorphism allows same function name with different behavior.</li>
+                <li>Abstraction hides internal details from user.</li>
+                <li>OOP improves modularity, readability, and maintainability of code.</li>
+            </ul>
+        </div>
+
+        <h2>Types / Features</h2>
+        <ul>
+            <li><b>Class:</b> Blueprint for objects.</li>
+            <li><b>Object:</b> Instance of a class.</li>
+            <li><b>Inheritance:</b> Deriving new class from existing class.</li>
+            <li><b>Polymorphism:</b> Function overloading and overriding.</li>
+            <li><b>Encapsulation:</b> Wrapping data & functions in class with access specifiers.</li>
+            <li><b>Abstraction:</b> Hiding internal implementation using abstract classes or interfaces.</li>
+        </ul>
+
+        <h2>Syntax</h2>
+        <pre><code>// Class syntax
+class ClassName {
+private:
+    // private members
+public:
+    // public members
+};
+
+// Object syntax
+ClassName obj;
+obj.memberFunction();</code></pre>
+
+        <h2>Examples</h2>
+
+        <h3>1. Class & Object</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Car {
+public:
+    string brand;
+    void display() { cout &lt;&lt; "Brand: " &lt;&lt; brand; }
+};
+
+int main() {
+    Car car1;
+    car1.brand = "BMW";
+    car1.display();
+}</code></pre>
+        <div class="output">Brand: BMW</div>
+
+        <h3>2. Inheritance</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Vehicle {
+public:
+    void display() { cout &lt;&lt; "This is a vehicle."; }
+};
+
+class Car : public Vehicle {
+};
+
+int main() {
+    Car c;
+    c.display();
+}</code></pre>
+        <div class="output">This is a vehicle.</div>
+
+        <h3>3. Polymorphism (Function Overloading)</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Math {
+public:
+    int add(int a,int b) { return a+b; }
+    double add(double a,double b) { return a+b; }
+};
+
+int main() {
+    Math m;
+    cout &lt;&lt; m.add(5,3) &lt;&lt; " ";
+    cout &lt;&lt; m.add(2.5,3.5);
+}</code></pre>
+        <div class="output">8 6</div>
+
+        <h3>4. Encapsulation</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Bank {
+private:
+    int balance;
+public:
+    void setBalance(int b) { balance = b; }
+    int getBalance() { return balance; }
+};
+
+int main() {
+    Bank b;
+    b.setBalance(1000);
+    cout &lt;&lt; "Balance: " &lt;&lt; b.getBalance();
+}</code></pre>
+        <div class="output">Balance: 1000</div>
+
+        <h3>5. Abstraction (Using Abstract Class)</h3>
+        <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    virtual void draw() = 0; // pure virtual function
+};
+
+class Circle : public Shape {
+public:
+    void draw() { cout &lt;&lt; "Drawing Circle"; }
+};
+
+int main() {
+    Circle c;
+    c.draw();
+}</code></pre>
+        <div class="output">Drawing Circle</div>
+
+         <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+    </div>
+</body>
+
+</html>

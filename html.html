@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn X HTML</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #e0e0e0;
+      font-family: 'Roboto', sans-serif;
+    }
+    h1{
+      color: #4CAF50; 
+      padding-top: 70px;
+    }
+    h2{
+      color: #4CAF50; 
+    }
+    .btn-primary {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 50px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin: 10px;
+      transition: 0.3s;
+    }
+    .btn-primary:hover {
+      background-color: #388E3C;
+    }
+    .card {
+      background-color: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card h3 {
+      color: #4CAF50;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    pre {
+      background-color: #0d0d0d;
+      color: #4CAF50;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      overflow-x: auto;;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1E1E1E;
+      border-top: 1px solid #333;
+      color: #888;
+    }
+  </style>
+</head>
+<body class="text-center">
+  <nav class="bg-gray-900 bg-opacity-80 backdrop-filter backdrop-blur-lg border-b border-gray-800 fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="ml-2 text-xl font-bold text-white">Learn X<span class="text-green-400"> HTML</span></span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="Navbar.html" class="px-3 py-2 rounded-md text-sm font-bold hover:bg-gray-800 hover:text-green-400">Home</a>
+                        <a href="feedback.php" class="px-3 py-2 rounded-md text-sm font-bold hover:bg-gray-800 hover:text-green-400">Feedback</a>
+                        <a href="register.php" class="px-3 py-2 rounded-md text-sm font-bold hover:bg-gray-800 hover:text-green-400">Register</a>
+                        <a href="login.php" class="px-3 py-2 rounded-md text-sm font-bold hover:bg-gray-800 hover:text-green-400">Login</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button class="mobile-menu-button p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+  <!-- Header -->
+  <header class="py-16">
+    <h1 class="text-5xl font-bold">HTML Masterclass</h1>
+    <p class="mt-4 text-lg">From basic tags to advanced techniques - everything you need to master HTML</p>
+    <div class="mt-6">
+      <a href="#Basics"><button class="btn-primary">Start Learning</button></a>
+      
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <section id="Basics">
+  <main class="py-12 px-12">
+    <h2 class="text-3xl font-semibold mb-10">HTML Basics</h2>
+
+    <div class="grid grid-cols-3 gap-8">
+      <!-- Card 1 -->
+      <div class="card">
+        <h3>📄 Document Structure</h3>
+        <p>Every HTML document needs a basic structure:</p>
+        <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Document Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Content goes here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </pre>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <h3>🔠 Headings</h3>
+        <p>HTML provides six levels of headings like :</p>
+        <b style="font-size:20px;">Heading 1</b><br>
+        <b style="font-size:19px;">Heading 2</b><br>
+        <b style="font-size:18px;">Heading 3</b>
+        <pre>
+&lt;h1&gt;Heading 1&lt;/h1&gt;
+&lt;h2&gt;Heading 2&lt;/h2&gt;
+&lt;h3&gt;Heading 3&lt;/h3&gt;
+        </pre>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <h3>✍️ Paragraphs & Text</h3>
+        <p>Basic text formatting elements:</p>
+        <p>This is a normal paragraph.</p>
+        <p><b>This text is bold.</b></p>
+        <p><i>This text is italicized.</i></p>
+        <p><u>This text is underlined.</u></p>
+        <p><s>This text is strikethrough.</s></p>
+        <pre>
+&lt;p&gt;This is a normal paragraph.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This text is bold.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;This text is italicized.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;This text is underlined.&lt;/u&gt;&lt;/p&gt;
+&lt;p&gt;&lt;s&gt;This text is strikethrough.&lt;/s&gt;&lt;/p&gt;
+        </pre>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <h3>📋 Lists</h3>
+        <p>HTML supports ordered and unordered lists:</p>
+        <ul>
+          <li>First item</li>
+          <li>Second item</li>
+        </ul>
+        <ol>
+          <li>First item</li>
+          <li>Second item</li>
+        </ol>
+      <pre>
+        &lt;h3&gt;Lists&lt;/h3&gt;           
+        &lt;p&gt;HTML ordered Lists&lt;/p&gt;
+        &lt;ul&gt;                                                                  
+        &lt;li&gt;First item&lt;/li&gt;
+        &lt;li&gt;Second item&lt;/li&gt;
+        &lt;/ul&gt;                    
+        &lt;ol&gt;                     
+        &lt;li&gt;First item&lt;/li&gt;
+        &lt;li&gt;Second item&lt;/li&gt;
+        &lt;/ol&gt;                    
+      </pre>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card">
+        <h3>🔗 Links</h3>
+        <p>Creating hyperlinks in HTML:</p>
+        <a href="https://example.com" class="text-green-400">Regular Link</a>
+        <pre>
+           &lt;a href="https://example.com"&gt;Regular Link&lt;/a&gt;
+        </pre>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card">
+        <h3>🖼️ Images</h3>
+        <p>Embedding images in HTML:</p>
+        <pre>
+          &lt;img src="image.jpg" alt="Description"&gt;
+        </pre>
+      </div>
+    </div>
+  </main>
+  </section>
+  <footer>
+    <p>©2025 All rights reserved. Learn X</p>
+    <p>Keep Learning. Keep Coding. 💻</p>
+  </footer>
+</body>
+</html>

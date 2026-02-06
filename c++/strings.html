@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Strings in C++</title>
+<style>
+body{margin:0;font-family:'Roboto',sans-serif;background:#121212;color:#E0E0E0;}
+header{padding:15px 40px;background:#1E1E1E;border-bottom:2px solid #4CAF50;}
+header h1{color:#4CAF50;margin:0;}
+.container{padding:36px;max-width:900px;margin:auto;}
+h2{color:#4CAF50;} h3{color:#81C784;}
+pre{background:#1E1E1E;padding:14px;border-radius:8px;border:1px solid #333;overflow:auto;}
+.output{background:#000;padding:10px;border:1px solid #4CAF50;color:#81C784;border-radius:6px;margin-bottom:20px;}
+ul{margin-left:20px;}
+a.back{display:inline-block;margin-top:16px;color:#4CAF50;text-decoration:none;}
+</style>
+</head>
+<body>
+<header><h1>Strings in C++</h1></header>
+<div class="container">
+
+<h2>Definition</h2>
+<p>Strings are sequences of characters. C++ supports C-style strings (char arrays) and <code>string</code> class.</p>
+
+<h2>Key Points</h2>
+<ul>
+  <li>C-style strings end with <code>'\0'</code>.</li>
+  <li>String class is part of <code>&lt;string&gt;</code> library.</li>
+  <li>Supports operations like length, concatenation, substring, insert, erase, replace, conversion.</li>
+</ul>
+
+<h2>Syntax</h2>
+<h3>C-style String</h3>
+<pre><code>char str[size];</code></pre>
+
+<h3>C++ String Class</h3>
+<pre><code>#include &lt;string&gt;
+string name = "Hello";</code></pre>
+
+<h2>Examples (12)</h2>
+
+<h3>1. C-style String</h3>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    char str[] = "Hello";
+    cout &lt;&lt; str;
+}</code></pre>
+<div class="output">Hello</div>
+
+<h3>2. C++ String</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string name = "Rahul";
+    cout &lt;&lt; "Hello " &lt;&lt; name;
+}</code></pre>
+<div class="output">Hello Rahul</div>
+
+<h3>3. String Length</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string s = "Programming";
+    cout &lt;&lt; s.length();
+}</code></pre>
+<div class="output">11</div>
+
+<h3>4. String Concatenation</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string s1="Hello ", s2="C++";
+    s1 += s2;
+    cout &lt;&lt; s1;
+}</code></pre>
+<div class="output">Hello C++</div>
+
+<h3>5. Substring</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string s="Programming";
+    cout &lt;&lt; s.substr(0,6);
+}</code></pre>
+<div class="output">Progra</div>
+
+<h3>6. Find Character</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string s="Hello World";
+    cout &lt;&lt; s.find('W');
+}</code></pre>
+<div class="output">6</div>
+
+<h3>7. Compare Strings</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string s1="abc", s2="xyz";
+    cout &lt;&lt; s1.compare(s2);
+}</code></pre>
+<div class="output">Negative value (abc &lt; xyz)</div>
+
+<h3>8. Insert in String</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string s="Hello World";
+    s.insert(6,"C++ ");
+    cout &lt;&lt; s;
+}</code></pre>
+<div class="output">Hello C++ World</div>
+
+<h3>9. Erase Part of String</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string s="Hello C++ World";
+    s.erase(6,4);
+    cout &lt;&lt; s;
+}</code></pre>
+<div class="output">Hello World</div>
+
+<h3>10. Replace Part of String</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string s="Hello World";
+    s.replace(6,5,"C++");
+    cout &lt;&lt; s;
+}</code></pre>
+<div class="output">Hello C++</div>
+
+<h3>11. String to Integer</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string s="123";
+    int x = stoi(s);
+    cout &lt;&lt; x+10;
+}</code></pre>
+<div class="output">133</div>
+
+<h3>12. Integer to String</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    int x=100;
+    string s = to_string(x);
+    cout &lt;&lt; "Value = " &lt;&lt; s;
+}</code></pre>
+<div class="output">Value = 100</div>
+
+  <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>if else </title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ 
+
+<header><h1>If-Else statement</h1></header>
+ <div class="container">
+        <h2>Definition</h2>
+
+            <p>The if-else statement checks the if condition and execute the block of code otherwise execute the else part.</p>
+            <h2>Syntax</h2>
+    <pre>
+if (condition) 
+{
+  // block of code to be executed if the condition is true
+}
+else
+ {
+  // block of code to be executed if the condition is false.
+}</pre>
+                <h2>Key Points</h2>
+                    <ul>
+                    <li>
+                    <p>It is used when only a single condition is to be checked</p> </li> 
+                    <li> <p>No condition had to written in the else part.</p></li>  
+                     <li> <p>It first check the if statement and executethe block of code if condition is true.</p></li>
+                      <li> <p>otherwise it will directly execute the else part.</p></li>    
+                    <li><p>It is called <b>if else statement</b>.</p></li>   
+                    
+                </ul>
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+    void main(){
+        int a=10,b=20; 
+         clrscr();
+    if(a>b)
+    {     
+              printf("\n a is greater than b");
+            } 
+            else
+            {     
+            printf("\n b is greater than a");
+        }
+    getch();
+}
+
+    <h3>Output:
+    b is greater than a</h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+</body>
+    </html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Advanced C++ Topics</title>
+<style>
+body{margin:0;font-family:'Roboto',sans-serif;background:#121212;color:#E0E0E0;}
+header{padding:15px 40px;background:#1E1E1E;border-bottom:2px solid #4CAF50;}
+header h1{color:#4CAF50;margin:0;}
+.container{padding:36px;max-width:900px;margin:auto;}
+h2{color:#4CAF50;} h3{color:#81C784;}
+pre{background:#1E1E1E;padding:14px;border-radius:8px;border:1px solid #333;overflow:auto;}
+.output{background:#000;padding:10px;border:1px solid #4CAF50;color:#81C784;border-radius:6px;margin-bottom:20px;}
+ul{margin-left:20px;}
+a.back{display:inline-block;margin-top:16px;color:#4CAF50;text-decoration:none;}
+</style>
+</head>
+<body>
+<header><h1>Advanced C++ Topics</h1></header>
+<div class="container">
+
+<h2>1. Exception Handling</h2>
+<p>Exception handling allows graceful handling of runtime errors using <code>try</code>, <code>catch</code>, <code>throw</code>.</p>
+
+<h3>Example</h3>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a=10,b=0;
+    try {
+        if(b==0) throw "Division by zero!";
+        cout &lt;&lt; a/b;
+    } catch(const char* msg) {
+        cout &lt;&lt; "Error: " &lt;&lt; msg;
+    }
+}</code></pre>
+<div class="output">Error: Division by zero!</div>
+
+<h2>2. Namespaces</h2>
+<p>Namespaces prevent naming conflicts in large programs.</p>
+
+<h3>Example</h3>
+<pre><code>#include &lt;iostream&gt;
+namespace A { int x=5; }
+namespace B { int x=10; }
+using namespace std;
+int main() {
+    cout &lt;&lt; A::x &lt;&lt; " " &lt;&lt; B::x;
+}</code></pre>
+<div class="output">5 10</div>
+
+<h2>3. Lambda Functions</h2>
+<p>Lambda functions are anonymous functions used for short tasks.</p>
+
+<h3>Example</h3>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    auto add = [](int a,int b){ return a+b; };
+    cout &lt;&lt; add(5,3);
+}</code></pre>
+<div class="output">8</div>
+
+<h2>4. Smart Pointers (C++11)</h2>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;memory&gt;
+using namespace std;
+
+int main() {
+    unique_ptr&lt;int&gt; p = make_unique&lt;int&gt;(100);
+    cout &lt;&lt; *p;
+}</code></pre>
+<div class="output">100</div>
+
+<h2>5. Multithreading (C++11)</h2>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;thread&gt;
+using namespace std;
+
+void hello() { cout &lt;&lt; "Hello from thread"; }
+
+int main() {
+    thread t1(hello);
+    t1.join();
+}</code></pre>
+<div class="output">Hello from thread</div>
+  <p><a class="back" href="../c++.html">&larr; Back to Home</a></p>
+</div>
+</body>
+</html>

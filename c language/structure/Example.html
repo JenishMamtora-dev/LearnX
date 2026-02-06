@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>Example</title>
+        <link rel="stylesheet" href="internal.css">
+</head>
+<body>
+ 
+  <h2>This C program demonstrates the use of a structure (struct) to store and access the details of a student.</h2>
+          
+         
+ <div class="container">
+      
+                <h2>Example</h2>
+    <pre id="code">
+    #include &lt;stdio.h&gt;
+   // Structure definition
+        struct Student 
+        {
+            int rollNo;
+            char name[20];
+            float marks;
+        };
+
+    void main() 
+    {
+        
+    // Declare a structure variable
+    struct Student s1;
+    // Input values from the user
+    printf("Enter Roll Number: ");
+    scanf("%d", &s1.rollNo);
+
+    printf("Enter Name: ");
+    scanf("%s", s1.name);  // reads string without spaces
+    printf("Enter Marks: ");
+    scanf("%f", &s1.marks);
+
+    // Print the values
+    printf("\nStudent Details:\n");
+    printf("Roll No: %d\n", s1.rollNo);
+    printf("Name: %s\n", s1.name);
+    printf("Marks: %.2f\n", s1.marks);
+    getch();
+}
+
+    <h3>Output:
+Enter Roll Number: 1
+Enter Name: Krish
+Enter Marks: 85.5
+
+Student Details:
+Roll No: 1
+Name: Krish
+Marks: 85.50</h3>
+    </pre>
+<button onclick="copyCode()">Copy Code</button>
+  </div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+</body>
+    </html>

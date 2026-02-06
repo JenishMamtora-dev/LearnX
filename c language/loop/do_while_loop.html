@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C Do While Loop</title>
+  <style>
+    body{margin:0;font-family:'Roboto',sans-serif;background:#121212;color:#E0E0E0;line-height:1.6}
+    header{padding:15px 40px;background:#1E1E1E;border-bottom:2px solid #4CAF50}
+    header h1{color:#4CAF50}
+    .container{padding:40px;max-width:900px;margin:auto}
+    h2{color:#4CAF50;margin-top:30px}
+    pre{background:#1E1E1E;border:1px solid #333;border-radius:6px;padding:15px;overflow-x:auto;font-family:'Fira Code',monospace;color:#E0E0E0}
+    ul{margin:10px 0 20px 25px}
+    li{margin:6px 0}
+    button{margin-top:10px;padding:8px 15px;background:#4CAF50;border:none;border-radius:5px;color:white;cursor:pointer}
+    button:hover{background:#45a049;box-shadow:0 0 10px #4CAF50}
+  </style>
+</head>
+<body>
+ <header><h1>C Do While Loop</h1></header>
+<div class="container">
+  <h2>Definition</h2>
+  <p>A <b>do while loop</b> is similar to a while loop, but the code executes at least once before checking the condition.</p>
+
+  <h2>Syntax</h2>
+  <pre>
+do {
+    // code to execute
+} while(condition);
+  </pre>
+
+  <h2>Key Points</h2>
+  <ul>
+    <li>The code runs at least once.</li>
+    <li>The condition is checked after execution.</li>
+    <li>Useful when one-time execution is required before checking.</li>
+  </ul>
+
+  <h2>Example</h2>
+  <pre id="code">
+#include &lt;stdio.h&gt;
+
+void main() {
+    int i = 1;
+    do {
+        printf("%d\n", i);
+        i++;
+    } while(i <= 5);
+}
+<h3>Output:
+    1
+    2
+    3 
+    4
+    5</h3>
+  </pre>
+  <button onclick="copyCode()">Copy Code</button>
+</div>
+  <script>
+    function copyCode(){
+      const code=document.getElementById("code").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Code copied!");
+    }
+  </script>
+</body>
+</html>
