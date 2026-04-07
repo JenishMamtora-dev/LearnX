@@ -1,25 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - LearnX</title>
   <style>
     body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: radial-gradient(circle at top left, #1a1a1a, #000000);
   color: #fff;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 .container {
   background: #111;
-  padding: 40px;
+  padding: 20px;
   border-radius: 15px;
   box-shadow: 0 0 30px #4CAF50;
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
   animation: fadeIn 1s ease-in-out;
 }
 
@@ -29,7 +33,7 @@ form {
 }
 
 .title {
-  font-size: 24px;
+  font-size: clamp(24px, 5vw, 35px);
   margin-bottom: 20px;
   text-align: center;
   color: #4CAF50;
@@ -44,6 +48,7 @@ input {
   background: #222;
   color: white;
   transition: 0.3s;
+  font-size: 16px;
 }
 input:focus {
   outline: none;
@@ -53,16 +58,18 @@ input:focus {
 button {
   background: #4CAF50;
   border: none;
+  margin-top: 20px;
   padding: 12px;
   color: white;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s ease;
+  font-size: 16px;
 }
 
 button:hover {
-  background: #4CAF50;
+  background: #45a049;
 }
 
 a {
@@ -71,6 +78,10 @@ a {
   color: white;
   text-decoration: none;
   font-size: 14px;
+}
+
+a:hover {
+  color: #4CAF50;
 }
 
 .msg {
@@ -90,17 +101,131 @@ a {
   from {transform: translateY(-30px); opacity: 0;}
   to {transform: translateY(0); opacity: 1;}
 }
+
+/* Tablet */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    max-width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  
+  .container {
+    padding: 20px 15px;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  input {
+    padding: 12px 10px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 12px;
+    font-size: 16px;
+  }
+}
 </style>
 </head>
 <body>
   <div class="container">
-    <form method="post" action="navbar.html">
+    <form onsubmit="handleLogin(event)">
       <h2 class="title">Login</h2>
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit"><a href="navbar.html">Login</a></button>
-      <a href="register.php">New user? Register here</a>
+      <input id="email" type="email" placeholder="Email" required />
+      <input id="password" type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <div id="message" class="msg"></div>
     </form>
+    <a href="Register.html">New user? Register here</a>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    let isSubmitting = false;
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      
+      if (isSubmitting) return;
+      isSubmitting = true;
+      
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const messageDiv = document.getElementById('message');
+      const submitBtn = document.querySelector('button[type="submit"]');
+
+      // Disable button during submission
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.6';
+      submitBtn.style.cursor = 'not-allowed';
+
+      try {
+        messageDiv.textContent = 'Logging in...';
+        messageDiv.style.color = '#4CAF50';
+
+        console.log('Login attempt with email:', email);
+
+        // Sign in with Supabase Auth
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        console.log('Login response:', { data, error });
+
+        if (error) {
+          console.error('Login error details:', error);
+          messageDiv.textContent = 'Login failed: ' + error.message;
+          messageDiv.style.color = '#ff6b6b';
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          submitBtn.style.cursor = 'pointer';
+          isSubmitting = false;
+          return;
+        }
+
+        if (!data.user) {
+          messageDiv.textContent = 'Login failed: No user returned';
+          messageDiv.style.color = '#ff6b6b';
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          submitBtn.style.cursor = 'pointer';
+          isSubmitting = false;
+          return;
+        }
+
+        messageDiv.textContent = 'Login successful! Redirecting...';
+        messageDiv.style.color = '#4CAF50';
+        
+        // Store user ID and email in localStorage
+        localStorage.setItem('userID', data.user.id);
+        localStorage.setItem('userEmail', data.user.email);
+        localStorage.setItem('activeUser', data.user.email);
+        
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1500);
+
+      } catch (error) {
+        messageDiv.textContent = 'Error: ' + error.message;
+        messageDiv.style.color = '#ff6b6b';
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.cursor = 'pointer';
+        isSubmitting = false;
+      }
+    }
+  </script>
 </body>
 </html>

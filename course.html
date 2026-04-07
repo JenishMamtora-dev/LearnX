@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="logo.png" type="image/png">
   <title>Course | LearnX</title>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <style>
@@ -11,68 +12,28 @@
       font-family: 'Roboto', sans-serif;
       background: #111; 
       color: #e0e0e0;
-    }
-    .navbar-fixed {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 78px;
-      width: 100%;
-      z-index: 2000;
-      background: rgba(30,30,30,0.9);
-      backdrop-filter: blur(6px);
-      border-bottom: 2px solid #4CAF50;
-      padding: 10px 32px;
-    }
-    .navbar-container {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 32px 10px 32px;
-    }
-    .navbar-logo {
-      color: #4CAF50;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.8rem;
-      cursor: pointer;
-      font-weight: 700;
-    }
-    .navbar-links {
-      display: flex;
-      gap: 18px;
-    }
-    .navbar-links a {
-      color: #e0e0e0;
-      text-decoration: none;
-      font-size: 1rem;
-      padding: 6px 12px;
-      border-radius: 6px;
-      transition: all 0.2s;
-    }
-    .navbar-links a:hover {
-      background: #232323;
-      color: #4CAF50;
+      min-height: 100vh;
     }
     .course-layout {
       display: flex;
       min-height: 100vh;
-      margin-top: 68px;
+      flex-direction: row;
     }
     .course-sidebar {
-      width: 270px;
+      width: clamp(200px, 25vw, 270px);
       background: #181818;
       border-right: 1.5px solid #232323;
-      padding: 32px 18px;
+      padding: clamp(15px, 3vw, 32px) clamp(12px, 2vw, 18px);
       display: flex;
       flex-direction: column;
+      overflow-y: auto;
+      position: relative;
     }
     .sidebar-back {
       background: none;
       border: none;
       color: #ccc;
-      font-size: 1.1rem;
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
       display: flex;
       align-items: center;
       margin-bottom: 28px;
@@ -84,7 +45,7 @@
     .sidebar-chapters h3 { 
       color: #fff; 
       margin-bottom: 16px; 
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 2vw, 1.2rem);
     }
     .chapter-list { 
       list-style: none; 
@@ -102,7 +63,7 @@
       text-align: left;
       display: flex;
       align-items: center;
-      font-size: 1rem;
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
       cursor: pointer;
       transition: all 0.15s;
     }
@@ -121,27 +82,29 @@
     .course-main {
       flex: 1;
       background: #111;
-      padding: 32px 0px 32px 0px;
+      padding: clamp(20px, 3vw, 32px);
       display: flex;
       flex-direction: column;
       overflow-y: auto;
     }
     .course-tabs {
-      padding-left: 30px;
+      padding-left: clamp(10px, 2vw, 30px);
       display: flex;
-      gap: 32px;
+      gap: clamp(15px, 3vw, 32px);
       border-bottom: 1.5px solid #232323;
-      margin-bottom: 32px;
+      margin-bottom: clamp(15px, 3vw, 32px);
+      overflow-x: auto;
     }
     .course-tab {
       padding: 12px 0;
-      font-size: 1.08rem;
+      font-size: clamp(0.85rem, 1.5vw, 1.08rem);
       color: #888;
       cursor: pointer;
       border: none;
       background: none;
       border-bottom: 2.5px solid transparent;
       transition: all 0.18s;
+      white-space: nowrap;
     }
     .course-tab:hover { color: #4CAF50; }
     .course-tab.active {
@@ -149,23 +112,64 @@
       border-bottom: 2.5px solid #4CAF50;
     }
     .chapter-title { 
-      font-size: 2rem; 
-      padding-left: 30px;
+      font-size: clamp(1.5rem, 5vw, 2rem); 
+      padding-left: clamp(10px, 2vw, 30px);
       margin-bottom: 24px; 
       color: #fff;
       font-family: 'Poppins', sans-serif;
     }
     .chapter-content { 
-      font-size: 1.15rem; 
-      padding-left: 30px;
+      font-size: clamp(0.95rem, 1.5vw, 1.15rem); 
+      padding-left: clamp(10px, 2vw, 30px);
       color: #ccc; 
       line-height: 1.8;
       margin-bottom: 24px;
       white-space: pre-wrap;
     }
-    .chapter-notes h3 { margin-bottom: 12px; padding-left: 30px; }
+    .chapter-section {
+      padding-left: clamp(10px, 2vw, 30px);
+      padding-right: clamp(10px, 2vw, 20px);
+      margin-bottom: 28px;
+    }
+    .chapter-section h3 {
+      color: #4CAF50;
+      margin-bottom: 12px;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-family: 'Poppins', sans-serif;
+    }
+    .chapter-section p {
+      color: #ccc;
+      line-height: 1.8;
+      margin-bottom: 12px;
+      font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    }
+    .syntax-box {
+      background: #181818;
+      border-left: 4px solid #4CAF50;
+      padding: 12px 16px;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      color: #4CAF50;
+      margin-bottom: 12px;
+      overflow-x: auto;
+      font-size: clamp(0.85rem, 1.2vw, 1rem);
+    }
+    .examples-list, .notes-list {
+      margin-left: 20px;
+      color: #ccc;
+    }
+    .examples-list li, .notes-list li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+    }
+    .chapter-notes h3 { 
+      margin-bottom: 12px; 
+      padding-left: clamp(10px, 2vw, 30px);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+    }
     #noteInput {
-      width: 80%;
+      width: clamp(100%, -135px + 100%, 80%);
       min-height: 140px;
       background: #181818;
       border: 1.5px solid #232323;
@@ -173,10 +177,11 @@
       border-radius: 7px;
       padding: 14px 18px;
       font-size: 1rem;
-      margin-left: 10px;
+      margin-left: clamp(10px, 2vw, 10px);
       margin-bottom: 10px;
       resize: vertical;
       font-family: 'Courier New', monospace;
+      max-width: 100%;
     }
     #noteInput:focus { 
       outline: none;
@@ -187,20 +192,30 @@
       display: none;
       font-weight: 500;
     }
-    .chapter-quiz h3 { margin-bottom: 16px;  padding-left: 30px;}
+    .chapter-quiz { 
+      padding-left: clamp(10px, 2vw, 30px);
+      padding-right: clamp(10px, 2vw, 30px);
+      min-height: 300px;
+    }
+    .chapter-quiz h3 { 
+      margin-bottom: 24px;
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      color: #fff;
+    }
     .quiz-option {
       background: #181818;
       border: 1.5px solid #232323;
       color: #e0e0e0;
       border-radius: 7px;
       padding: 14px 18px;
-      margin-left: 20px;
       margin-bottom: 12px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
       transition: all 0.15s;
-      width: 80%;
+      width: 100%;
+      max-width: 600px;
       text-align: left;
+      display: block;
     }
     .quiz-option:hover:not(.correct):not(.wrong) { 
       background: #232323;
@@ -216,26 +231,122 @@
       border-color: #ef4444; 
       color: #ef4444;
     }
-    #quizResult { margin-top: 16px; font-weight: 500; }
-    .chapter-resources { color: #aaa; font-size: 1rem; margin-left: 30px;}
+    #quizResult { 
+      margin-top: 16px; 
+      font-weight: 500;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+    }
+    .chapter-resources { 
+      color: #aaa; 
+      font-size: clamp(0.9rem, 1.5vw, 1rem); 
+      margin-left: clamp(10px, 2vw, 30px);
+    }
+    .course-name-header {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid #232323;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .course-layout {
+        flex-direction: column;
+      }
+      .course-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1.5px solid #232323;
+        padding: 15px;
+        order: 2;
+      }
+      .course-main {
+        order: 1;
+        padding: clamp(15px, 2vw, 20px);
+      }
+      .course-tabs {
+        padding-left: clamp(5px, 1vw, 10px);
+        gap: clamp(10px, 2vw, 15px);
+        margin-bottom: clamp(10px, 2vw, 15px);
+      }
+      .chapter-title {
+        padding-left: clamp(5px, 1vw, 10px);
+      }
+      .chapter-content {
+        padding-left: clamp(5px, 1vw, 10px);
+        font-size: 1rem;
+      }
+      .chapter-section {
+        padding-left: clamp(5px, 1vw, 10px);
+        padding-right: clamp(5px, 1vw, 10px);
+      }
+      #noteInput {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .course-layout {
+        flex-direction: column;
+      }
+      .course-sidebar {
+        padding: 10px;
+        max-height: 200px;
+      }
+      .course-main {
+        padding: 10px;
+      }
+      .course-tabs {
+        padding-left: 5px;
+        gap: 8px;
+        font-size: 0.85rem;
+      }
+      .course-tab {
+        padding: 8px 0;
+        font-size: 0.8rem;
+      }
+      .chapter-title {
+        font-size: 1.3rem;
+        padding-left: 5px;
+      }
+      .chapter-content {
+        font-size: 0.95rem;
+        padding-left: 5px;
+      }
+      .chapter-section {
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      .chapter-section h3 {
+        font-size: 1rem;
+      }
+      .chapter-section p {
+        font-size: 0.9rem;
+      }
+      #noteInput {
+        min-height: 120px;
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+      .chapter-quiz {
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      .quiz-option {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <header class="navbar-fixed">
-    <div class="navbar-container">
-      <h1 class="navbar-logo" onclick="window.location='Index.html'">LearnX</h1>
-      <nav class="navbar-links">
-        <a href="Index.html">Home</a>
-        <a href="user1.html">My Courses</a>
-        <a href="register.php">Sign Up</a>
-        <a href="login.php">Login</a>
-      </nav>
-    </div>
-  </header>
-
   <div class="course-layout">
     <aside class="course-sidebar">
-      <button class="sidebar-back" onclick="window.location='Index.html'"><i class='bx bx-arrow-back'></i> Back</button>
+      <div class="course-name-header" id="courseNameHeader"></div>
+      <button class="sidebar-back" onclick="window.location='user1.html'"><i class='bx bx-arrow-back'></i> Back</button>
       <div class="sidebar-chapters">
         <h3>Chapters</h3>
         <ul class="chapter-list" id="chapterList"></ul>
@@ -252,7 +363,26 @@
 
       <div id="view-read">
         <div class="chapter-title" id="chapterTitle"></div>
-        <div class="chapter-content" id="chapterContent"></div>
+        <div class="chapter-section" id="shortDescSection" style="display:none;">
+          <h3>Overview</h3>
+          <p id="shortDescription"></p>
+        </div>
+        <div class="chapter-section" id="detailedDefSection" style="display:none;">
+          <h3>Detailed Definition</h3>
+          <p id="detailedDefinition"></p>
+        </div>
+        <div class="chapter-section" id="syntaxSection" style="display:none;">
+          <h3>Syntax</h3>
+          <div class="syntax-box" id="syntax"></div>
+        </div>
+        <div class="chapter-section" id="examplesSection" style="display:none;">
+          <h3>Examples</h3>
+          <ul class="examples-list" id="examplesList"></ul>
+        </div>
+        <div class="chapter-section" id="notesSection" style="display:none;">
+          <h3>Key Points</h3>
+          <ul class="notes-list" id="notesList"></ul>
+        </div>
       </div>
 
       <div id="view-notes" style="display:none">
@@ -276,34 +406,57 @@
     </main>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
-    const chapters = [
-      {
-        title: "1. Getting Started",
-        content: "This is the beginning. We cover installation and setup.\n\nMake sure you have VS Code installed.",
-        quiz: { q: "What is the file extension for a C source file?", opts: [{ t: ".c", ok: true }, { t: ".cpp", ok: false }, { t: ".java", ok: false }] }
-      },
-      {
-        title: "2. Variables",
-        content: "Learn about variables, declaration, and initialization in C.",
-        quiz: { q: "Which keyword is used to declare an integer variable?", opts: [{ t: "int", ok: true }, { t: "float", ok: false }, { t: "char", ok: false }] }
-      },
-      {
-        title: "3. Advanced Hooks",
-        content: "Advanced topics in C programming.",
-        quiz: null
-      }
-    ];
-
+    // Get course name from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseName = urlParams.get('course');
+    
+    // Wait for everything to be loaded from Supabase
+    let chapters = [];
     let activeChapter = 0;
-    let notes = JSON.parse(localStorage.getItem('courseNotes')) || {};
+    
+    // Notes structure globally is allNotes -> user -> course -> chapter
+    // But this page uses an older courseNotes -> chapter structure for current course locally
+    // Let's align it to the global allNotes structure used in index.js for cross-page compatibility
+    let allNotes = JSON.parse(localStorage.getItem('allNotes')) || {};
+    let progress = JSON.parse(localStorage.getItem('progress')) || {};
+    
+    let activeUserRaw = localStorage.getItem('activeUser');
+    let uKey = activeUserRaw;
+    let userId = null;
+    try {
+       if (activeUserRaw) {
+         let parsed = JSON.parse(activeUserRaw);
+         if (parsed && typeof parsed === 'object') {
+             uKey = parsed.email || parsed;
+             userId = parsed.id;
+         }
+       }
+    } catch(e) {}
+    
+    let activeUser = uKey; // For backwards compat
+
+    // Initialize tracking structures
+    if (!progress[uKey]) progress[uKey] = {};
+    if (!progress[uKey][courseName]) progress[uKey][courseName] = [];
+    
+    if (!allNotes[uKey]) allNotes[uKey] = {};
+    if (!allNotes[uKey][courseName]) allNotes[uKey][courseName] = {};
+
+    // Use mapped notes for this specific course explicitly
+    let notes = allNotes[uKey][courseName];
+
+    // Set course name in sidebar header
+    document.getElementById('courseNameHeader').textContent = courseName || 'Course';
 
     function renderSidebar() {
       const list = document.getElementById('chapterList');
       list.innerHTML = '';
       chapters.forEach((ch, i) => {
-        const isLocked = i > 0 && !notes[i-1];
-        const isDone = notes[i];
+        const isLocked = i > 0 && !progress[activeUser][courseName].includes(i - 1);
+        const isDone = progress[activeUser][courseName].includes(i);
         const classList = `chapter-item${activeChapter === i ? ' active' : ''}${isLocked ? ' locked' : ''}`;
         const disabled = isLocked ? 'disabled tabindex="-1"' : '';
         list.innerHTML += `<li><button class="${classList}" ${disabled} onclick="selectChapter(${i})">${ch.title}${isDone ? '<i class="bx bx-check-circle"></i>' : ''}${isLocked ? '<i class="bx bxs-lock"></i>' : ''}</button></li>`;
@@ -311,22 +464,83 @@
     }
 
     function renderChapter() {
+      if (chapters.length === 0) return;
       const ch = chapters[activeChapter];
       document.getElementById('chapterTitle').textContent = ch.title;
-      document.getElementById('chapterContent').textContent = ch.content;
       document.getElementById('noteInput').value = notes[activeChapter] || '';
       
+      // Display short description
+      const shortDescSection = document.getElementById('shortDescSection');
+      if (ch.shortDescription) {
+        document.getElementById('shortDescription').textContent = ch.shortDescription;
+        shortDescSection.style.display = 'block';
+      } else {
+        shortDescSection.style.display = 'none';
+      }
+      
+      // Display detailed definition
+      const detailedDefSection = document.getElementById('detailedDefSection');
+      if (ch.detailedDefinition) {
+        document.getElementById('detailedDefinition').textContent = ch.detailedDefinition;
+        detailedDefSection.style.display = 'block';
+      } else {
+        detailedDefSection.style.display = 'none';
+      }
+      
+      // Display syntax
+      const syntaxSection = document.getElementById('syntaxSection');
+      if (ch.syntax) {
+        document.getElementById('syntax').textContent = ch.syntax;
+        syntaxSection.style.display = 'block';
+      } else {
+        syntaxSection.style.display = 'none';
+      }
+      
+      // Display examples
+      const examplesSection = document.getElementById('examplesSection');
+      const examplesList = document.getElementById('examplesList');
+      if (ch.examples && ch.examples.length > 0) {
+        examplesList.innerHTML = '';
+        ch.examples.forEach(ex => {
+          const li = document.createElement('li');
+          li.textContent = ex;
+          examplesList.appendChild(li);
+        });
+        examplesSection.style.display = 'block';
+      } else {
+        examplesSection.style.display = 'none';
+      }
+      
+      // Display notes/key points
+      const notesSection = document.getElementById('notesSection');
+      const notesList = document.getElementById('notesList');
+      if (ch.notes && ch.notes.length > 0) {
+        notesList.innerHTML = '';
+        ch.notes.forEach(note => {
+          const li = document.createElement('li');
+          li.textContent = note;
+          notesList.appendChild(li);
+        });
+        notesSection.style.display = 'block';
+      } else {
+        notesSection.style.display = 'none';
+      }
+      
+      // Display quiz
       const quizContainer = document.getElementById('quizContainer');
-      if (ch.quiz) {
+      const quizResult = document.getElementById('quizResult');
+      if (ch.quiz && ch.quiz.q && ch.quiz.opts && ch.quiz.opts.length > 0) {
         let html = `<h3>${ch.quiz.q}</h3>`;
         ch.quiz.opts.forEach((op, i) => {
-          html += `<div class="quiz-option" onclick="checkQuiz(this, ${op.ok})">${String.fromCharCode(65 + i)}. ${op.t}</div>`;
+          const isCorrect = op.ok === true || op.ok === 'true';
+          html += `<div class="quiz-option" onclick="checkQuiz(this, ${isCorrect})">${String.fromCharCode(65 + i)}. ${op.t}</div>`;
         });
         quizContainer.innerHTML = html;
+        quizResult.innerHTML = '';
       } else {
-        quizContainer.innerHTML = '<em>No quiz for this topic.</em>';
+        quizContainer.innerHTML = '<p style="color: #888; padding: 20px;">No quiz available for this chapter.</p>';
+        quizResult.innerHTML = '';
       }
-      document.getElementById('quizResult').textContent = '';
     }
 
     window.selectChapter = (i) => {
@@ -345,9 +559,22 @@
       });
     };
 
-    window.saveNote = () => {
+    window.saveNote = async () => {
       notes[activeChapter] = document.getElementById('noteInput').value;
-      localStorage.setItem('courseNotes', JSON.stringify(notes));
+      allNotes[uKey][courseName] = notes;
+      localStorage.setItem('allNotes', JSON.stringify(allNotes));
+      
+      if (userId) {
+          try {
+             await supabaseClient.from('user_notes').upsert({
+                 user_id: userId,
+                 course_name: courseName,
+                 chapter_index: activeChapter,
+                 note_content: notes[activeChapter]
+             }, { onConflict: 'user_id,course_name,chapter_index' });
+          } catch(e) { console.error(e); }
+      }
+      
       const msg = document.getElementById('saveMsg');
       msg.style.display = 'block';
       setTimeout(() => msg.style.display = 'none', 1200);
@@ -359,7 +586,24 @@
         el.classList.add('correct');
         document.getElementById('quizResult').innerHTML = "<span style='color:#4CAF50'>✓ Correct! Next chapter unlocked!</span>";
         document.querySelectorAll('.quiz-option').forEach(e => e.style.pointerEvents = 'none');
-        setTimeout(() => {
+        setTimeout(async () => {
+          // Mark current chapter as completed
+          if (!progress[uKey][courseName].includes(activeChapter)) {
+            progress[uKey][courseName].push(activeChapter);
+            localStorage.setItem('progress', JSON.stringify(progress));
+            
+            if (userId) {
+                try {
+                    await supabaseClient.from('course_progress').upsert({
+                        user_id: userId,
+                        course_name: courseName,
+                        chapter_index: activeChapter,
+                        completed: true,
+                        completed_at: new Date().toISOString()
+                    }, { onConflict: 'user_id,course_name,chapter_index' });
+                } catch(e) { console.error('Error saving quiz progress', e); }
+            }
+          }
           window.saveNote();
           if (activeChapter + 1 < chapters.length) window.selectChapter(activeChapter + 1);
         }, 1200);
@@ -369,9 +613,55 @@
       }
     };
 
+    async function loadDataAndRender() {
+        try {
+            // Try to load syllabus from Supabase first
+            const { data: courseDataSupabase, error } = await supabaseClient
+                .from('courses')
+                .select('syllabus')
+                .eq('name', courseName)
+                .single();
+                
+            let syllabusData = null;
+            if (courseDataSupabase && courseDataSupabase.syllabus) {
+                syllabusData = courseDataSupabase.syllabus;
+            } else {
+                // Fallback to localStorage coursesData
+                const coursesData = JSON.parse(localStorage.getItem('coursesData')) || [];
+                const courseDataLocal = coursesData.find(c => c.name === courseName);
+                if (courseDataLocal && courseDataLocal.syllabus) {
+                    syllabusData = courseDataLocal.syllabus;
+                }
+            }
+            
+            if (syllabusData) {
+                chapters = syllabusData.map(item => ({
+                    title: item.t,
+                    shortDescription: item.shortDescription,
+                    detailedDefinition: item.detailedDefinition,
+                    syntax: item.syntax,
+                    examples: item.examples,
+                    notes: item.notes,
+                    content: item.c,
+                    quiz: item.quiz
+                }));
+            } else {
+                chapters = [{
+                    title: "Course Not Found",
+                    content: "The requested course data could not be loaded. Please go back to Home."
+                }];
+            }
+            
+            renderSidebar();
+            renderChapter();
+            
+        } catch (e) {
+            console.error("Failed to load course", e);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      renderSidebar();
-      renderChapter();
+      loadDataAndRender();
       document.getElementById('noteInput').addEventListener('input', window.saveNote);
     });
   </script>

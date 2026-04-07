@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="icon" href="logo.png" type="image/png">
   <title>LearnX - Programming E-Learning</title>
   <link rel="stylesheet" href="index.css">
 </head>
@@ -19,9 +21,8 @@
       <nav class="navbar-links" id="navbarLinks">
         <a href="#">Home</a>
         <a href="user1.html">My Courses</a>
-        <a href="Feedback.html">Feedback</a>
         <a href="register.html">Register</a>
-        <a href="login.html">Login</a>
+        <button class="logout-btn" id="logoutBtn" style="display:none;" onclick="logout()">Logout</button>
       </nav>
       <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()">
         <span></span>
@@ -32,10 +33,9 @@
   </header>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#">Home</a>
-    <a href="user1.html">My Courses</a>
-    <a href="Feedback.html">Feedback</a>
+    <a href="#">My Courses</a>
     <a href="register.html">Register</a>
-    <a href="login.html">Login</a>
+    <button class="logout-btn" id="logoutBtnMobile" style="display:none;" onclick="logout()">Logout</button>
   </div>
   <script>
     // Dropdown search logic
@@ -153,6 +153,7 @@
           <label for="agree" style="font-size:13px;color:white;">I agree to LearnX <a href="#" style="color:black;">Terms of Service</a>.</label>
         </div>
         <button class="btn btn-primary" style="width:100%; margin-bottom:10px;">Sign in</button>
+        <p style="color:#ff6b6b; font-size:12px; display:none; text-align:center; margin-bottom:10px;" id="loginError"></p>
       </form>
       <div style="font-size:13px;color:white;">Don't have an account? <a href="Register.html" style="color:black;">Register</a></div>
     </div>
@@ -169,8 +170,11 @@
     </div>
   </section>
 
+
+  <!-- Student App UI (dashboard + reader) -->
+  <div class="content">
     <!-- Main App Content -->
-    <div id="app" style="display:none">
+    <div id="app">
       <div class="main">
         <h2 style="margin-bottom:10px; margin-top: 40px; margin-left: 50px; font-size: 50px; max-width: 80%;">Learn Python, JavaScript, HTML, CSS, and more.</h2>
         <h3 style="margin-left: 50px; font-size: 24px; max-width: 50%; margin-bottom: 100px;">Choose between a range of beginner-friendly learning paths, hand-crafted by learning experts and backed by research</h3>
@@ -229,10 +233,11 @@
   </div>
   
   <footer>
-    <p>©2025 All rights reserved. Learn X</p>
+    <p>©2026 All rights reserved. Learn X</p>
     <p>Keep Learning. Keep Coding. 💻</p>
   </footer>
 
+  <script src="supabase-config.js"></script>
   <script src="index.js"></script>
 
 </body>
