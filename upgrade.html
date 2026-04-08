@@ -14,23 +14,27 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
         .container {
-            height: 80vh;
             display: flex;
             gap: 50px;
-           
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
         }
         .upgrade-content {
             background-color: #1E1E1E;
             border-radius: 10px;
             border: 2px solid #4CAF50;
             padding: 30px;
-            width: 300px;
+            width: 100%;
+            max-width: 300px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             text-align: center;
             color: white;
+            box-sizing: border-box;
         }
 
          .upgrade-content:hover {
@@ -77,6 +81,13 @@
         }
         .btn-upgrade:hover {
             background-color: #45a049;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 40px 15px; display: block; height: auto; }
+            .container { gap: 30px; flex-direction: column; align-items: center; height: auto; }
+            .upgrade-content { max-width: 400px; padding: 25px; }
+            ul { margin: 40px 0; }
         }
     </style>
 </head>

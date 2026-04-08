@@ -85,6 +85,16 @@ CREATE TABLE IF NOT EXISTS public.active_sessions (
   last_activity TIMESTAMP DEFAULT NOW()
 );
 
+-- 7. CREATE FEEDBACK TABLE (for user feedback submissions)
+CREATE TABLE IF NOT EXISTS public.feedback (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  message TEXT NOT NULL,
+  submitted_at TIMESTAMP DEFAULT NOW()
+);
+
 -- ========================================
 -- SET UP ROW LEVEL SECURITY (RLS) POLICIES
 -- ========================================
@@ -97,6 +107,7 @@ ALTER TABLE public.course_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.quiz_records ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.active_sessions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.courses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.feedback ENABLE ROW LEVEL SECURITY;
 
 -- Anyone can view courses
 DROP POLICY IF EXISTS "Public can view courses" ON public.courses;
@@ -241,6 +252,14 @@ DROP POLICY IF EXISTS "Users can delete their sessions" ON public.active_session
 CREATE POLICY "Users can delete their sessions" ON public.active_sessions
   FOR DELETE USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert own feedback" ON public.feedback;
+CREATE POLICY "Users can insert own feedback" ON public.feedback
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Public admins can view feedback" ON public.feedback;
+CREATE POLICY "Public admins can view feedback" ON public.feedback
+  FOR SELECT USING (true);
+
 -- ========================================
 -- CREATE INDEXES FOR BETTER PERFORMANCE
 -- ========================================
@@ -254,3 +273,30 @@ CREATE INDEX IF NOT EXISTS idx_course_progress_course ON public.course_progress(
 CREATE INDEX IF NOT EXISTS idx_quiz_records_user_id ON public.quiz_records(user_id);
 CREATE INDEX IF NOT EXISTS idx_active_sessions_user_id ON public.active_sessions(user_id);
 CREATE INDEX IF NOT EXISTS idx_active_sessions_course ON public.active_sessions(course_name);
+
+-- ========================================
+-- FUNCTION: DELETE USER COMPLETELY
+-- ========================================
+-- This function deletes a user from auth.users.
+-- Because all public tables have ON DELETE CASCADE referencing auth.users(id),
+-- deleting from auth.users will automatically remove:
+--   - public.users
+--   - user_courses
+--   - user_notes
+--   - course_progress
+--   - quiz_records
+--   - active_sessions
+--
+-- SECURITY DEFINER runs with the privileges of the function creator (postgres),
+-- so it can delete from auth.users even when called from the client via RPC.
+
+CREATE OR REPLACE FUNCTION public.delete_user_completely(target_user_id UUID)
+RETURNS VOID
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  DELETE FROM auth.users WHERE id = target_user_id;
+END;
+$$;

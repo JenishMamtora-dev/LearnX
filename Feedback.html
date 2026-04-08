@@ -4,107 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="logo.png" type="image/png">
-    <title>Feedback - LearnX-Programming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Feedback - LearnX Pro</title>
     <style>
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at top left, #1a1a1a, #000000);
-    color: #fff;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .container {
-    background: #111;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 0 30px #4CAF50;
-    width: 450px;
-    animation: fadeIn 1s ease-in-out;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .title {
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-align: center;
-    color: #4CAF50;
-  }
-  
-  label {
-    margin: 10px 0 5px;
-    font-weight: bold;
-  }
-  
-  input, textarea {
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background: #222;
-    color: #fff;
-    margin-bottom: 15px;
-    transition: box-shadow 0.3s ease;
-  }
-  input:focus, textarea:focus {
-    outline: none;
-    box-shadow: 0 0 8px #4CAF50;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  button:hover {
-    background-color: #4CAF50;
-  }
-  
-  .msg {
-    text-align: center;
-    margin-top: 10px;
-    font-weight: bold;
-    color: #18c20f;
-  }
-  
-  /* Animation */
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-  
-</style>
+        :root {
+            --bg: #050505;
+            --card: #141414;
+            --border: #222;
+            --text: #e0e0e0;
+            --text-muted: #888;
+            --accent: #6366f1;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 350px;
+            padding: clamp(20px, 5vw, 30px);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            font-size: clamp(18px, 3vw, 24px);
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .inp {
+            width: 100%;
+            padding: clamp(10px, 2vw, 12px);
+            background: black;
+            border: 1px solid var(--border);
+            color: white;
+            border-radius: 6px;
+            margin: clamp(10px, 2vw, 15px) 0;
+            outline: none;
+            font-size: clamp(12px, 1.5vw, 14px);
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: clamp(11px, 1.5vw, 13px);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .btn-primary:hover {
+            background: #4f46e5;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h2>We Value Your Feedback</h2>
-        <p>Help us improve our educational platform by sharing your thoughts.</p>
-        <form id="feedbackForm">
-            <label for="name">Your Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name" required>
-
-            <label for="email">Your Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
-        
-            <label for="message">Your Feedback:</label>
-            <textarea id="message" name="message" rows="5" placeholder="Write your feedback here..." required></textarea>
-
-            <button type="submit">Submit Feedback</button>
-        </form>
-        <p id="responseMessage"></p>
+    <div class="login-box">
+        <h2>Submit Feedback</h2>
+        <input id="name" class="inp" placeholder="Your Name" required>
+        <input id="email" class="inp" type="email" placeholder="Your Email" required>
+        <textarea id="message" class="inp" rows="4" placeholder="Your Message" required></textarea>
+        <button class="btn-primary" id="submitFeedbackBtn">Submit Feedback</button>
+        <p style="color:#ff6b6b; font-size:12px; display:none; text-align:center; margin-top:10px;" id="loginError"></p>
+        <p style="color:#10b981; font-size:12px; display:none; text-align:center; margin-top:10px;" id="successMsg"></p>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
     <script src="feedback.js"></script>
 </body>
 </html>

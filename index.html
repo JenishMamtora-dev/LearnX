@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="icon" href="logo.png" type="image/png">
   <title>LearnX - Programming E-Learning</title>
   <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
   <header class="navbar-fixed">
     <div class="navbar-container">
       <h1 class="navbar-logo">LearnX</h1>
-      <form class="navbar-search" onsubmit="event.preventDefault(); handleSearch();" autocomplete="off" style="position:relative;">
-        <input type="text" id="navbarSearchInput" placeholder="Search courses, topics..." autocomplete="off" oninput="handleSearchInput()" onfocus="handleSearchInput()">
+      <form class="navbar-search" onsubmit="event.preventDefault(); handleSearch();" autocomplete="off"
+        style="position:relative;">
+        <input type="text" id="navbarSearchInput" placeholder="Search courses, topics..." autocomplete="off"
+          oninput="handleSearchInput()" onfocus="handleSearchInput()">
         <button type="submit"><i class='bx bx-search'></i></button>
         <div id="searchDropdown" class="search-dropdown" style="display:none;"></div>
       </form>
@@ -22,8 +26,37 @@
         <a href="#">Home</a>
         <a href="user1.html">My Courses</a>
         <a href="register.html">Register</a>
-        <button class="logout-btn" id="logoutBtn" style="display:none;" onclick="logout()">Logout</button>
       </nav>
+      
+      <div id="profileSection" style="display:none; position:relative; margin-left: 15px; margin-right: 15px; align-items:center;">
+        <button id="profileMenuBtn" onclick="toggleProfileMenu(event)" style="background:none; border:none; color:white; cursor:pointer; font-size: 32px; padding: 0; display:flex; align-items:center; transition: 0.2s;">
+          <i class='bx bx-user-circle' style="color: #4CAF50;"></i>
+        </button>
+        
+        <div id="profileOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 10000; cursor: default;" onclick="toggleProfileMenu(event)"></div>
+        <div id="profileDropdown" style="display:flex; flex-direction:column; position:fixed; right: -320px; top: 0; background: #181818; border-left: 1px solid #333; height: 100vh; width: 300px; box-shadow: -5px 0 20px rgba(0,0,0,0.5); z-index: 10001; color: #e0e0e0; transition: right 0.3s ease;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #333; padding: 25px 25px 15px 25px;">
+            <div style="font-size: 22px; font-weight: bold; color: #fff;">Profile</div>
+            <button onclick="toggleProfileMenu(event)" style="background: none; border: none; color: #aaa; font-size: 28px; cursor: pointer; transition: 0.2s; padding: 0;">&times;</button>
+          </div>
+          
+          <div style="flex-grow: 1; padding: 0 25px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+              <i class='bx bx-user-circle' style="font-size: 80px; color: #4CAF50; margin-bottom: 15px;"></i>
+              <div id="profileName" style="font-size: 20px; color: #fff; margin-bottom: 8px; font-weight: 500;">...</div>
+              <div id="profileEmail" style="font-size: 15px; color: #aaa; word-break: break-all;">...</div>
+            </div>
+            <div style="height: 20px;"></div>
+          </div>
+          
+          <div style="padding: 25px;">
+             <button style="width: 100%; text-align: center; background: #ef4444; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 500; font-size: 16px; transition: 0.2s;" onclick="logout()">
+               <i class='bx bx-log-out' style="font-size: 20px;"></i> Logout
+             </button>
+          </div>
+        </div>
+      </div>
+
       <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()">
         <span></span>
         <span></span>
@@ -32,10 +65,12 @@
     </div>
   </header>
   <div class="mobile-menu" id="mobileMenu">
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+      <button onclick="toggleMobileMenu()" style="background: none; border: none; color: #E0E0E0; font-size: 38px; cursor: pointer; line-height: 1; padding: 0;">&times;</button>
+    </div>
     <a href="#">Home</a>
-    <a href="#">My Courses</a>
+    <a href="user1.html">My Courses</a>
     <a href="register.html">Register</a>
-    <button class="logout-btn" id="logoutBtnMobile" style="display:none;" onclick="logout()">Logout</button>
   </div>
   <script>
     // Dropdown search logic
@@ -50,11 +85,11 @@
       if (typeof coursesData !== 'undefined') {
         coursesData.forEach((course, ci) => {
           if (course.name.toLowerCase().includes(query)) {
-            searchResults.push({type: 'course', name: course.name, courseIdx: ci});
+            searchResults.push({ type: 'course', name: course.name, courseIdx: ci });
           }
           course.syllabus.forEach((chap, i) => {
             if (chap.t.toLowerCase().includes(query) || chap.c.toLowerCase().includes(query)) {
-              searchResults.push({type: 'chapter', course: course.name, title: chap.t, courseIdx: ci, chapterIdx: i});
+              searchResults.push({ type: 'chapter', course: course.name, title: chap.t, courseIdx: ci, chapterIdx: i });
             }
           });
         });
@@ -103,14 +138,30 @@
     }
 
     // Hide dropdown on click outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       const dropdown = document.getElementById('searchDropdown');
       const input = document.getElementById('navbarSearchInput');
-      if (!dropdown || !input) return;
-      if (!dropdown.contains(e.target) && e.target !== input) {
-        dropdown.style.display = 'none';
+      if (dropdown && input) {
+        if (!dropdown.contains(e.target) && e.target !== input) {
+          dropdown.style.display = 'none';
+        }
       }
     });
+
+    function toggleProfileMenu(e) {
+      if (e) e.stopPropagation();
+      const dropdown = document.getElementById('profileDropdown');
+      const overlay = document.getElementById('profileOverlay');
+      if (dropdown) {
+        if (dropdown.style.right === '0px') {
+          dropdown.style.right = '-320px';
+          if (overlay) overlay.style.display = 'none';
+        } else {
+          dropdown.style.right = '0px';
+          if (overlay) overlay.style.display = 'block';
+        }
+      }
+    }
   </script>
   <style>
     .search-dropdown {
@@ -121,7 +172,7 @@
       background: #181818;
       border: 1.5px solid #333;
       border-radius: 0 0 12px 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
       z-index: 3000;
       max-height: 260px;
       overflow-y: auto;
@@ -129,13 +180,18 @@
       font-size: 1rem;
       animation: fadeIn 0.18s;
     }
+
     .search-item {
       padding: 12px 18px;
       cursor: pointer;
       border-bottom: 1px solid #232323;
       transition: background 0.15s;
     }
-    .search-item:last-child { border-bottom: none; }
+
+    .search-item:last-child {
+      border-bottom: none;
+    }
+
     .search-item:hover {
       background: #232323;
       color: #4CAF50;
@@ -150,18 +206,22 @@
         <input id="password" class="inp" type="password" placeholder="Your password" required>
         <div style="display:flex;align-items:center;margin:10px 0 18px 0;">
           <input type="checkbox" id="agree" required style="margin-right:8px;">
-          <label for="agree" style="font-size:13px;color:white;">I agree to LearnX <a href="#" style="color:black;">Terms of Service</a>.</label>
+          <label for="agree" style="font-size:13px;color:white;">I agree to LearnX <a href="#"
+              style="color:black;">Terms of Service</a>.</label>
         </div>
         <button class="btn btn-primary" style="width:100%; margin-bottom:10px;">Sign in</button>
-        <p style="color:#ff6b6b; font-size:12px; display:none; text-align:center; margin-bottom:10px;" id="loginError"></p>
+        <p style="color:#ff6b6b; font-size:12px; display:none; text-align:center; margin-bottom:10px;" id="loginError">
+        </p>
       </form>
-      <div style="font-size:13px;color:white;">Don't have an account? <a href="Register.html" style="color:black;">Register</a></div>
+      <div style="font-size:13px;color:white;">Don't have an account? <a href="Register.html"
+          style="color:black;">Register</a></div>
     </div>
     <div class="hero-text">
       <h2 class="hero-title">The Easiest Way to Learn Programming 🚀</h2>
       <div class="hero-desc">
         <ul>
-          <li>Master <span class="highlight">C</span>, <span class="highlight">C++</span>, <span class="highlight">HTML</span> & <span class="highlight">CSS</span></li>
+          <li>Master <span class="highlight">C</span>, <span class="highlight">C++</span>, <span
+              class="highlight">HTML</span> & <span class="highlight">CSS</span></li>
           <li>Clear syntax and practical examples</li>
           <li>Step-by-step interactive lessons</li>
           <li>Track your progress and take quizzes</li>
@@ -176,21 +236,25 @@
     <!-- Main App Content -->
     <div id="app">
       <div class="main">
-        <h2 style="margin-bottom:10px; margin-top: 40px; margin-left: 50px; font-size: 50px; max-width: 80%;">Learn Python, JavaScript, HTML, CSS, and more.</h2>
-        <h3 style="margin-left: 50px; font-size: 24px; max-width: 50%; margin-bottom: 100px;">Choose between a range of beginner-friendly learning paths, hand-crafted by learning experts and backed by research</h3>
+        <h2 style="margin-bottom:10px; margin-top: 40px; margin-left: clamp(15px, 5vw, 50px); font-size: clamp(28px, 5vw, 50px); max-width: 90%;">Learn
+          Python, JavaScript, HTML, CSS, and more.</h2>
+        <h3 style="margin-left: clamp(15px, 5vw, 50px); font-size: clamp(16px, 3vw, 24px); max-width: 90%; margin-bottom: clamp(40px, 10vw, 100px);">Choose between a range of
+          beginner-friendly learning paths, hand-crafted by learning experts and backed by research</h3>
         <div id="grid" class="grid"></div>
 
         <!-- Reader overlay -->
         <div id="reader" class="reader-view" aria-hidden="true">
           <div class="toc-sidebar">
-            <button class="btn btn-outline" style="width:100%; margin-bottom:18px" onclick="closeReader()"><i class='bx bx-left-arrow-alt'></i> Back</button>
+            <button class="btn btn-outline" style="width:100%; margin-bottom:18px" onclick="closeReader()"><i
+                class='bx bx-left-arrow-alt'></i> Back</button>
             <h4 style="color:white; margin-bottom:10px">Chapters</h4>
             <div id="chapterList"></div>
           </div>
 
           <div class="content-area">
             <div class="top-tabs">
-              <div class="tab active" onclick="switchTab('read')" id="tab-read"><i class='bx bx-book-open'></i> Read</div>
+              <div class="tab active" onclick="switchTab('read')" id="tab-read"><i class='bx bx-book-open'></i> Read
+              </div>
               <div class="tab" onclick="switchTab('notes')" id="tab-notes"><i class='bx bx-notepad'></i> My Notes</div>
               <div class="tab" onclick="switchTab('quiz')" id="tab-quiz"><i class='bx bx-bulb'></i> Quiz</div>
             </div>
@@ -203,9 +267,12 @@
 
               <div id="view-notes" style="display:none">
                 <h2 style="margin-bottom:15px">My Notes for this Chapter</h2>
-                <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px">Your notes are saved automatically to your browser.</p>
-                <textarea id="noteInput" class="notes-box" placeholder="Type your key takeaways here..." oninput="saveNote()"></textarea>
-                <div style="margin-top:10px; color:var(--success); font-size:12px; display:none" id="saveMsg"><i class='bx bx-check'></i> Saved</div>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px">Your notes are saved
+                  automatically to your browser.</p>
+                <textarea id="noteInput" class="notes-box" placeholder="Type your key takeaways here..."
+                  oninput="saveNote()"></textarea>
+                <div style="margin-top:10px; color:var(--success); font-size:12px; display:none" id="saveMsg"><i
+                    class='bx bx-check'></i> Saved</div>
               </div>
 
               <div id="view-quiz" style="display:none">
@@ -222,7 +289,7 @@
     </div>
   </div>
 
-<div class="popup-overlay" id="popup" aria-hidden="true" role="dialog">
+  <div class="popup-overlay" id="popup" aria-hidden="true" role="dialog">
     <div class="pro-modal" role="document" aria-labelledby="upgrade-title">
       <span class="close-btn" onclick="closePopup()">&times;</span>
       <div class="icon-container"><span>🚀</span></div>
@@ -231,7 +298,77 @@
       <a href="upgrade.html"><button class="btn-upgrade">Get Started</button></a>
     </div>
   </div>
-  
+
+  <section style="display: flex; justify-content: center; padding: 40px 20px; background: #050505;">
+    <div
+      style="width: 100%; max-width: 350px; padding: 30px; background: #141414; border: 1px solid #222; border-radius: 12px; text-align: center;">
+      <h2 style="font-size: 24px; margin-bottom: 20px; color: white;">Feedback</h2>
+      <form id="feedbackFormIndex" onsubmit="event.preventDefault(); submitFeedbackIndex();">
+        <input id="fbName" placeholder="Your Name" required
+          style="width: 100%; padding: 12px; background: black; border: 1px solid #222; color: white; border-radius: 6px; margin: 10px 0; outline: none; font-size: 14px; box-sizing: border-box;">
+        <input id="fbEmail" type="email" placeholder="Your Email" required
+          style="width: 100%; padding: 12px; background: black; border: 1px solid #222; color: white; border-radius: 6px; margin: 10px 0; outline: none; font-size: 14px; box-sizing: border-box;">
+        <textarea id="fbMessage" rows="4" placeholder="Your Message" required
+          style="width: 100%; padding: 12px; background: black; border: 1px solid #222; color: white; border-radius: 6px; margin: 10px 0; outline: none; font-size: 14px; box-sizing: border-box; resize: vertical;"></textarea>
+        <button type="submit"
+          style="width:100%; justify-content:center; margin-top:5px; background: #6366f1; color: white; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; font-size: 13px; transition: 0.2s;">Submit
+          Feedback</button>
+        <p style="color:#ff6b6b; font-size:12px; display:none; text-align:center; margin-top:10px;" id="fbError"></p>
+        <p style="color:#10b981; font-size:12px; display:none; text-align:center; margin-top:10px;" id="fbSuccess"></p>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    async function submitFeedbackIndex() {
+      let name = document.getElementById("fbName").value.trim();
+      let email = document.getElementById("fbEmail").value.trim();
+      let message = document.getElementById("fbMessage").value.trim();
+      let errorMsg = document.getElementById("fbError");
+      let successMsg = document.getElementById("fbSuccess");
+
+      errorMsg.style.display = "none";
+      successMsg.style.display = "none";
+
+      try {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+
+        if (!user) {
+          errorMsg.style.display = "block";
+          errorMsg.textContent = "Login first";
+          return;
+        }
+
+        if (email.toLowerCase() !== user.email.toLowerCase()) {
+          errorMsg.style.display = "block";
+          errorMsg.textContent = "Email not registered";
+          return;
+        }
+
+
+        const { error } = await supabaseClient
+          .from('feedback')
+          .insert([{ name: name, email: email, message: message, user_id: user.id }]);
+
+        if (error) {
+          console.error(error);
+        }
+
+        successMsg.style.display = "block";
+        successMsg.textContent = "Thank you " + name;
+
+        document.getElementById("fbName").value = "";
+        document.getElementById("fbEmail").value = "";
+        document.getElementById("fbMessage").value = "";
+
+      } catch (err) {
+        errorMsg.style.display = "block";
+        errorMsg.textContent = "An error occurred. Please try again.";
+        console.error(err);
+      }
+    }
+  </script>
+
   <footer>
     <p>©2026 All rights reserved. Learn X</p>
     <p>Keep Learning. Keep Coding. 💻</p>
@@ -241,4 +378,5 @@
   <script src="index.js"></script>
 
 </body>
+
 </html>

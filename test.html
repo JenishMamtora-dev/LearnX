@@ -236,6 +236,14 @@
         .modal.error h3 { color: var(--error); }
         .modal p { color: #555; font-size: 14px; }
 
+        @media (max-width: 768px) {
+            .main-container { flex-direction: column; overflow-y: auto; height: auto; }
+            .panel-instructions, .panel-editor, .panel-preview { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+            .panel-instructions { max-height: 300px; }
+            .panel-editor { min-height: 400px; }
+            .panel-preview { min-height: 350px; }
+            .header-controls { font-size: 14px; }
+        }
     </style>
 </head>
 <body>

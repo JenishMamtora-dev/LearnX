@@ -211,6 +211,7 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+
         .toc-item.locked i.lock-icon {
             color: #888;
         }
@@ -350,7 +351,7 @@
             .app {
                 flex-direction: column;
             }
-            
+
             .sidebar {
                 width: 100%;
                 padding: 10px;
@@ -452,13 +453,15 @@
 
 <body>
 
-    <div id="login-screen">
+    <div id="login-screen" style="display:none">
         <div class="login-box">
             <h2>Student Login</h2>
             <input id="email" class="inp" placeholder="Email">
             <input id="password" class="inp" type="password" placeholder="Password">
-            <button class="btn btn-primary" style="width:100%; justify-content:center" onclick="login()">Start Learning</button>
-            <p style="color:#ff6b6b; font-size:12px; display:none; text-align:center; margin-top:10px;" id="loginError"></p>
+            <button class="btn btn-primary" style="width:100%; justify-content:center" onclick="login()">Start
+                Learning</button>
+            <p style="color:#ff6b6b; font-size:12px; display:none; text-align:center; margin-top:10px;" id="loginError">
+            </p>
         </div>
     </div>
 
@@ -466,7 +469,9 @@
 
         <div class="sidebar">
             <div class="logo"><i class='bx bxs-brain'></i> LearnX Pro</div>
-            <a href="index.html" style="color:inherit; text-decoration:none;"><div class="nav-item"><i class='bx bxs-home'></i> Home</div></a>
+            <a href="index.html" style="color:inherit; text-decoration:none;">
+                <div class="nav-item"><i class='bx bxs-home'></i> Home</div>
+            </a>
             <div class="nav-item active" onclick="closeReader()"><i class='bx bxs-grid-alt'></i> Dashboard</div>
             <div class="nav-item"><i class='bx bx-stats'></i> Progress</div>
             <div class="nav-item" style="margin-top:auto" onclick="logout()"><i class='bx bx-log-out'></i> Logout</div>
@@ -498,32 +503,35 @@
                     <div class="scroll-content">
                         <div id="view-read">
                             <h1 id="lessonTitle" style="font-size:28px; margin-bottom:20px; color:white;">Title</h1>
-                            
+
                             <div id="shortDescSection" style="display:none; margin-bottom:20px;">
                                 <h3 style="color:var(--accent); margin-bottom:10px; font-size:1.2rem;">Overview</h3>
                                 <p id="shortDescription" style="line-height:1.7; color:#ccc; font-size:16px;"></p>
                             </div>
-                            
+
                             <div id="detailedDefSection" style="display:none; margin-bottom:20px;">
-                                <h3 style="color:var(--accent); margin-bottom:10px; font-size:1.2rem;">Detailed Definition</h3>
+                                <h3 style="color:var(--accent); margin-bottom:10px; font-size:1.2rem;">Detailed
+                                    Definition</h3>
                                 <p id="detailedDefinition" style="line-height:1.7; color:#ccc; font-size:16px;"></p>
                             </div>
-                            
+
                             <div id="syntaxSection" style="display:none; margin-bottom:20px;">
                                 <h3 style="color:var(--accent); margin-bottom:10px; font-size:1.2rem;">Syntax</h3>
-                                <div id="syntax" style="background:var(--card); border-left:4px solid var(--accent); padding:15px; border-radius:6px; font-family:'Courier New', monospace; color:var(--accent); margin-bottom:10px;"></div>
+                                <div id="syntax"
+                                    style="background:var(--card); border-left:4px solid var(--accent); padding:15px; border-radius:6px; font-family:'Courier New', monospace; color:var(--accent); margin-bottom:10px;">
+                                </div>
                             </div>
-                            
+
                             <div id="examplesSection" style="display:none; margin-bottom:20px;">
                                 <h3 style="color:var(--accent); margin-bottom:10px; font-size:1.2rem;">Examples</h3>
                                 <ul id="examplesList" style="margin-left:20px; color:#ccc;"></ul>
                             </div>
-                            
+
                             <div id="keyPointsSection" style="display:none; margin-bottom:20px;">
                                 <h3 style="color:var(--accent); margin-bottom:10px; font-size:1.2rem;">Key Points</h3>
                                 <ul id="keyPointsList" style="margin-left:20px; color:#ccc;"></ul>
                             </div>
-                            
+
                             <div id="lessonText" style="line-height:1.7; color:#ccc; font-size:16px"></div>
                         </div>
 
@@ -545,7 +553,8 @@
 
                         <div id="view-resources" style="display:none">
                             <h2 style="margin-bottom:15px">Resources</h2>
-                            <div id="resourcesContent" style="color:#aaa; font-size:14px;">No extra resources for this chapter.</div>
+                            <div id="resourcesContent" style="color:#aaa; font-size:14px;">No extra resources for this
+                                chapter.</div>
                         </div>
 
                     </div>
@@ -571,7 +580,7 @@
                     uKey = parsed;
                 }
             }
-        } catch(e) { }
+        } catch (e) { }
 
         let activeUser = uKey; // Backwards compatibility
         let activeCourse = null;
@@ -582,30 +591,40 @@
 
         // Auth check on load
         document.addEventListener("DOMContentLoaded", async () => {
-             const { data: { user }, error } = await supabaseClient.auth.getUser();
-             if (user) {
-                 uKey = user.email;
-                 userID = user.id;
-                 activeUser = uKey;
-                 localStorage.setItem('activeUser', JSON.stringify({ email: uKey, id: userID }));
-                 await fetchGlobalCourses();
-                 init();
-             } else {
-                 document.getElementById('login-screen').style.display = "flex";
-                 document.getElementById('app').style.display = "none";
-             }
+            // Optimistic load to prevent form flash/interruption
+            if (activeUserRaw) {
+                document.getElementById('login-screen').style.display = "none";
+                document.getElementById('app').style.display = "flex";
+                fetchGlobalCourses().then(() => init());
+            }
+
+            const { data: { user }, error } = await supabaseClient.auth.getUser();
+            if (user) {
+                uKey = user.email;
+                userID = user.id;
+                activeUser = uKey;
+                localStorage.setItem('activeUser', JSON.stringify({ email: uKey, id: userID }));
+                if (!activeUserRaw) {
+                    await fetchGlobalCourses();
+                    init();
+                }
+            } else {
+                document.getElementById('login-screen').style.display = "flex";
+                document.getElementById('app').style.display = "none";
+                localStorage.removeItem('activeUser');
+            }
         });
 
         async function fetchGlobalCourses() {
             try {
                 const { data } = await supabaseClient.from('courses').select('name, overview, badge, icon, tech_icons, syllabus').eq('is_live', true);
                 if (data && data.length > 0) {
-                    coursesData = data.map(c => ({...c, techIcons: c.tech_icons}));
+                    coursesData = data.map(c => ({ ...c, techIcons: c.tech_icons }));
                     localStorage.setItem('coursesData', JSON.stringify(coursesData));
                 } else {
                     coursesData = JSON.parse(localStorage.getItem('coursesData')) || [];
                 }
-            } catch(e) {
+            } catch (e) {
                 coursesData = JSON.parse(localStorage.getItem('coursesData')) || [];
             }
         }
@@ -615,22 +634,22 @@
             const e = document.getElementById('email').value.trim();
             const p = document.getElementById('password').value;
             const errorMsg = document.getElementById('loginError');
-            
+
             try {
                 const { data, error } = await supabaseClient.auth.signInWithPassword({
                     email: e,
                     password: p
                 });
-                
+
                 if (error) throw error;
-                
+
                 uKey = e;
                 userID = data.user.id;
                 activeUser = uKey;
                 localStorage.setItem('activeUser', JSON.stringify({ email: uKey, id: userID }));
-                
+
                 await fetchGlobalCourses();
-                
+
                 errorMsg.style.display = 'none';
                 init();
             } catch (err) {
@@ -639,10 +658,10 @@
                 setTimeout(() => errorMsg.style.display = 'none', 3000);
             }
         }
-        async function logout() { 
+        async function logout() {
             await supabaseClient.auth.signOut();
-            localStorage.removeItem('activeUser'); 
-            location.reload(); 
+            localStorage.removeItem('activeUser');
+            location.reload();
         }
 
         function init() {
@@ -655,40 +674,58 @@
         function renderGrid() {
             const g = document.getElementById('grid');
             g.innerHTML = "";
-            
+
             if (enrolledCourses.length === 0) {
                 g.innerHTML = '<p style="color:#888; text-align:center; padding:40px;">No courses started yet. Go to Home to explore courses!</p>';
                 return;
             }
-            
+
             // Display enrolled courses from Supabase
             enrolledCourses.forEach(enrolledCourse => {
                 const courseObj = coursesData.find(c => c.name === enrolledCourse.course_name);
                 const displayName = courseObj?.name || enrolledCourse.course_name;
+                
+                let progressPercent = 0;
+                if (courseObj && courseObj.syllabus) {
+                    const totalChapters = courseObj.syllabus.length;
+                    const userProg = progress[uKey]?.[displayName] || [];
+                    const completedChapters = userProg.length;
+                    if (totalChapters > 0) {
+                        progressPercent = Math.round((completedChapters / totalChapters) * 100);
+                        if (progressPercent > 100) progressPercent = 100;
+                    }
+                }
+
                 g.innerHTML += `
-        <div class="course-card" onclick="openReader('${ displayName }')">
+        <div class="course-card" onclick="openReader('${displayName}')">
             <div class="card-banner"><i class='bx bxs-graduation'></i></div>
             <div class="card-body">
-                <b>${ displayName }</b>
-                <p style="font-size:12px; color:#888; margin-top:5px">Continue Learning</p>
+                <b>${displayName}</b>
+                <div style="margin-top: 10px; background: var(--border); border-radius: 4px; height: 6px; overflow: hidden;">
+                    <div style="background: var(--success); height: 100%; width: ${progressPercent}%; transition: width 0.3s ease;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); margin-top: 5px;">
+                    <span>Continue Learning</span>
+                    <span style="color: ${progressPercent === 100 ? 'var(--success)' : 'var(--text-muted)'}; font-weight: ${progressPercent === 100 ? 'bold' : 'normal'};">${progressPercent}%</span>
+                </div>
             </div>
         </div>`;
             });
         }
-        
+
         async function loadEnrolledCourses() {
             if (!userID) {
                 console.error('No user ID found');
                 renderGrid();
                 return;
             }
-            
+
             try {
                 const { data, error } = await supabaseClient
                     .from('user_courses')
                     .select('course_name')
                     .eq('user_id', userID);
-                
+
                 if (error) {
                     console.error('Error loading enrolled courses:', error);
                     // Fallback to localStorage
@@ -698,7 +735,7 @@
                 } else {
                     enrolledCourses = data || [];
                 }
-                
+
                 renderGrid();
             } catch (error) {
                 console.error('Error:', error);
@@ -709,24 +746,14 @@
         /* --- READER LOGIC --- */
         function openReader(cName) {
             activeCourse = cName;
-            // Get course data from coursesData
-            const courseData = coursesData.find(c => c.name === cName);
-            if (!courseData) {
-                alert('Course not found');
-                return;
-            }
-            document.getElementById('reader').style.display = "grid";
-            renderSidebar(courseData.syllabus);
-            loadChapter(0, courseData.syllabus);
-            switchTab('read');
-            
-            // Track active session in Supabase
+            // Track active session in Supabase then redirect
             trackActiveSession(cName);
+            window.location.href = 'course.html?course=' + encodeURIComponent(cName);
         }
-        
+
         async function trackActiveSession(courseName) {
             if (!userID) return;
-            
+
             try {
                 // Insert or update active session
                 const { error } = await supabaseClient
@@ -737,19 +764,19 @@
                         started_at: new Date().toISOString(),
                         last_activity: new Date().toISOString()
                     }, { onConflict: 'user_id,course_name' });
-                
+
                 if (error) console.error('Error tracking session:', error);
             } catch (error) {
                 console.error('Error tracking session:', error);
             }
         }
-        
+
         function closeReader() { document.getElementById('reader').style.display = "none"; }
 
         function isChapterLocked(i) {
             // First chapter is always unlocked
             if (i === 0) return false;
-            const userProg = progress[ uKey ]?.[ activeCourse ] || [];
+            const userProg = progress[uKey]?.[activeCourse] || [];
             return !userProg.includes(i - 1);
         }
 
@@ -764,7 +791,7 @@
         function renderSidebar(syllabus) {
             const list = document.getElementById('chapterList');
             list.innerHTML = "";
-            const userProg = progress[ uKey ]?.[ activeCourse ] || [];
+            const userProg = progress[uKey]?.[activeCourse] || [];
 
             if (!syllabus) return;
 
@@ -778,9 +805,9 @@
                 const icon = locked ? "<i class='bx bxs-lock lock-icon'></i>" : (isDone ? "<i class='bx bxs-check-circle'></i>" : "");
 
                 list.innerHTML += `
-        <div class="toc-item ${ activeCls } ${ doneCls } ${ lockedCls }" onclick="attemptLoadChapter(${ i }, window.currentSyllabus)">
-            <span>${ s.t }</span>
-            ${ icon }
+        <div class="toc-item ${activeCls} ${doneCls} ${lockedCls}" onclick="attemptLoadChapter(${i}, window.currentSyllabus)">
+            <span>${s.t}</span>
+            ${icon}
         </div>`;
             });
         }
@@ -788,7 +815,7 @@
         function loadChapter(i, syllabus) {
             // Store current syllabus for onclick handlers
             window.currentSyllabus = syllabus;
-            
+
             // Guard: don't load locked chapters
             if (isChapterLocked(i)) {
                 alert("This chapter is locked. Complete the previous chapter first.");
@@ -796,7 +823,7 @@
             }
 
             activeChapter = i;
-            const s = syllabus[ i ];
+            const s = syllabus[i];
 
             // Set Title
             document.getElementById('lessonTitle').innerText = s.t;
@@ -809,7 +836,7 @@
             } else {
                 shortDescSection.style.display = 'none';
             }
-            
+
             // Display detailed definition
             const detailedDefSection = document.getElementById('detailedDefSection');
             if (s.detailedDefinition) {
@@ -818,7 +845,7 @@
             } else {
                 detailedDefSection.style.display = 'none';
             }
-            
+
             // Display syntax
             const syntaxSection = document.getElementById('syntaxSection');
             if (s.syntax) {
@@ -827,7 +854,7 @@
             } else {
                 syntaxSection.style.display = 'none';
             }
-            
+
             // Display examples
             const examplesSection = document.getElementById('examplesSection');
             const examplesList = document.getElementById('examplesList');
@@ -844,7 +871,7 @@
             } else {
                 examplesSection.style.display = 'none';
             }
-            
+
             // Display key points/notes
             const keyPointsSection = document.getElementById('keyPointsSection');
             const keyPointsList = document.getElementById('keyPointsList');
@@ -861,7 +888,7 @@
             } else {
                 keyPointsSection.style.display = 'none';
             }
-            
+
             // Display main content (if exists)
             if (s.c) {
                 document.getElementById('lessonText').innerHTML = s.c;
@@ -871,9 +898,9 @@
             }
 
             // Load Notes
-            if (!allNotes[ uKey ]) allNotes[ uKey ] = {};
-            if (!allNotes[ uKey ][ activeCourse ]) allNotes[ uKey ][ activeCourse ] = {};
-            document.getElementById('noteInput').value = allNotes[ uKey ][ activeCourse ][ i ] || "";
+            if (!allNotes[uKey]) allNotes[uKey] = {};
+            if (!allNotes[uKey][activeCourse]) allNotes[uKey][activeCourse] = {};
+            document.getElementById('noteInput').value = allNotes[uKey][activeCourse][i] || "";
 
             // Load Quiz
             const quiz = s.quiz;
@@ -895,7 +922,7 @@
                 el.style.pointerEvents = 'auto';
             });
             document.getElementById('quizResult').innerHTML = "";
-            
+
             // Load Resources
             const resourcesContent = document.getElementById('resourcesContent');
             if (s.resources && s.resources.length > 0) {
@@ -916,7 +943,7 @@
         /* --- TABS SYSTEM --- */
         function switchTab(tabName) {
             // Hide all
-            [ 'read', 'notes', 'quiz', 'resources' ].forEach(t => {
+            ['read', 'notes', 'quiz', 'resources'].forEach(t => {
                 document.getElementById('view-' + t).style.display = 'none';
                 document.getElementById('tab-' + t).classList.remove('active');
             });
@@ -931,21 +958,21 @@
         async function saveNote() {
             const txt = document.getElementById('noteInput').value;
 
-            if (!allNotes[ uKey ]) allNotes[ uKey ] = {};
-            if (!allNotes[ uKey ][ activeCourse ]) allNotes[ uKey ][ activeCourse ] = {};
+            if (!allNotes[uKey]) allNotes[uKey] = {};
+            if (!allNotes[uKey][activeCourse]) allNotes[uKey][activeCourse] = {};
 
-            allNotes[ uKey ][ activeCourse ][ activeChapter ] = txt;
+            allNotes[uKey][activeCourse][activeChapter] = txt;
             localStorage.setItem('allNotes', JSON.stringify(allNotes));
-            
+
             if (userID) {
-               try {
-                  await supabaseClient.from('user_notes').upsert({
-                      user_id: userID,
-                      course_name: activeCourse,
-                      chapter_index: activeChapter,
-                      note_content: txt
-                  }, { onConflict: 'user_id,course_name,chapter_index' });
-               } catch(e) { }
+                try {
+                    await supabaseClient.from('user_notes').upsert({
+                        user_id: userID,
+                        course_name: activeCourse,
+                        chapter_index: activeChapter,
+                        note_content: txt
+                    }, { onConflict: 'user_id,course_name,chapter_index' });
+                } catch (e) { }
             }
 
             // UI indicator
@@ -962,13 +989,13 @@
                 document.querySelectorAll('.quiz-option').forEach(e => e.style.pointerEvents = 'none');
                 setTimeout(async () => {
                     // Mark current chapter as completed
-                    if (!progress[ uKey ]) progress[ uKey ] = {};
-                    if (!progress[ uKey ][ activeCourse ]) progress[ uKey ][ activeCourse ] = [];
-                    
-                    if (!progress[ uKey ][ activeCourse ].includes(activeChapter)) {
-                        progress[ uKey ][ activeCourse ].push(activeChapter);
+                    if (!progress[uKey]) progress[uKey] = {};
+                    if (!progress[uKey][activeCourse]) progress[uKey][activeCourse] = [];
+
+                    if (!progress[uKey][activeCourse].includes(activeChapter)) {
+                        progress[uKey][activeCourse].push(activeChapter);
                         localStorage.setItem('progress', JSON.stringify(progress));
-                        
+
                         if (userID) {
                             try {
                                 await supabaseClient.from('course_progress').upsert({
@@ -978,10 +1005,10 @@
                                     completed: true,
                                     completed_at: new Date().toISOString()
                                 }, { onConflict: 'user_id,course_name,chapter_index' });
-                            } catch(e) { }
+                            } catch (e) { }
                         }
                     }
-                    
+
                     // Move to next chapter if exists
                     if (activeChapter + 1 < window.currentSyllabus.length) {
                         loadChapter(activeChapter + 1, window.currentSyllabus);
