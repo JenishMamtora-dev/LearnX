@@ -288,20 +288,25 @@
       </div>
     </div>
   </div>
-
-  <div class="popup-overlay" id="popup" aria-hidden="true" role="dialog">
-    <div class="pro-modal" role="document" aria-labelledby="upgrade-title">
-      <span class="close-btn" onclick="closePopup()">&times;</span>
-      <div class="icon-container"><span>🚀</span></div>
-      <h4 id="upgrade-title">Upgrade to Learn-X Pro</h4>
-      <h5>Unlock unlimited access of Courses, premium support, and exclusive chatbot features today.</h5>
-      <a href="upgrade.html"><button class="btn-upgrade">Get Started</button></a>
+  <section style="display: flex; justify-content: center; align-items: center; gap: 60px; padding: 60px 40px; background: #050505; flex-wrap: wrap; border-top: 3px solid #4CAF50; border-radius: 16px;">
+    <!-- Left: Tagline -->
+    <div style="flex: 1; min-width: 260px; max-width: 420px;">
+      <p style="font-size: 13px; font-weight: 600; letter-spacing: 2px; color: #4CAF50; text-transform: uppercase; margin-bottom: 14px;">Your Voice Matters</p>
+      <h2 style="font-size: clamp(22px, 3vw, 34px); font-weight: 700; color: white; line-height: 1.35; margin-bottom: 18px;">We'd love to hear your thoughts, your feedback makes us better!</h2>
+      <p style="font-size: 15px; color: #888; line-height: 1.7;">Share your experience, suggestions, or any issues. Every message helps us build a better learning platform for you.</p>
+      <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px; color: #aaa; font-size: 14px;">
+          <span style="width: 36px; height: 36px; border-radius: 50%; background: #1a1a1a; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: #4CAF50; font-size: 18px;">✉</span>
+          We read every single message
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; color: #aaa; font-size: 14px;">
+          <span style="width: 36px; height: 36px; border-radius: 50%; background: #1a1a1a; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: #4CAF50; font-size: 18px;">🚀</span>
+          Your ideas shape our roadmap
+        </div>
+      </div>
     </div>
-  </div>
-
-  <section style="display: flex; justify-content: center; padding: 40px 20px; background: #050505;">
-    <div
-      style="width: 100%; max-width: 350px; padding: 30px; background: #141414; border: 1px solid #222; border-radius: 12px; text-align: center;">
+    <!-- Right: Feedback Form -->
+    <div style="width: 100%; max-width: 370px; padding: 30px; background: #141414; border: 1px solid #222; border-radius: 12px; text-align: center;">
       <h2 style="font-size: 24px; margin-bottom: 20px; color: white;">Feedback</h2>
       <form id="feedbackFormIndex" onsubmit="event.preventDefault(); submitFeedbackIndex();">
         <input id="fbName" placeholder="Your Name" required
@@ -311,7 +316,7 @@
         <textarea id="fbMessage" rows="4" placeholder="Your Message" required
           style="width: 100%; padding: 12px; background: black; border: 1px solid #222; color: white; border-radius: 6px; margin: 10px 0; outline: none; font-size: 14px; box-sizing: border-box; resize: vertical;"></textarea>
         <button type="submit"
-          style="width:100%; justify-content:center; margin-top:5px; background: #6366f1; color: white; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; font-size: 13px; transition: 0.2s;">Submit
+          style="width:100%; justify-content:center; margin-top:5px; background: #4CAF50; color: white; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; font-size: 13px; transition: 0.2s;">Submit
           Feedback</button>
         <p style="color:#ff6b6b; font-size:12px; display:none; text-align:center; margin-top:10px;" id="fbError"></p>
         <p style="color:#10b981; font-size:12px; display:none; text-align:center; margin-top:10px;" id="fbSuccess"></p>

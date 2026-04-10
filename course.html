@@ -422,6 +422,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script>
+    // IMPORTANT: DO NOT clear localStorage completely! Only clear cache data
+    // Preserve: activeUser, progress, allNotes
+    localStorage.removeItem('coursesData');
+    localStorage.removeItem('courseChaptersCache');
+    sessionStorage.clear();
+    
     // Get course name from URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const courseName = urlParams.get('course');
@@ -449,6 +455,12 @@
        }
     } catch(e) {}
     
+    // If no user, redirect to login
+    if (!uKey) {
+      document.body.innerHTML = '<h2 style="text-align:center; margin-top:50px; color:red;">❌ Please login first</h2>';
+      setTimeout(() => window.location.href = 'index.html', 2000);
+    }
+    
     let activeUser = uKey; // For backwards compat
 
     // Initialize tracking structures
@@ -463,6 +475,33 @@
 
     // Set course name in sidebar header
     document.getElementById('courseNameHeader').textContent = courseName || 'Course';
+
+    // Load progress from Supabase
+    async function loadProgressFromSupabase() {
+      if (!userId) return;
+      try {
+        const { data, error } = await supabaseClient
+          .from('course_progress')
+          .select('chapter_index')
+          .eq('user_id', userId)
+          .eq('course_name', courseName);
+        
+        if (error) {
+          console.error('Error loading progress:', error);
+          return;
+        }
+        
+        if (data && data.length > 0) {
+          // Merge Supabase progress with localStorage
+          const completedChapters = data.map(p => p.chapter_index);
+          progress[uKey][courseName] = [...new Set([...progress[uKey][courseName], ...completedChapters])];
+          localStorage.setItem('progress', JSON.stringify(progress));
+          console.log('Progress synced from Supabase:', progress[uKey][courseName]);
+        }
+      } catch(e) {
+        console.error('Error syncing progress:', e);
+      }
+    }
 
     function renderSidebar() {
       const list = document.getElementById('chapterList');
@@ -496,12 +535,12 @@
         let examHtml = `
           <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;">
             <div style="font-size:72px;margin-bottom:16px;">🏆</div>
-            <h2 style="color:#fff;font-size:1.8rem;margin-bottom:12px;font-family:'Poppins',sans-serif;">CSS Final Exam</h2>
+            <h2 style="color:#fff;font-size:1.8rem;margin-bottom:12px;font-family:'Poppins',sans-serif;">${ch.title}</h2>
             <p style="color:#aaa;max-width:480px;line-height:1.7;margin-bottom:28px;">${ch.detailedDefinition}</p>
             <ul style="list-style:none;padding:0;margin-bottom:32px;">
               ${(ch.notes||[]).map(n => `<li style="color:#ccc;margin-bottom:8px;">✅ ${n}</li>`).join('')}
             </ul>
-            <a href="${ch.examUrl}" style="
+            <a href="${ch.examUrl || 'challenge.html'}" style="
               display:inline-block;
               background:#00ff88;
               color:#000;
@@ -602,7 +641,9 @@
         let html = `<h3>${ch.quiz.q}</h3>`;
         ch.quiz.opts.forEach((op, i) => {
           const isCorrect = op.ok === true || op.ok === 'true';
-          html += `<div class="quiz-option" onclick="checkQuiz(this, ${isCorrect})">${String.fromCharCode(65 + i)}. ${op.t}</div>`;
+          // Escape HTML entities to display tags as text
+          const escapedText = op.t.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          html += `<div class="quiz-option" onclick="checkQuiz(this, ${isCorrect})">${String.fromCharCode(65 + i)}. ${escapedText}</div>`;
         });
         quizContainer.innerHTML = html;
         quizResult.innerHTML = '';
@@ -689,23 +730,46 @@
 
     async function loadDataAndRender() {
         try {
-            // Try to load syllabus from Supabase first
-            const { data: courseDataSupabase, error } = await supabaseClient
+            console.log('Loading course data for:', courseName);
+            
+            // First, ensure Supabase has the latest exam URL mappings
+            const courseExamMap = {
+                'C Programming': 'c_exam.html',
+                'C++ Programming': 'cpp_exam.html',
+                'HTML': 'html_exam.html',
+                'CSS': 'challenge.html',
+                'PHP': 'php_exam.html',
+                'JAVA': 'java_exam.html'
+            };
+            
+            // Try to load syllabus from Supabase only (no cache fallback)
+            let { data: courseDataSupabase, error } = await supabaseClient
                 .from('courses')
-                .select('syllabus')
+                .select('*')
                 .eq('name', courseName)
                 .single();
                 
             let syllabusData = null;
+            
             if (courseDataSupabase && courseDataSupabase.syllabus) {
                 syllabusData = courseDataSupabase.syllabus;
-            } else {
-                // Fallback to localStorage coursesData
-                const coursesData = JSON.parse(localStorage.getItem('coursesData')) || [];
-                const courseDataLocal = coursesData.find(c => c.name === courseName);
-                if (courseDataLocal && courseDataLocal.syllabus) {
-                    syllabusData = courseDataLocal.syllabus;
+                console.log(`Loaded ${syllabusData.length} chapters from Supabase`);
+                
+                // Update exam URLs if missing
+                const examChapter = syllabusData.find(ch => ch.isExam === true);
+                if (examChapter && examChapter.t === '10. Exam') {
+                    const correctExamUrl = courseExamMap[courseName] || 'challenge.html';
+                    if (examChapter.examUrl !== correctExamUrl) {
+                        console.log(`Updating exam URL for ${courseName} to ${correctExamUrl}`);
+                        syllabusData = syllabusData.map(ch => 
+                            ch.isExam === true ? {...ch, examUrl: correctExamUrl} : ch
+                        );
+                        // Sync back to Supabase
+                        await supabaseClient.from('courses').update({ syllabus: syllabusData }).eq('name', courseName);
+                    }
                 }
+            } else {
+                console.warn('No data found in Supabase for', courseName);
             }
             
             if (syllabusData) {
@@ -719,8 +783,9 @@
                     content: item.c,
                     quiz: item.quiz,
                     isExam: item.isExam || false,
-                    examUrl: item.examUrl || null
+                    examUrl: item.examUrl || courseExamMap[courseName] || 'challenge.html'
                 }));
+                console.log('Final chapters loaded:', chapters.length);
             } else {
                 chapters = [{
                     title: "Course Not Found",
@@ -730,6 +795,10 @@
             
             renderSidebar();
             renderChapter();
+            
+            // Load user's progress from Supabase to sync with their actual completed chapters
+            await loadProgressFromSupabase();
+            renderSidebar(); // Re-render to show completed chapters
             
         } catch (e) {
             console.error("Failed to load course", e);

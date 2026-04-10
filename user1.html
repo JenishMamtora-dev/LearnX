@@ -591,24 +591,28 @@
 
         // Auth check on load
         document.addEventListener("DOMContentLoaded", async () => {
-            // Optimistic load to prevent form flash/interruption
+            // PRIORITY 1: Check if user is already logged in (localStorage)
             if (activeUserRaw) {
                 document.getElementById('login-screen').style.display = "none";
                 document.getElementById('app').style.display = "flex";
-                fetchGlobalCourses().then(() => init());
+                await fetchGlobalCourses();
+                await loadEnrolledCourses(); // Load enrolled courses with progress
+                return;
             }
 
+            // PRIORITY 2: Check if Supabase session is still active
             const { data: { user }, error } = await supabaseClient.auth.getUser();
             if (user) {
                 uKey = user.email;
                 userID = user.id;
                 activeUser = uKey;
                 localStorage.setItem('activeUser', JSON.stringify({ email: uKey, id: userID }));
-                if (!activeUserRaw) {
-                    await fetchGlobalCourses();
-                    init();
-                }
+                document.getElementById('login-screen').style.display = "none";
+                document.getElementById('app').style.display = "flex";
+                await fetchGlobalCourses();
+                await loadEnrolledCourses();
             } else {
+                // Only show login screen if both check fail
                 document.getElementById('login-screen').style.display = "flex";
                 document.getElementById('app').style.display = "none";
                 localStorage.removeItem('activeUser');
@@ -736,10 +740,52 @@
                     enrolledCourses = data || [];
                 }
 
+                // Load progress from Supabase for all enrolled courses
+                await loadProgressFromSupabase();
+                
                 renderGrid();
             } catch (error) {
                 console.error('Error:', error);
                 renderGrid();
+            }
+        }
+
+        // Load progress from Supabase
+        async function loadProgressFromSupabase() {
+            if (!userID) return;
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('course_progress')
+                    .select('course_name, chapter_index')
+                    .eq('user_id', userID);
+                
+                if (error) {
+                    console.error('Error loading progress:', error);
+                    return;
+                }
+                
+                if (data && data.length > 0) {
+                    // Initialize progress object if needed
+                    if (!progress[uKey]) progress[uKey] = {};
+                    
+                    // Group progress by course
+                    data.forEach(item => {
+                        const courseName = item.course_name;
+                        if (!progress[uKey][courseName]) {
+                            progress[uKey][courseName] = [];
+                        }
+                        if (!progress[uKey][courseName].includes(item.chapter_index)) {
+                            progress[uKey][courseName].push(item.chapter_index);
+                        }
+                    });
+                    
+                    // Save to localStorage
+                    localStorage.setItem('progress', JSON.stringify(progress));
+                    console.log('✅ Progress synced from Supabase:', progress);
+                }
+            } catch(e) {
+                console.error('Error syncing progress:', e);
             }
         }
 

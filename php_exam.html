@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Exam | LearnX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0d0d0d;
+            --editor-bg: #1e1e1e;
+            --neon-green: #00ff88;
+            --border: 1px solid #333;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        html, body {
+            background: var(--bg-dark);
+            color: white;
+            height: 100%;
+            min-height: 100vh;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 50px;
+            background: #141414;
+            border-bottom: var(--border);
+            flex-shrink: 0;
+        }
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .top-bar-logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--neon-green);
+            letter-spacing: 1px;
+        }
+        .task-title {
+            font-weight: 600;
+            font-size: clamp(11px, 2vw, 14px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .task-title span {
+            color: var(--neon-green);
+        }
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hint-btn, .run-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+        .run-btn {
+            background: var(--neon-green);
+            color: black;
+            font-weight: 600;
+            padding: 8px 16px;
+        }
+        .run-btn:hover {
+            background: #00e67a;
+            box-shadow: 0 0 15px rgba(0,255,136,0.4);
+        }
+        .hint-btn:hover {
+            background: #444;
+        }
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            flex: 1;
+            overflow: hidden;
+        }
+        .editor-container, .preview-container {
+            display: flex;
+            flex-direction: column;
+            border: var(--border);
+        }
+        .editor-container {
+            border-right: var(--border);
+        }
+        .panel-header {
+            background: #222;
+            padding: 8px 12px;
+            border-bottom: var(--border);
+            font-size: 13px;
+            font-weight: 600;
+            color: #aaa;
+        }
+        textarea {
+            flex: 1;
+            background: var(--editor-bg);
+            color: #e0e0e0;
+            border: none;
+            padding: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            resize: none;
+            outline: none;
+        }
+        textarea:focus {
+            background: #252525;
+        }
+        .output-box {
+            flex: 1;
+            background: #111;
+            border-top: var(--border);
+            padding: 10px;
+            overflow: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            color: var(--neon-green);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        .modal-box {
+            background: #111;
+            padding: clamp(24px, 5vw, 40px);
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--neon-green);
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 0 50px rgba(0,255,136,0.2);
+            animation: popUp 0.4s ease;
+        }
+        @keyframes popUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+        .input-name {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            outline: none;
+            font-size: 15px;
+        }
+        .input-name:focus { border-color: var(--neon-green); }
+        @media (max-width: 768px) {
+            .workspace {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+            }
+            .editor-container {
+                border-right: none;
+                border-bottom: var(--border);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="top-bar-logo">LearnX</div>
+            <div class="task-title">PHP <span>Exam</span></div>
+        </div>
+        <div class="top-bar-right">
+            <button class="hint-btn" onclick="showHint()"><i class="fas fa-lightbulb"></i> Hint</button>
+            <button class="run-btn" onclick="checkOutput()"><i class="fas fa-play"></i> Check</button>
+        </div>
+    </div>
+
+    <div class="workspace">
+        <div class="editor-container">
+            <div class="panel-header">Write PHP Function</div>
+            <textarea id="codeArea">&lt;?php
+
+// Create a function that filters even numbers from an array
+function filterEvenNumbers($numbers) {
+    // Write your code here
+    
+}
+
+$numbers = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+$evens = filterEvenNumbers($numbers);
+
+echo "Even numbers: " . implode(", ", $evens);
+
+?&gt;</textarea>
+        </div>
+
+        <div class="preview-container">
+            <div class="panel-header">Expected Output</div>
+            <div class="output-box" id="outputBox">Even numbers: 2, 4, 6, 8, 10</div>
+        </div>
+    </div>
+
+    <div class="modal" id="successModal">
+        <div class="modal-box">
+            <i class="fas fa-trophy" style="font-size: 52px; color: #ffd700; margin-bottom: 16px;"></i>
+            <h2 style="color: white; font-size: clamp(1.1rem,4vw,1.5rem);">Backend Master!</h2>
+            <p style="color: #aaa; font-size: 14px; margin-top: 6px;">PHP Function Created! 🎉</p>
+            <input type="text" id="userName" class="input-name" placeholder="Enter your full name for the certificate">
+            <button class="run-btn" style="width:100%; padding:14px; font-size:14px; justify-content:center;" onclick="goToCert()">
+                Get Certificate &nbsp;<i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showHint() {
+            alert("HINT:\n✓ Use array_filter() function\n✓ Or use foreach loop with if condition\n✓ Check if number % 2 == 0\n✓ Return filtered array");
+        }
+
+        function checkOutput() {
+            const code = document.getElementById('codeArea').value;
+            
+            // Check if code contains required PHP elements
+            const hasFunction = code.includes('function') && code.includes('filterEvenNumbers');
+            const hasFilter = code.includes('array_filter') || (code.includes('foreach') && code.includes('%'));
+            const hasArray = code.includes('$numbers');
+            const hasReturn = code.includes('return');
+            
+            if (hasFunction && hasFilter && hasArray && hasReturn) {
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                setTimeout(() => {
+                    document.getElementById('successModal').style.display = 'flex';
+                }, 800);
+            } else {
+                alert("❌ Code needs improvement!\n✓ Create function\n✓ Use array_filter or foreach\n✓ Filter even numbers (% 2 == 0)\n✓ Return array");
+            }
+        }
+
+        function goToCert() {
+            const name = document.getElementById('userName').value.trim();
+            if (!name) return alert("Please enter your name!");
+            window.location.href = `certificate.html?name=${encodeURIComponent(name)}&course=PHP`;
+        }
+    </script>
+</body>
+</html>

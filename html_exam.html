@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Exam | LearnX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0d0d0d;
+            --editor-bg: #1e1e1e;
+            --neon-green: #00ff88;
+            --border: 1px solid #333;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        html, body {
+            background: var(--bg-dark);
+            color: white;
+            height: 100%;
+            min-height: 100vh;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 50px;
+            background: #141414;
+            border-bottom: var(--border);
+            flex-shrink: 0;
+        }
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .top-bar-logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--neon-green);
+            letter-spacing: 1px;
+        }
+        .task-title {
+            font-weight: 600;
+            font-size: clamp(11px, 2vw, 14px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .task-title span {
+            color: var(--neon-green);
+        }
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hint-btn, .run-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+        .run-btn {
+            background: var(--neon-green);
+            color: black;
+            font-weight: 600;
+            padding: 8px 16px;
+        }
+        .run-btn:hover {
+            background: #00e67a;
+            box-shadow: 0 0 15px rgba(0,255,136,0.4);
+        }
+        .hint-btn:hover {
+            background: #444;
+        }
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            flex: 1;
+            overflow: hidden;
+        }
+        .editor-container, .preview-container {
+            display: flex;
+            flex-direction: column;
+            border: var(--border);
+        }
+        .editor-container {
+            border-right: var(--border);
+        }
+        .panel-header {
+            background: #222;
+            padding: 8px 12px;
+            border-bottom: var(--border);
+            font-size: 13px;
+            font-weight: 600;
+            color: #aaa;
+        }
+        textarea {
+            flex: 1;
+            background: var(--editor-bg);
+            color: #e0e0e0;
+            border: none;
+            padding: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            resize: none;
+            outline: none;
+        }
+        textarea:focus {
+            background: #252525;
+        }
+        .output-box {
+            flex: 1;
+            background: white;
+            border-top: var(--border);
+            padding: 10px;
+            overflow: auto;
+            font-family: sans-serif;
+            font-size: 14px;
+            color: #333;
+        }
+        .target-visual {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 10px;
+            gap: 10px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        .modal-box {
+            background: #111;
+            padding: clamp(24px, 5vw, 40px);
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--neon-green);
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 0 50px rgba(0,255,136,0.2);
+            animation: popUp 0.4s ease;
+        }
+        @keyframes popUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+        .input-name {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            outline: none;
+            font-size: 15px;
+        }
+        .input-name:focus { border-color: var(--neon-green); }
+        @media (max-width: 768px) {
+            .workspace {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+            }
+            .editor-container {
+                border-right: none;
+                border-bottom: var(--border);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="top-bar-logo">LearnX</div>
+            <div class="task-title">Challenge: <span>Build Contact Form</span></div>
+        </div>
+        <div class="top-bar-right">
+            <button class="hint-btn" onclick="showHint()"><i class="fas fa-lightbulb"></i> Hint</button>
+        </div>
+    </div>
+
+    <div class="workspace">
+        <div class="editor-container">
+            <div class="panel-header">
+                Build a Simple Form
+                <button class="run-btn" onclick="checkTask()"><i class="fas fa-play"></i> Preview</button>
+            </div>
+            <textarea id="codeArea">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;style&gt;
+    form {
+      max-width: 400px;
+      margin: 20px;
+      padding: 20px;
+      background: #f0f0f0;
+      border-radius: 8px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- TODO: Create a form with:
+       - h2 title "Contact Us"
+       - input fields for name and email with labels
+       - textarea for message with label
+       - submit button
+  --&gt;
+  &lt;form&gt;
+    &lt;!-- Add your form elements here --&gt;
+  &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        </div>
+
+        <div class="preview-container">
+            <div class="panel-header">Your Output</div>
+            <iframe id="userFrame" style="flex:1; background:white; border:none;"></iframe>
+            
+            <div style="height: clamp(160px, 28vh, 260px); background: #111; border-top: var(--border); padding: 10px; display: flex; flex-direction: column; flex-shrink: 0;">
+                <div class="panel-header" style="background:transparent; padding:0 0 6px 0; border:none;">Target Output</div>
+                <div style="flex: 1; background: white; display: flex; justify-content: center; align-items: flex-start; border-radius: 4px; padding: 10px; overflow: auto; position: relative;">
+                    <div style="position: absolute; top: 5px; right: 5px; background: #000; color: white; padding: 2px 6px; font-size: 10px; border-radius: 3px; opacity: 0.7;">TARGET</div>
+                    <div id="targetForm" style="width: 100%; max-width: 350px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="successModal">
+        <div class="modal-box">
+            <i class="fas fa-trophy" style="font-size: 52px; color: #ffd700; margin-bottom: 16px;"></i>
+            <h2 style="color: white; font-size: clamp(1.1rem,4vw,1.5rem);">Web Form Master!</h2>
+            <p style="color: #aaa; font-size: 14px; margin-top: 6px;">Beautiful Form Created! 🎉</p>
+            <input type="text" id="userName" class="input-name" placeholder="Enter your full name for the certificate">
+            <button class="run-btn" style="width:100%; padding:14px; font-size:14px; justify-content:center;" onclick="goToCert()">
+                Get Certificate &nbsp;<i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function renderTarget() {
+            const targetDiv = document.getElementById('targetForm');
+            targetDiv.innerHTML = `
+                <form style="max-width: 100%; margin: 0; padding: 15px; background: #f0f0f0; border-radius: 8px;">
+                    <h2 style="margin-bottom: 15px; color: #333;">Contact Us</h2>
+                    
+                    <label style="display: block; margin-bottom: 5px; color: #555; font-weight: 600;">Name:</label>
+                    <input type="text" placeholder="Your Name" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    
+                    <label style="display: block; margin-bottom: 5px; color: #555; font-weight: 600;">Email:</label>
+                    <input type="email" placeholder="your@email.com" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    
+                    <label style="display: block; margin-bottom: 5px; color: #555; font-weight: 600;">Message:</label>
+                    <textarea placeholder="Your message..." style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; min-height: 80px;"></textarea>
+                    
+                    <button type="submit" style="width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Submit</button>
+                </form>
+            `;
+        }
+
+        function runCode() {
+            const code = document.getElementById('codeArea').value;
+            const iframe = document.getElementById('userFrame');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+
+            doc.open();
+            doc.write(code);
+            doc.close();
+        }
+
+        function checkTask() {
+            const code = document.getElementById('codeArea').value;
+            const iframe = document.getElementById('userFrame');
+            
+            // First render the code
+            runCode();
+            
+            // Then validate after a short delay
+            setTimeout(() => { validateForm(iframe); }, 200);
+        }
+
+        function validateForm(iframe) {
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            const form = doc.querySelector('form');
+            const hasInputs = doc.querySelectorAll('input').length >= 2;
+            const hasTextarea = doc.querySelector('textarea[name]');
+            const hasButton = doc.querySelector('button');
+            const hasLabels = doc.querySelectorAll('label').length >= 2;
+            const hasH2 = doc.querySelector('h2');
+
+            if (form && hasInputs && hasTextarea && hasButton && hasLabels && hasH2) {
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                setTimeout(() => {
+                    document.getElementById('successModal').style.display = 'flex';
+                }, 800);
+            } else {
+                alert("❌ Task not complete!\n✓ Add <h2>Contact Us</h2>\n✓ Add 2+ input fields with labels\n✓ Add textarea with label\n✓ Add submit button\n\nCheck the hint for help!");
+            }
+        }
+
+        function showHint() {
+            alert("HINT:\n✓ Inside <form>, add:\n  - <h2>Contact Us</h2>\n  - <label> + <input> for name\n  - <label> + <input> for email\n  - <label> + <textarea> for message\n  - <button type='submit'>Submit</button>");
+        }
+
+        function goToCert() {
+            const name = document.getElementById('userName').value.trim();
+            if (!name) return alert("Please enter your name!");
+            window.location.href = `certificate.html?name=${encodeURIComponent(name)}&course=HTML`;
+        }
+
+        // Render target on page load
+        renderTarget();
+    </script>
+</body>
+</html>

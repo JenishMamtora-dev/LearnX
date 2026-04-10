@@ -18,40 +18,52 @@ document.getElementById("submitFeedbackBtn").addEventListener("click", async fun
     }
 
     try {
-        // Enforce user is logged in
+        // Check if user is logged in
         const { data: { user } } = await supabaseClient.auth.getUser();
 
         if (!user) {
             errorMsg.style.display = "block";
-            errorMsg.textContent = "Login first";
+            errorMsg.textContent = "Login first to submit feedback";
             return;
         }
 
         if (email.toLowerCase() !== user.email.toLowerCase()) {
             errorMsg.style.display = "block";
-            errorMsg.textContent = "Email not registered";
+            errorMsg.textContent = "Email does not match your account";
             return;
         }
 
-        // Send to supabase
-        const { error } = await supabaseClient
+        // Send to Supabase feedback table
+        const { data, error } = await supabaseClient
             .from('feedback')
-            .insert([{ name: name, email: email, message: message, user_id: user.id }]);
+            .insert([{ 
+                user_id: user.id,
+                name: name,
+                email: email,
+                message: message,
+                submitted_at: new Date().toISOString()
+            }]);
 
         if (error) {
-            console.error(error);
-            // Optionally could still show thank you message or show actual error 
-            // but we will gracefully handle it for the user
+            console.error("Supabase error:", error);
+            errorMsg.style.display = "block";
+            errorMsg.textContent = "Error submitting feedback. Please try again.";
+            return;
         }
 
         // Show success message
         successMsg.style.display = "block";
-        successMsg.textContent = "Thank you " + name;
+        successMsg.textContent = "Thank you " + name + "! Your feedback has been received. ✅";
 
         // Clear the form fields
         document.getElementById("name").value = "";
         document.getElementById("email").value = "";
         document.getElementById("message").value = "";
+
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+            successMsg.style.display = "none";
+        }, 3000);
 
     } catch (err) {
         errorMsg.style.display = "block";

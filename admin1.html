@@ -9,6 +9,7 @@
     <link rel="icon" href="logo.png" type="image/png">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
 
     <style>
         /* CSS VARIABLES FOR EASY THEMING */
@@ -343,6 +344,46 @@
             overflow-x: auto;
         }
 
+        .feedback-card {
+            background: #222;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .feedback-user {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 15px;
+        }
+
+        .feedback-time {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .feedback-rating {
+            color: #ffd700;
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .feedback-text {
+            color: #ddd;
+            line-height: 1.5;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
         /* RESPONSIVE DESIGN */
         @media (max-width: 768px) {
             .sidebar { width: 60px; padding: 15px 10px; }
@@ -392,6 +433,9 @@
                 <a onclick="show('courses')"><i class='bx bxs-book-content'></i>
                     <div class="text">Courses</div>
                 </a>
+                <a onclick="show('feedbacks')"><i class='bx bxs-message-square'></i>
+                    <div class="text">Feedbacks</div>
+                </a>
                 <a onclick="logout()" style="margin: 4px 0 0 0; color:var(--danger)"><i class='bx bx-log-out'></i>
                     <div class="text">Logout</div>
                 </a>
@@ -432,8 +476,6 @@
                             <tr>
                                 <th>Email</th>
                                 <th>Full Name</th>
-                                <th>Active Course</th>
-                                <th>Last Active</th>
                                 <th>Joined</th>
                                 <th>Actions</th>
                             </tr>
@@ -469,16 +511,26 @@
                 </div>
             </div>
 
+            <div id="feedbacks" class="section">
+                <div class="panel-card">
+                    <div class="header-flex">
+                        <h3>User Feedbacks</h3>
+                        <input type="text" id="searchFeedback" onkeyup="filterFeedbacks()" placeholder="Search feedbacks..." style="width:250px; margin:0">
+                    </div>
+                    <div id="feedbacksList" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase-config.js"></script>
     <script>
         /* --- CONFIG & INIT --- */
         let users = [];
         let courses = [];
         let activeSessions = [];
+        let feedbacks = [];
+        let allFeedbacks = []; // Store all feedbacks for filtering
 
         if (localStorage.login === "yes") loadAdmin();
 
@@ -509,19 +561,35 @@
             // Start with collapsed sidebar
             document.querySelector(".sidebar").classList.add("collapsed");
             
+            // Check if Supabase is initialized
+            if (!supabaseClient) {
+                alert("❌ Supabase is not connected. Make sure supabase-config.js is loaded correctly.");
+                console.error("supabaseClient not found!");
+                return;
+            }
+            
+            console.log("✅ Supabase client initialized");
             loadCoursesFromSupabase();
             loadUsersFromSupabase();
+            loadFeedbacksFromSupabase();
             setInterval(loadUsersFromSupabase, 5000); // Refresh every 5 seconds
+            setInterval(loadFeedbacksFromSupabase, 10000); // Refresh feedbacks every 10 seconds
         }
         
         async function loadCoursesFromSupabase() {
             try {
+                console.log("Loading courses from Supabase...");
                 const { data, error } = await supabaseClient.from('courses').select('id, name, is_live, created_at').order('id', { ascending: true });
-                if (error) throw error;
+                if (error) {
+                    console.error("Error loading courses:", error);
+                    throw error;
+                }
+                console.log("✅ Courses loaded:", data);
                 courses = data || [];
                 render();
             } catch(e) {
                 console.error("Failed to load courses:", e);
+                alert("⚠️ Failed to load courses: " + e.message);
             }
         }
 
@@ -556,6 +624,28 @@
             }
         }
 
+        async function loadFeedbacksFromSupabase() {
+            try {
+                console.log("Loading feedbacks from Supabase...");
+                const { data, error } = await supabaseClient
+                    .from('feedback')
+                    .select('id, user_id, name, email, message, submitted_at')
+                    .order('submitted_at', { ascending: false });
+                
+                if (error) {
+                    console.error('❌ Error loading feedbacks:', error);
+                    return;
+                }
+                
+                allFeedbacks = data || [];
+                feedbacks = allFeedbacks;
+                console.log('✅ Feedbacks loaded:', allFeedbacks.length);
+                renderFeedbacks();
+            } catch (error) {
+                console.error('❌ Error:', error);
+            }
+        }
+
         /* --- UI LOGIC --- */
         // Sidebar hover animation
         const sidebar = document.querySelector(".sidebar");
@@ -581,31 +671,6 @@
         }
 
         /* --- CRUD OPERATIONS --- */
-
-        // ADD USER
-        function addUser() {
-            const n = document.getElementById("uname");
-            const e = document.getElementById("uemail");
-            const p = document.getElementById("upass");
-
-            // VALIDATION
-            if (n.value.trim() === "" || e.value.trim() === "" || p.value.trim() === "") {
-                alert("Please fill all fields!");
-                return;
-            }
-
-            // Check if email already exists
-            if (users.find(u => u.e === e.value.trim())) {
-                alert("This email is already registered!");
-                return;
-            }
-
-            users.push({ id: Date.now(), n: n.value, e: e.value, pass: p.value });
-            n.value = ""; e.value = ""; p.value = ""; // Clear inputs
-            save();
-            showToast("User Added Successfully");
-        }
-
         // ADD COURSE
         async function addCourse() {
             const c = document.getElementById("cname");
@@ -627,17 +692,43 @@
         
         // TOGGLE COURSE LIVE STATUS
         async function toggleCourseLive(courseId) {
+            console.log("Toggle called for courseId:", courseId);
+            
+            if (!supabaseClient) {
+                alert("❌ Supabase not connected. Check console for errors.");
+                return;
+            }
+            
             const course = courses.find(c => c.id === courseId);
-            if (course) {
-                const newStatus = !course.is_live;
-                try {
-                    const { error } = await supabaseClient.from('courses').update({ is_live: newStatus }).eq('id', courseId);
-                    if (error) throw error;
-                    await loadCoursesFromSupabase();
-                    showToast(newStatus ? "Course is now LIVE" : "Course is now OFFLINE");
-                } catch(e) {
-                    alert("Error updating status: " + e.message);
+            console.log("Course found:", course);
+            
+            if (!course) {
+                alert("❌ Course not found!");
+                return;
+            }
+            
+            const newStatus = !course.is_live;
+            console.log("Updating course", courseId, "to status:", newStatus);
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('courses')
+                    .update({ is_live: newStatus })
+                    .eq('id', courseId);
+                
+                console.log("Update response - Data:", data, "Error:", error);
+                
+                if (error) {
+                    console.error("Supabase error:", error);
+                    alert("❌ Error: " + error.message);
+                    return;
                 }
+                
+                await loadCoursesFromSupabase();
+                showToast(newStatus ? "✅ Course is now LIVE" : "✅ Course is now OFFLINE");
+            } catch(e) {
+                console.error("Exception caught:", e);
+                alert("❌ Error updating status: " + e.message);
             }
         }
 
@@ -701,8 +792,6 @@
         <tr>
           <td><b>${ u.email }</b></td>
           <td>${ u.full_name || '-' }</td>
-          <td><span style="background:#4CAF50; padding:4px 12px; border-radius:4px; font-size:12px;">${ activeCourse }</span></td>
-          <td style="font-size:12px; color:#888;">${ lastActive }</td>
           <td style="font-size:12px;">${ joinedDate }</td>
           <td>
             <button class="btn btn-red btn-sm" onclick="delUser('${ u.id }')"><i class='bx bx-trash'></i></button>
@@ -721,8 +810,8 @@
         <td>#${ c.id }</td>
         <td>${ statusBadge }</td>
         <td>
-          <button class="btn btn-green btn-sm" onclick="toggleCourseLive(${ c.id })" style="background:${c.is_live ? '#ff9800' : '#4CAF50'}"><i class='bx bxs-toggle-left'></i> ${c.is_live ? 'DISABLE' : 'ENABLE'}</button>
-          <button class="btn btn-red btn-sm" onclick="delCourse(${ c.id })"><i class='bx bx-trash'></i></button>
+          <button class="btn btn-green btn-sm" onclick="toggleCourseLive('${ c.id }')" style="background:${c.is_live ? '#ff9800' : '#4CAF50'}"><i class='bx bxs-toggle-left'></i> ${c.is_live ? 'DISABLE' : 'ENABLE'}</button>
+          <button class="btn btn-red btn-sm" onclick="delCourse('${ c.id }')"><i class='bx bx-trash'></i></button>
         </td>
       </tr>`;
             });
@@ -730,6 +819,66 @@
             // Update Dashboard Counts
             document.getElementById("uCount").innerText = users.length;
             document.getElementById("cCount").innerText = courses.length;
+        }
+
+        function renderFeedbacks() {
+            const feedbacksList = document.getElementById('feedbacksList');
+            if (!feedbacksList) return;
+            
+            feedbacksList.innerHTML = '';
+            
+            if (feedbacks.length === 0) {
+                feedbacksList.innerHTML = '<p style="color:#888; text-align:center; padding:40px;">No feedbacks yet</p>';
+                return;
+            }
+            
+            feedbacks.forEach(f => {
+                const feedbackDate = new Date(f.submitted_at).toLocaleString();
+                
+                feedbacksList.innerHTML += `
+                <div class="feedback-card">
+                    <div class="feedback-header">
+                        <div>
+                            <div class="feedback-user">${f.name || f.email}</div>
+                            <div class="feedback-time">${feedbackDate}</div>
+                        </div>
+                        <button class="btn btn-red btn-sm" onclick="deleteFeedback('${f.id}')" style="background: var(--danger);"><i class='bx bx-trash'></i></button>
+                    </div>
+                    <div class="feedback-text"><strong>Email:</strong> ${f.email}<br>${f.message}</div>
+                </div>`;
+            });
+        }
+
+        function filterFeedbacks() {
+            const search = document.getElementById('searchFeedback').value.toLowerCase();
+            
+            feedbacks = allFeedbacks.filter(f => {
+                const name = (f.name || '').toLowerCase();
+                const email = (f.email || '').toLowerCase();
+                const message = (f.message || '').toLowerCase();
+                
+                return name.includes(search) || email.includes(search) || message.includes(search);
+            });
+            
+            renderFeedbacks();
+        }
+
+        async function deleteFeedback(feedbackId) {
+            if (!confirm('Are you sure you want to delete this feedback?')) return;
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('feedback')
+                    .delete()
+                    .eq('id', feedbackId);
+                
+                if (error) throw error;
+                
+                showToast('Feedback deleted successfully');
+                await loadFeedbacksFromSupabase();
+            } catch (error) {
+                alert('Error deleting feedback: ' + error.message);
+            }
         }
     </script>
 
