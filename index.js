@@ -314,6 +314,18 @@ const initialCoursesData = [
         notes: ['display: flex enables flexbox', 'justify-content aligns horizontally', 'align-items aligns vertically'],
         c: 'Layout with flexbox.',
         quiz: { q: 'Property to align items along main axis?', opts: [{ t: 'justify-content', ok: true }, { t: 'align-items', ok: false }, { t: 'flex-wrap', ok: false }] }
+      },
+      {
+        t: '4. Exam',
+        shortDescription: 'Put your CSS knowledge to the test!',
+        detailedDefinition: 'This is the final chapter of the CSS course. Complete the live coding challenge to prove your understanding of CSS styling. Match the target design exactly to earn your certificate.',
+        syntax: '',
+        examples: [],
+        notes: ['Apply what you learned about selectors, box model, and flexbox', 'Match the target output exactly', 'Earn a certificate on completion'],
+        c: 'Final CSS coding challenge.',
+        isExam: true,
+        examUrl: 'challenge.html',
+        quiz: { q: 'Which CSS property sets the background color?', opts: [{ t: 'background-color', ok: true }, { t: 'color', ok: false }, { t: 'fill', ok: false }] }
       }
     ]
   },
@@ -448,8 +460,8 @@ function updateProfileMenu() {
             }
           })
           .catch(() => {
-              const namePart = typeof email === 'string' ? email.split('@')[0] : 'Student';
-              profileName.innerText = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+            const namePart = typeof email === 'string' ? email.split('@')[0] : 'Student';
+            profileName.innerText = namePart.charAt(0).toUpperCase() + namePart.slice(1);
           });
       } else {
         // Basic display name derivation from email
@@ -493,6 +505,30 @@ async function fetchCoursesFromSupabase() {
       coursesData.forEach(c => {
         c.techIcons = c.tech_icons || [];
       });
+
+      // --- Sync: ensure the CSS course has the Exam chapter in Supabase ---
+      const cssCourse = coursesData.find(c => c.name === 'CSS');
+      if (cssCourse && Array.isArray(cssCourse.syllabus)) {
+        const hasExam = cssCourse.syllabus.some(ch => ch.isExam === true || ch.t === '4. Exam');
+        if (!hasExam) {
+          const examChapter = {
+            t: '4. Exam',
+            shortDescription: 'Put your CSS knowledge to the test!',
+            detailedDefinition: 'This is the final chapter of the CSS course. Complete the live coding challenge to prove your understanding of CSS styling. Match the target design exactly to earn your certificate.',
+            syntax: '',
+            examples: [],
+            notes: ['Apply what you learned about selectors, box model, and flexbox', 'Match the target output exactly', 'Earn a certificate on completion'],
+            c: 'Final CSS coding challenge.',
+            isExam: true,
+            examUrl: 'challenge.html',
+            quiz: { q: 'Which CSS property sets the background color?', opts: [{ t: 'background-color', ok: true }, { t: 'color', ok: false }, { t: 'fill', ok: false }] }
+          };
+          const updatedSyllabus = [...cssCourse.syllabus, examChapter];
+          await supabaseClient.from('courses').update({ syllabus: updatedSyllabus }).eq('name', 'CSS');
+          cssCourse.syllabus = updatedSyllabus;
+          console.log('CSS Exam chapter synced to Supabase.');
+        }
+      }
     }
 
     // Save to localStorage just in case other standalone pages need it synchronously before they update

@@ -523,11 +523,11 @@ body {
 }
 .course-card:nth-child(1) { 
   width: 100%; 
-  max-width: calc(100% - 135px); 
+  max-width: calc(100% - 100px); 
 }
 .course-card:nth-child(2) { 
   width: 100%; 
-  max-width: calc(100% - 135px); 
+  max-width: calc(100% - 100px); 
 }
 .course-card:nth-child(n+3) { 
   width: 100%; 

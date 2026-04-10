@@ -79,6 +79,19 @@
     .chapter-item i { margin-left: 8px; }
     .chapter-item .bx-check-circle { color: #4CAF50; }
     .chapter-item.locked .bxs-lock { color: #444; }
+    .chapter-item.exam-chapter {
+      border-left: 3px solid #ffd700;
+      background: #1e1a0e;
+      color: #ffd700;
+    }
+    .chapter-item.exam-chapter:hover:not(.locked) {
+      background: #2a240e;
+      color: #ffe84d;
+    }
+    .chapter-item.exam-chapter.active {
+      background: #2a240e;
+      color: #ffd700;
+    }
     .course-main {
       flex: 1;
       background: #111;
@@ -457,9 +470,12 @@
       chapters.forEach((ch, i) => {
         const isLocked = i > 0 && !progress[activeUser][courseName].includes(i - 1);
         const isDone = progress[activeUser][courseName].includes(i);
-        const classList = `chapter-item${activeChapter === i ? ' active' : ''}${isLocked ? ' locked' : ''}`;
+        const isExam = ch.isExam === true;
+        const examCls = isExam ? ' exam-chapter' : '';
+        const classList = `chapter-item${activeChapter === i ? ' active' : ''}${isLocked ? ' locked' : ''}${examCls}`;
         const disabled = isLocked ? 'disabled tabindex="-1"' : '';
-        list.innerHTML += `<li><button class="${classList}" ${disabled} onclick="selectChapter(${i})">${ch.title}${isDone ? '<i class="bx bx-check-circle"></i>' : ''}${isLocked ? '<i class="bx bxs-lock"></i>' : ''}</button></li>`;
+        const examIcon = isExam ? '<i class="bx bxs-trophy" style="color:#ffd700;margin-left:6px;"></i>' : '';
+        list.innerHTML += `<li><button class="${classList}" ${disabled} onclick="selectChapter(${i})">${ch.title}${examIcon}${isDone ? '<i class="bx bx-check-circle"></i>' : ''}${isLocked ? '<i class="bx bxs-lock"></i>' : ''}</button></li>`;
       });
     }
 
@@ -468,7 +484,60 @@
       const ch = chapters[activeChapter];
       document.getElementById('chapterTitle').textContent = ch.title;
       document.getElementById('noteInput').value = notes[activeChapter] || '';
-      
+
+      // --- Exam Chapter: show special card instead of regular content ---
+      if (ch.isExam) {
+        document.getElementById('shortDescSection').style.display = 'none';
+        document.getElementById('detailedDefSection').style.display = 'none';
+        document.getElementById('syntaxSection').style.display = 'none';
+        document.getElementById('examplesSection').style.display = 'none';
+        document.getElementById('notesSection').style.display = 'none';
+        // Render exam card
+        let examHtml = `
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;">
+            <div style="font-size:72px;margin-bottom:16px;">🏆</div>
+            <h2 style="color:#fff;font-size:1.8rem;margin-bottom:12px;font-family:'Poppins',sans-serif;">CSS Final Exam</h2>
+            <p style="color:#aaa;max-width:480px;line-height:1.7;margin-bottom:28px;">${ch.detailedDefinition}</p>
+            <ul style="list-style:none;padding:0;margin-bottom:32px;">
+              ${(ch.notes||[]).map(n => `<li style="color:#ccc;margin-bottom:8px;">✅ ${n}</li>`).join('')}
+            </ul>
+            <a href="${ch.examUrl}" style="
+              display:inline-block;
+              background:#00ff88;
+              color:#000;
+              font-weight:700;
+              font-size:1rem;
+              padding:14px 36px;
+              border-radius:8px;
+              text-decoration:none;
+              box-shadow:0 0 24px rgba(0,255,136,0.35);
+              transition:background 0.2s;
+            " onmouseover="this.style.background='#00e67a'" onmouseout="this.style.background='#00ff88'">🚀 Start Exam</a>
+          </div>`;
+        document.getElementById('view-read').innerHTML = examHtml;
+        // Reset quiz tab
+        document.getElementById('quizContainer').innerHTML = '<p style="color:#888;padding:20px;">Complete the exam challenge to finish this course.</p>';
+        document.getElementById('quizResult').innerHTML = '';
+        return;
+      }
+
+      // --- Normal Chapter ---
+      // Restore read view if it was replaced by exam card
+      const readView = document.getElementById('view-read');
+      if (!readView.querySelector('#chapterTitle')) {
+        readView.innerHTML = `
+          <div class="chapter-title" id="chapterTitle"></div>
+          <div class="chapter-section" id="shortDescSection" style="display:none;"><h3>Overview</h3><p id="shortDescription"></p></div>
+          <div class="chapter-section" id="detailedDefSection" style="display:none;"><h3>Detailed Definition</h3><p id="detailedDefinition"></p></div>
+          <div class="chapter-section" id="syntaxSection" style="display:none;"><h3>Syntax</h3><div class="syntax-box" id="syntax"></div></div>
+          <div class="chapter-section" id="examplesSection" style="display:none;"><h3>Examples</h3><ul class="examples-list" id="examplesList"></ul></div>
+          <div class="chapter-section" id="notesSection" style="display:none;"><h3>Key Points</h3><ul class="notes-list" id="notesList"></ul></div>`;
+        document.getElementById('chapterTitle').textContent = ch.title;
+        document.getElementById('noteInput').value = notes[activeChapter] || '';
+      } else {
+        document.getElementById('chapterTitle').textContent = ch.title;
+      }
+
       // Display short description
       const shortDescSection = document.getElementById('shortDescSection');
       if (ch.shortDescription) {
@@ -545,6 +614,11 @@
 
     window.selectChapter = (i) => {
       activeChapter = i;
+      // If this is an exam chapter, redirect immediately
+      if (chapters[i] && chapters[i].isExam && chapters[i].examUrl) {
+        window.location.href = chapters[i].examUrl;
+        return;
+      }
       renderSidebar();
       renderChapter();
       switchTab('read');
@@ -643,7 +717,9 @@
                     examples: item.examples,
                     notes: item.notes,
                     content: item.c,
-                    quiz: item.quiz
+                    quiz: item.quiz,
+                    isExam: item.isExam || false,
+                    examUrl: item.examUrl || null
                 }));
             } else {
                 chapters = [{
